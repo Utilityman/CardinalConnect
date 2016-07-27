@@ -1,0 +1,76 @@
+<html>
+<head>
+	<script type="text/javascript" src="js/jquery.js"></script>
+	<script type="text/javascript" src="js/base.js"></script>
+	
+	<link href="css/style.css" type="text/css" rel="stylesheet"></link>
+		<link href="css/home.css" type="text/css" rel="stylesheet"></link>
+	
+	<title>Cardinal Home</title>
+</head>
+<body onload="loadHome()">
+
+<div id="title">
+	<img id="logo" src="res/logo.png" alt="Logo">
+	<span>CALVERT HALL COLLEGE</span>	
+</div>
+	<ul id="titlebar">
+		<li onclick="navigate(this)" id="logout">Logout</li>
+		<li onclick="navigate(this)" id="events" class="dropdown">
+			<a class="dropbtn">Events</a>
+			<div class="dropdown-content">
+				<a onclick="getEvents('students')">Student Events</a>
+				<a onclick="getEvents('alumni')">Alumni Events</a>
+			</div>
+		</li>
+		<li id="internships" onclick="navigate(this)" class="dropdown">
+			<a class="dropbtn">Internships</a>
+			<div class="dropdown-content">
+				<!--<a onclick="findInternships('all')">All</a>-->
+				<a onclick="findInternships('biology')">Biology</a>
+				<a onclick="findInternships('business')">Business</a>
+				<a onclick="findInternships('chemistry')">Chemistry</a>
+				<a onclick="findInternships('english')">English</a>
+				<a onclick="findInternships('socialSciences')">Social Sciences</a>
+				<a onclick="findInternships('technology')">Technology</a>
+			</div>
+		</li>
+		<li id="mentorships" onclick="navigate(this)" class="dropdown">
+			<a class="dropbtn">Mentorships</a>
+			<div class="dropdown-content">
+				<!--<a onclick="findMentorships('all')">All</a>-->
+				<a onclick="findMentorships('biology')">Biology</a>
+				<a onclick="findMentorships('business')">Business</a>
+				<a onclick="findMentorships('chemistry')">Chemistry</a>
+				<a onclick="findMentorships('english')">English</a>
+				<a onclick="findMentorships('socialSciences')">Social Sciences</a>
+				<a onclick="findMentorships('technology')">Technology</a>
+			</div>
+		</li>		
+		<li onclick="navigate(this)" class="active" id="home">Home</li>		
+	</ul>
+	<br>
+	
+	<div id="content-1">
+		<div id="content-1-title">Internships and Mentorships</div>
+		<ul id="positions">
+			<li class="noInterships">
+			<p class="title">Tech Internship</p>
+			<p class="date">Summer 2017</p>
+			<p class="where">Ben and Jerry's</p>
+			</li>
+			<li class="noInterships">
+			<p class="title">Marketing Internship</p>
+			<p class="date">Fall 2016</p>
+			<p class="where">Dunder Mifflin</p>
+			</li>
+		</ul>
+	</div>
+	<div id="content-2">
+		<div>Upcoming Events</div>
+	</div>
+<div id="footer">Calvert Hall College, Cardinal Connect. 2016. If there are any 
+				issues or concerns, contact the Advancement Office at 999-9999-999</div>
+
+</body>
+</html>
