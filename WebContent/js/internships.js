@@ -1,12 +1,13 @@
 
-function loadMentorships()
+
+function loadInternships()
 {
 	$.ajax({
 		type: 'POST',
 		url: 'Data', 
 		data: 
 		{
-			'action': 'getMentorships',
+			'action': 'getInternships',
 		},
 		success: function(data)
 		{
@@ -24,36 +25,40 @@ function loadMentorships()
 	});
 }
 
-function postMentorship()
+function postInternship()
 {
 	var firstName = $("#firstName").val();
 	var lastName = $("#lastName").val();
-	var mentorshipTitle = $("#mentorshipTitle").val();
+	var internshipTitle = $("#internshipTitle").val();
 	var location = $("#location").val();
-	var company = $('#company').val();
+	var paid = $('input[name=salary]:checked', '#internDetails').val();
 	var description = $("#description").val();
 	var contact = $("#contact").val();
 	var interests = $("#interests").val();
 	var company = $("#company").val();
+	var availability = $("#availability").val();
 	
 	// Data Verification
-	if(firstName != "" && lastName != "" && mentorshipTitle != "" && location != "" &&
-			description != "" && contact != ""  && company != "")
+	if(firstName != "" && lastName != "" && internshipTitle != "" && location != "" &&
+			paid != 'undefined' && description != "" && contact != ""  && company != "" &&
+			availability != "")
 		$.ajax({
 			type: "POST",
 			url: 'Data',
 			data:
 			{
-				'action': 'postMentorship',
+				'action': 'postInternship',
 				
 				'firstName': firstName,
 				'lastName': lastName,
-				'mentorshipTitle': mentorshipTitle,
+				'internshipTitle': internshipTitle,
 				'location': location,
+				'paid': paid,
 				'description': description,
 				'contact': contact,
 				'interests': interests,
 				'company': company,
+				'avilability': availability,
 			},
 			complete: function(data)
 			{
@@ -76,14 +81,14 @@ function fillField(json)
 		var node = document.createElement("li");
 		node.onclick = function(){expand(this)};
 
-		$(node).append("<p class='title'>" + json[i].mentorshipTitle + "</p>");
+		$(node).append("<p class='title'>" + json[i].internshipTitle + "</p>");
 		$(node).append("<p class='description hidden'>" + json[i].description + "</p>");
 		$(node).append("<p class='name hidden'>Poster: " + json[i].firstName + " " + 
 									json[i].lastName + " - " + json[i].contact + "</p>");
 		$(node).append("<p class='name hidden'>Location: " + json[i].location + " at " +  json[i].company + "</p>");
+		$(node).append("<p class='name hidden'>Availability: " + json[i].avilability + "</p>");
 		
-		$("#mentorshipList").append(node);
+		$("#internshipList").append(node);
 	}
 }
-
 

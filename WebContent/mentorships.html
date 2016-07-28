@@ -3,13 +3,15 @@
 	<script type="text/javascript" src="js/jquery.js"></script>
 	<script type="text/javascript" src="js/base.js"></script>
 	<script type="text/javascript" src="js/mentorships.js"></script>
+	<script type="text/javascript" src="js/modal.js"></script>
+
 	
 	<link href="css/style.css" type="text/css" rel="stylesheet"></link>
 	<link href="css/contents.css" type="text/css" rel="stylesheet"></link>
 	<link href="css/modal.css" type="text/css" rel="stylesheet"></link>
 	<title>Mentorships</title>
 </head>
-<body onload="loadHome()">
+<body onload="loadMentorships()">
 
 <div id="title">
 	<img id="logo" src="res/logo.png" alt="Logo">
@@ -27,7 +29,6 @@
 		<li id="internships" onclick="navigate(this)" class="dropdown">
 			<a class="dropbtn">Internships</a>
 			<div class="dropdown-content">
-				<!--<a onclick="findInternships('all')">All</a>-->
 				<a onclick="findInternships('biology')">Biology</a>
 				<a onclick="findInternships('business')">Business</a>
 				<a onclick="findInternships('chemistry')">Chemistry</a>
@@ -39,7 +40,6 @@
 		<li id="mentorships" onclick="navigate(this)" class="dropdown active">
 			<a class="dropbtn">Mentorships</a>
 			<div class="dropdown-content">
-				<!--<a onclick="findMentorships('all')">All</a>-->
 				<a onclick="findMentorships('biology')">Biology</a>
 				<a onclick="findMentorships('business')">Business</a>
 				<a onclick="findMentorships('chemistry')">Chemistry</a>
@@ -57,31 +57,8 @@
 	</div>
 	
 	<div id="content">
-		<ul>
-			<li onclick="expand(this)">
-				<p class="title">Mentorship with Stark Industries CEO 
-				<span class="briefDescription">- Technology innovation/creation in California</span></p>
-				<p class="description hidden">Get mentoring directly from Stark Industries
-				CEO. Mentoring will be done in the form of seeing the thought 
-				process and then creation of new upcoming Stark products.</p>
-				<p class="name hidden">Host: Tony, Stark</p>
-				<p class="location hidden">Location: 10880 Malibu Point, Malibu, CA</p>
-				<p class="interests hidden">Interests: engineering, invention, technology</p>
-				<button class="signUpButton hidden" onclick="signUp(this)">Sign Up!</button>
-			</li>
-			<li onclick="expand(this)">
-				<p class="title">Opportunity at Baltimore Harbor
-				<span class="briefDescription">- Cleaning the harbor area research</span></p>
-				<p class="description hidden">Marine biologists have been researching for the 
-				past several years now for methods to clean up the bay area.
-				In order to bring the new generations into the field, we are
-				inviting students to come help us with our research and learn
-				all about the bay area.</p>
-				<p class="name hidden">Host: Harbor Restoration Initiative</p>
-				<p class="location hidden">Location: Baltimore Harbor</p>
-				<p class="interests hidden">Interests: biology, research, chemistry</p>
-				<button class="signUpButton hidden" onclick="signUp(this)">Sign Up!</button>
-			</li>
+		<ul id="mentorshipList">
+			<li id="contentless">Nothing to Display!</li>
 		</ul>
 	</div>
 	
@@ -115,9 +92,10 @@
   	<div class="modal-content">
     	<div class="modal-header">
       		<span onclick="closePostPopup()" class="close">X</span>
-      		<h2>Post</h2>
+      		<h2>Post Mentorship</h2>
     	</div>
 	    <div class="modal-body">
+	    	<div id="formDiv">
 			<form>
 				<fieldset>
 					<legend>Mentorship Details</legend>
@@ -135,18 +113,18 @@
 							<label for="location">Location:</label>
 							<input id="location" type="text" placeholder="Location"/>
 						</li>
-					</ol>
-				</fieldset>
-				<fieldset>
-					<ol>
+						<li>
+							<label for="company">Company</label>
+							<input id="company" type="text" placeholder="Company"/>
+						</li>
+						<li>
+							<label for="contact">Contact</label>
+							<input id="contact" type="text" placeholder="guy@email.com"/>
+						</li>
 						<li>
 							<label for="description">Description:</label>
 							<textarea id="description" rows=5></textarea>
 						</li>
-					</ol>
-				</fieldset>
-				<fieldset>
-					<ol>
 						<li>
 							<label for="interests">Interests:</label>
 							<input id="interests" type="text" placeholder="Interest"/>
@@ -154,10 +132,12 @@
 						</li>
 					</ol>
 				</fieldset>
-				<fieldset>
-					<button type=submit>Submit Mentorship</button>
-				</fieldset>
+				<button type="button" onclick="postMentorship()">Submit Mentorship</button>
 			</form>
+			</div>
+			<div id="successDiv" class="hidden">
+				Success! Your post is now pending approval.
+			</div>
 	    </div>
     <div class="modal-footer">
       <h4>Submissions will be submitted to administration 
