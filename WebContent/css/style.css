@@ -34,7 +34,7 @@ html, body
 	float: right;
 	display: inline-block;
 	color: #ffb60d;
-	padding: 8px 16px;
+	padding: 8px 16px;	
 }
 
 #titlebar .active
@@ -50,6 +50,7 @@ html, body
 #title
 {
 	margin-bottom: 16px;
+	white-space: nowrap;
 }
 
 #title span
@@ -101,6 +102,5 @@ html, body
 
 .dropdown-content a:hover
 {
-	color: white;
-	background-color: #cf4058;	
+	background-color: #f7e5ba;	
 }
