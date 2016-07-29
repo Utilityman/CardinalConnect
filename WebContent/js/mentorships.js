@@ -1,26 +1,25 @@
 
 function loadMentorships()
 {
+	var filter = getParameterByName("id");
+	console.log(filter);
 	$.ajax({
 		type: 'POST',
 		url: 'Data', 
 		data: 
 		{
 			'action': 'getMentorships',
+			'filter': filter,
 		},
-		success: function(data)
+		complete: function(data)
 		{
 			//console.log(data);
-			if(data.length > 0)
-				$("#contentless").remove();
+			if(data.responseJSON.length > 0)
+				fillField(data.responseJSON);
 			else
-				$("#contentless").val("No Content to Display!");
-			fillField(data);
+				$("#mentorshipList").append("<li id='contentless'><p class='title'>No Mentorships to Display!</p></li>");
+			fillFocusDropdown();
 		},
-		error: function(xhr)
-		{
-			console.log(xhr.responseText);
-		}
 	});
 }
 
@@ -35,6 +34,8 @@ function postMentorship()
 	var contact = $("#contact").val();
 	var interests = $("#interests").val();
 	var company = $("#company").val();
+	var focus = $("#focus").val();
+
 	
 	// Data Verification
 	if(firstName != "" && lastName != "" && mentorshipTitle != "" && location != "" &&
@@ -54,12 +55,12 @@ function postMentorship()
 				'contact': contact,
 				'interests': interests,
 				'company': company,
+				'focus': focus,
 			},
 			complete: function(data)
 			{
 				$("#formDiv").addClass("hidden");
 				$("#successDiv").removeClass("hidden");
-				//console.log(data.responseText);
 			},
 		});
 	else
@@ -77,7 +78,7 @@ function fillField(json)
 		node.onclick = function(){expand(this)};
 
 		$(node).append("<p class='title'>" + json[i].mentorshipTitle + "</p>");
-		$(node).append("<p class='description hidden'>" + json[i].description + "</p>");
+		$(node).append("<p class='name hidden'>" + json[i].description + "</p>");
 		$(node).append("<p class='name hidden'>Poster: " + json[i].firstName + " " + 
 									json[i].lastName + " - " + json[i].contact + "</p>");
 		$(node).append("<p class='name hidden'>Location: " + json[i].location + " at " +  json[i].company + "</p>");

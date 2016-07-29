@@ -1,12 +1,28 @@
 
+#contents
+{
+	width: 100%;
+	height: 72%;
+}
+
+#eventListing
+{
+	width: 74%;
+	height: 100%;
+	float: left;
+	background: #ff8;
+}
+
 #content-1
 {
 	background: #7a7174;
 	width: 25%;
-	margin-right: 24px;
-	float: left;
-	height: 75%;
+	float: right;
+	height: 100%;
+	overflow-y: auto;
 }
+
+
 
 #content-1 #content-1-title
 {	
@@ -39,12 +55,12 @@
 	color: #050505;
 	padding: 2px 8px;	
 	border-bottom: 1.5px solid #555555;
+	
 }
 
-#content-1 p
+#content-1 p:not(.title)
 {
 	font-size: 14px;
-	line-height: 10px;
 }
 
 
@@ -52,21 +68,12 @@
 {
 	font-size: 16px;
 	text-align: center;
-
+	text-decoration: underline;
 }
 
 #content-1 li:hover
 {
 	background-color: #877f81;
-}
-
-#content-2
-{
-	float: left;
-	width: 70%;
-	background-color: #ff9;
-	height: 75%;
-	margin-bottom: 8px;
 }
 
 #footer
@@ -75,7 +82,6 @@
 	
 	font-size: 12px;
 	color: white;
-	background: #ff9;
 	clear: both;
 	margin-top: 8px;
 	

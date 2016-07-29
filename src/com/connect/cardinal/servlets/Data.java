@@ -41,12 +41,19 @@ public class Data extends HttpServlet {
 		response.setContentType("application/json");
 		out = response.getWriter();
 		Map<String, String> parameters = RequestParser.getParameters(request.getParameterMap());
-		System.out.println(parameters);
+		
+		System.out.println("Params: " + parameters);
 		String resp = "";
+		
+		System.out.println(request.getSession().getId());
+		
 		
 		if(parameters.get("action").equals("getInternships"))
 		{
-			resp = ObjectRetriever.getActiveInternships();
+			if(parameters.get("filter").equals(""))
+				resp = ObjectRetriever.getActiveInternships();
+			else
+				resp = ObjectRetriever.getInternshipsWithFilter(parameters.get("filter"));
 		}
 		else if(parameters.get("action").equals("postInternship"))
 		{
@@ -54,7 +61,10 @@ public class Data extends HttpServlet {
 		}
 		else if(parameters.get("action").equals("getMentorships"))
 		{
-			resp = ObjectRetriever.getActiveMentorships();
+			if(parameters.get("filter").equals(""))
+				resp = ObjectRetriever.getActiveMentorships();
+			else
+				resp = ObjectRetriever.getMentorshipssWithFilter(parameters.get("filter"));
 		}
 		else if(parameters.get("action").equals("postMentorship"))
 		{
@@ -62,7 +72,9 @@ public class Data extends HttpServlet {
 		}
 
 		
+		System.out.println("Response: " + resp);
 		System.out.println();
+
 		out.println(resp);
 	}
 

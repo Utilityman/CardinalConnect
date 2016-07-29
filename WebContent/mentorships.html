@@ -19,6 +19,7 @@
 </div>
 	<ul id="titlebar">
 		<li onclick="navigate(this)" id="logout">Logout</li>
+		<li onclick="navigate(this)" id="account">Account</li>
 		<li onclick="navigate(this)" id="events" class="dropdown">
 			<a class="dropbtn">Events</a>
 			<div class="dropdown-content">
@@ -33,7 +34,7 @@
 				<a onclick="findInternships('business')">Business</a>
 				<a onclick="findInternships('chemistry')">Chemistry</a>
 				<a onclick="findInternships('english')">English</a>
-				<a onclick="findInternships('socialSciences')">Social Sciences</a>
+				<a onclick="findInternships('social sciences')">Social Sciences</a>
 				<a onclick="findInternships('technology')">Technology</a>
 			</div>
 		</li>
@@ -44,7 +45,7 @@
 				<a onclick="findMentorships('business')">Business</a>
 				<a onclick="findMentorships('chemistry')">Chemistry</a>
 				<a onclick="findMentorships('english')">English</a>
-				<a onclick="findMentorships('socialSciences')">Social Sciences</a>
+				<a onclick="findMentorships('social sciences')">Social Sciences</a>
 				<a onclick="findMentorships('technology')">Technology</a>
 			</div>
 		</li>		
@@ -58,7 +59,7 @@
 	
 	<div id="content">
 		<ul id="mentorshipList">
-			<li id="contentless">Nothing to Display!</li>
+			
 		</ul>
 	</div>
 	
@@ -126,9 +127,10 @@
 							<textarea id="description" rows=5></textarea>
 						</li>
 						<li>
-							<label for="interests">Interests:</label>
-							<input id="interests" type="text" placeholder="Interest"/>
-							<label id="enteredInterests"></label>
+							<label for="focus">Focus:</label>
+							<select id="focus">
+							
+							</select>
 						</li>
 					</ol>
 				</fieldset>
