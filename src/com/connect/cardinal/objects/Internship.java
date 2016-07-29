@@ -28,6 +28,7 @@ public class Internship extends DBObject
 	private int active;
 	private String company;
 	private String availability;
+	private String focus;
 	
 	/**
 	 * @param parameters
@@ -47,7 +48,9 @@ public class Internship extends DBObject
 		internship.setFirstName(parameters.get("firstName"));
 		internship.setCompany(parameters.get("company"));
 		internship.setAvailability(parameters.get("availability"));
-		System.out.println(internship);
+		internship.setFocus(parameters.get("focus"));
+		System.out.println(parameters.get("availability"));
+		System.out.println(internship.getAvailability());
 		
 		
 		Session session = HibernateUtil.getSession();
@@ -71,7 +74,7 @@ public class Internship extends DBObject
 	 * @param description
 	 */
 	public Internship(String firstName, String lastName, String internshipTitle, String location, String paid,
-			String description, String contact, int active, String company, String availability) {
+			String description, String contact, int active, String company, String availability, String focus) {
 		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -83,6 +86,7 @@ public class Internship extends DBObject
 		this.active = active;
 		this.company = company;
 		this.availability = availability;
+		this.focus = focus;
 	}
 	
 	/**
@@ -101,6 +105,7 @@ public class Internship extends DBObject
 		this.active = 0;
 		this.company = null;
 		this.availability = null;
+		this.focus = null;
 	}
 
 	public String getFirstName() {
@@ -179,5 +184,15 @@ public class Internship extends DBObject
 
 	public void setCompany(String company) {
 		this.company = company;
+	}
+
+
+	public String getFocus() {
+		return focus;
+	}
+
+
+	public void setFocus(String focus) {
+		this.focus = focus;
 	}
 }

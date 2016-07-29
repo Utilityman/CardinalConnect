@@ -9,6 +9,9 @@ import org.hibernate.service.ServiceRegistry;
 
 import com.connect.cardinal.objects.Internship;
 import com.connect.cardinal.objects.Mentorship;
+import com.connect.cardinal.objects.User;
+
+import antlr.debug.Event;
 
 /**
  * @author jmackin
@@ -53,5 +56,7 @@ public class HibernateUtil
 	{
 		configuration.addAnnotatedClass(Internship.class);
 		configuration.addAnnotatedClass(Mentorship.class);
+		configuration.addAnnotatedClass(Event.class);
+		configuration.addAnnotatedClass(User.class);
 	}
 }

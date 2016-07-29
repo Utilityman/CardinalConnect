@@ -2,14 +2,16 @@
 <head>
 	<script type="text/javascript" src="js/jquery.js"></script>
 	<script type="text/javascript" src="js/base.js"></script>
-	<script type="text/javascript" src="js/mentorships.js"></script>
+	<script type="text/javascript" src="js/modal.js"></script>
+	<script type="text/javascript" src="js/events.js"></script>
+	
 	
 	<link href="css/style.css" type="text/css" rel="stylesheet"></link>
 	<link href="css/contents.css" type="text/css" rel="stylesheet"></link>
 	<link href="css/modal.css" type="text/css" rel="stylesheet"></link>
 	<title>Events</title>
 </head>
-<body onload="loadHome()">
+<body onload="loadEvents()">
 
 <div id="title">
 	<img id="logo" src="res/logo.png" alt="Logo">
@@ -17,6 +19,7 @@
 </div>
 	<ul id="titlebar">
 		<li onclick="navigate(this)" id="logout">Logout</li>
+		<li onclick="navigate(this)" id="account">Account</li>
 		<li onclick="navigate(this)" id="events" class="dropdown active">
 			<a class="dropbtn">Events</a>
 			<div class="dropdown-content">
@@ -31,7 +34,7 @@
 				<a onclick="findInternships('business')">Business</a>
 				<a onclick="findInternships('chemistry')">Chemistry</a>
 				<a onclick="findInternships('english')">English</a>
-				<a onclick="findInternships('socialSciences')">Social Sciences</a>
+				<a onclick="findInternships('social sciences')">Social Sciences</a>
 				<a onclick="findInternships('technology')">Technology</a>
 			</div>
 		</li>
@@ -42,7 +45,7 @@
 				<a onclick="findMentorships('business')">Business</a>
 				<a onclick="findMentorships('chemistry')">Chemistry</a>
 				<a onclick="findMentorships('english')">English</a>
-				<a onclick="findMentorships('socialSciences')">Social Sciences</a>
+				<a onclick="findMentorships('social sciences')">Social Sciences</a>
 				<a onclick="findMentorships('technology')">Technology</a>
 			</div>
 		</li>		
@@ -51,7 +54,7 @@
 	
 	<div id="controls">
 		<button onclick="showFilterPopup()">Filter</button>
-		<button onclick="showPostPopup()">Post</button>
+		<!--<button onclick="showPostPopup()">Post</button>-->
 	</div>
 	
 	<div id="content">
@@ -61,7 +64,6 @@
 				<p class="description hidden">Annual student/alum picnic hosted at Calvert Hall College.</p>
 				<p class="name hidden">Host: Our Alumni</p>
 				<p class="location hidden">Location: The Calvert Hall Campus</p>
-				<button class="signUpButton hidden" onclick="signUp(this)">Sign Up!</button>
 			</li>
 			<li onclick="expand(this)">
 				<p class="title">Faculty Appreciation Week</p>
@@ -70,7 +72,6 @@
 				and let's spend a week to show it!</p>
 				<p class="name hidden">Host: Everyone (except the faculty!)</p>
 				<p class="location hidden">Location: Our Campus</p>
-				<button class="signUpButton hidden" onclick="signUp(this)">Sign Up!</button>
 			</li>
 		</ul>
 	</div>
@@ -100,8 +101,8 @@
   </div>
 </div>
 
-<div id="postPopup" class="modal">
-	<!-- Popup content -->
+<!-- <div id="postPopup" class="modal">
+	Popup content
   	<div class="modal-content">
     	<div class="modal-header">
       		<span onclick="closePostPopup()" class="close">X</span>
@@ -154,6 +155,6 @@
       before approval! <br>All fields required.</h4>
     </div>
   </div>
-</div>
+</div>-->
 </body>
 </html>

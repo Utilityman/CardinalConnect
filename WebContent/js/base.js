@@ -2,26 +2,8 @@
  * 	Base functions that are applicable for more than one page
  */
 
-function loadHome()
-{
-	console.log($(document));
-	$.ajax({
-		type: 'POST',
-		url: 'Home', 
-		data: 
-		{
-			'action': 'getHomeData',
-		},
-		success: function(data)
-		{
-			console.log(data);
-		},
-		error: function(xhr)
-		{
-			console.log(xhr.responseText);
-		}
-	});
-}
+var focuses = ['Biology', 'Business', 'Chemistry', 'English', 'General', 'Social Sciences', 'Technology'];
+var navigateParam = ""
 
 /**
  * The title bar calls navigate in order to navigate to the base page of each one
@@ -35,17 +17,29 @@ function navigate(location)
 			window.location.href = "home.html";
 			break;
 		case "mentorships":
-			window.location.href = "mentorships.html";
+			window.location.href = "mentorships.html" + navigateParam;
 			break;
 		case "internships":
-			window.location.href = "internships.html";
+			window.location.href = "internships.html" + navigateParam;
 			break;
 		case "events":
-			window.location.href = "events.html";
+			window.location.href = "events.html" + navigateParam;
 			break;
 		case "logout":
+			console.log("logout");
+			break;
+		case "account":
+			console.log("account");
 			break;
 	}
+}
+
+function getParameterByName(name) 
+{
+    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+        results = regex.exec(location.search);
+    return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 }
 
 /**
@@ -54,8 +48,7 @@ function navigate(location)
  */
 function findMentorships(param)
 {
-	console.log("navigating with parameter " + param);
-	window.location.href = "mentorships.html";
+	navigateParam = "?&id=" + param;
 }
 
 /**
@@ -64,8 +57,7 @@ function findMentorships(param)
  */
 function findInternships(param)
 {
-	console.log("navigating with parameter " + param);
-	window.location.href = "internships.html";
+	navigateParam = "?&id=" + param;
 }
 
 /**
@@ -81,6 +73,21 @@ function expand(tab)
 	$(tab).addClass('active');
 }
 
+
+function fillFocusDropdown()
+{
+	for(var i = 0; i < focuses.length; i++)
+	{
+		$("#focus").append($("<option></option>")
+				.attr("value", focuses[i])
+				.text(focuses[i]));	
+	}
+}
+
+function getEvents(param)
+{
+	navigateParam = "?&id=" + param;
+}
 
 
 

@@ -26,6 +26,7 @@ public class Mentorship extends DBObject
 	private String description;
 	private String company;
 	private int active;
+	private String focus;
 	
 	/**
 	 * @param parameters
@@ -43,6 +44,7 @@ public class Mentorship extends DBObject
 		mentorship.setLastName(parameters.get("lastName"));
 		mentorship.setFirstName(parameters.get("firstName"));
 		mentorship.setCompany(parameters.get("company"));
+		mentorship.setFocus(parameters.get("focus"));
 		System.out.println(mentorship);
 		
 		Session session = HibernateUtil.getSession();
@@ -64,7 +66,7 @@ public class Mentorship extends DBObject
 	 * @param company
 	 */
 	public Mentorship(String firstName, String lastName, String title, String location, String description, 
-			String company, int active, String contact) {
+			String company, int active, String contact, String focus) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.mentorshipTitle = title;
@@ -73,6 +75,7 @@ public class Mentorship extends DBObject
 		this.company = company;
 		this.setActive(active);
 		this.contact = contact;
+		this.focus = focus;
 	}
 	
 	public Mentorship()
@@ -85,6 +88,7 @@ public class Mentorship extends DBObject
 		this.description = null;
 		this.company = null;
 		this.setActive(0);
+		this.focus = null;
 	}
 
 	public String getLocation() {
@@ -149,5 +153,13 @@ public class Mentorship extends DBObject
 
 	public void setContact(String contact) {
 		this.contact = contact;
+	}
+
+	public String getFocus() {
+		return focus;
+	}
+
+	public void setFocus(String focus) {
+		this.focus = focus;
 	}	
 }
