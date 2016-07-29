@@ -1,0 +1,145 @@
+html, body
+{
+	height: 100%;
+	overflow: hidden;	
+	font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+}
+
+#loginWindow
+{
+	width: 300px;
+	height: 185px;
+	margin-left: 36%;
+	margin-top: 10%;		
+}
+
+ #success
+ {
+ 	margin-left: 30%;
+ 	margin-top: 18%;
+ 	width: 270px;
+	height: 60px;
+ }
+
+#accountCreation
+{
+	width: 500px;
+	height: 225px;
+	margin-left: 25%;
+	margin-top: 10%;
+}
+
+#loginWindow form, #accountCreation form, #success form
+{
+	width: 100%;
+	height: 100%;
+	
+}
+
+#loginWindow legend, #accountCreation legend
+{
+	background: #4c4648;
+	padding: 10px 24px;
+	color: #CCCCCC;
+	border-radius: 4px;
+	margin-left: 8px;
+	
+	-webkit-box-shadow: 0px -5px 15px 0px rgba(0,0,0,0.5);
+	-moz-box-shadow: 0px -5px 15px 0px rgba(0,0,0,0.50);
+	box-shadow: 0px -5px 15px 0px rgba(0,0,0,0.50);
+}
+
+#loginWindow fieldset, #accountCreation fieldset, #success fieldset
+{	
+	border: solid 2px #BBBBBB;
+	border-radius: 16px;
+	width: 100%;
+	height: 100%;
+	background: #DDDDDD;
+	-webkit-box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.75);
+	-moz-box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.75);
+	box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.75);
+}
+
+#loginWindow #failedLogin
+{
+	text-align: center;
+	line-height:0px;	
+}
+
+#success fieldset label
+{
+	font-size: 20px;
+	white-space: nowrap;
+}
+
+#loginWindow ul
+{
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+
+#loginWindow li:first-child
+{
+	margin-top: 8px;
+}
+
+#loginWindow li
+{
+	color: #CCCCCC;
+	margin-bottom: 4px;
+}
+
+#loginWindow .centered
+{
+	margin-top: 8px;
+	text-align: center;
+}
+
+#loginWindow #login
+{
+	margin-right: 8px;
+}
+
+#loginWindow input, #accountCreation input
+{
+	font-size: 18px;
+	padding: 4px 4px;
+	width: 275px;
+	border-radius: 4px;
+}
+
+#accountCreation input.name
+{
+	width: 100px;
+}
+
+#loginWindow button, #accountCreation button
+{
+	padding: 8px 16px;
+	font-size: 16px;
+	border: 0;
+}
+
+#loginWindow button:hover, #accountCreation button:hover
+{
+	background-color: #676767;
+	border-radius: 4px;
+	color: #CCCCCC;
+}
+
+#createAccount, #returnToLogin 
+{
+	margin-left: 200px;
+	color: white;
+	font-size: 13px;
+	font-weight: bold;
+	white-space: nowrap;	
+}
+#returnToLogin{margin-left: 335px;}
+
+#createAccount:hover, #returnToLogin:hover
+{
+	color: #232021;
+}

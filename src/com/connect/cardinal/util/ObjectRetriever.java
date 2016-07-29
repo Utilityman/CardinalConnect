@@ -38,4 +38,34 @@ public class ObjectRetriever
 		List results = query.list();
 		return gson.toJson(results);
 	}
+
+	/**
+	 * @param string
+	 * @return
+	 */
+	public static String getInternshipsWithFilter(String string) 
+	{
+		Session session = HibernateUtil.getSession();
+		Gson gson = new Gson();
+		String filteredInternships = "FROM com.connect.cardinal.objects.Internship E where E.focus = '" + string + "' and E.active = 0";
+		Query query = session.createQuery(filteredInternships);
+		@SuppressWarnings("rawtypes")
+		List results = query.list();
+		return gson.toJson(results);		
+	}
+	
+	/**
+	 * @param string
+	 * @return
+	 */
+	public static String getMentorshipssWithFilter(String string) 
+	{
+		Session session = HibernateUtil.getSession();
+		Gson gson = new Gson();
+		String filteredInternships = "FROM com.connect.cardinal.objects.Mentorship E where E.active = 0 and E.focus = '" + string + "'";
+		Query query = session.createQuery(filteredInternships);
+		@SuppressWarnings("rawtypes")
+		List results = query.list();
+		return gson.toJson(results);		
+	}
 }
