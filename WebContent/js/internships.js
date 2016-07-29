@@ -2,26 +2,25 @@
 
 function loadInternships()
 {
+	var filter = getParameterByName("id");
+
 	$.ajax({
 		type: 'POST',
 		url: 'Data', 
 		data: 
 		{
 			'action': 'getInternships',
+			'filter': filter,
 		},
-		success: function(data)
+		complete: function(data)
 		{
-			//console.log(data);
-			if(data.length > 0)
-				$("#contentless").remove();
+			console.log(data.responseJSON);
+			if(data.responseJSON.length > 0)
+				fillField(data.responseJSON);
 			else
-				$("#contentless").val("No Content to Display!");
-			fillField(data);
+				$("#internshipList").append("<li id='contentless'><p class='title'>No Internships to Display!</p></li>");
+			fillFocusDropdown();
 		},
-		error: function(xhr)
-		{
-			console.log(xhr.responseText);
-		}
 	});
 }
 
@@ -37,6 +36,9 @@ function postInternship()
 	var interests = $("#interests").val();
 	var company = $("#company").val();
 	var availability = $("#availability").val();
+	var focus = $("#focus").val();
+	
+	console.log(availability);
 	
 	// Data Verification
 	if(firstName != "" && lastName != "" && internshipTitle != "" && location != "" &&
@@ -58,13 +60,13 @@ function postInternship()
 				'contact': contact,
 				'interests': interests,
 				'company': company,
-				'avilability': availability,
+				'availability': availability,
+				'focus': focus,
 			},
 			complete: function(data)
 			{
 				$("#formDiv").addClass("hidden");
 				$("#successDiv").removeClass("hidden");
-				//console.log(data.responseText);
 			},
 		});
 	else
@@ -82,11 +84,11 @@ function fillField(json)
 		node.onclick = function(){expand(this)};
 
 		$(node).append("<p class='title'>" + json[i].internshipTitle + "</p>");
-		$(node).append("<p class='description hidden'>" + json[i].description + "</p>");
+		$(node).append("<p class='name hidden'>" + json[i].description + "</p>");
 		$(node).append("<p class='name hidden'>Poster: " + json[i].firstName + " " + 
 									json[i].lastName + " - " + json[i].contact + "</p>");
 		$(node).append("<p class='name hidden'>Location: " + json[i].location + " at " +  json[i].company + "</p>");
-		$(node).append("<p class='name hidden'>Availability: " + json[i].avilability + "</p>");
+		$(node).append("<p class='name hidden'>Availability: " + json[i].availability + "</p>");
 		
 		$("#internshipList").append(node);
 	}

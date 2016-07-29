@@ -5,3 +5,5 @@
 
 ## Java Stuff
 *.class
+/build/
+/target/

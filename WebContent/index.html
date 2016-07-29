@@ -1,10 +1,84 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<script type="text/javascript" src="js/jquery.js"></script>
+	<script type="text/javascript" src="js/login.js"></script>
+	
+	<link href="css/style.css" type="text/css" rel="stylesheet"></link>
+	<link href="css/login.css" type="text/css" rel="stylesheet"></link>
+	
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Login</title>
 </head>
 <body>
+<div id="title">
+	<img id="logo" src="res/logo.png" alt="Logo">
+	<span>CALVERT HALL COLLEGE</span>	
+</div>
 
+<div id="loginWindow">
+	<form>
+	<fieldset>
+		<legend>Login</legend>
+		<p id="failedLogin"></p>
+		<table>
+		<tr>
+			<td><input id="username" type="text" placeholder="Username"/></td>
+		</tr>
+		<tr>
+			<td><input id="password" type="password" placeholder="Password"/></td>
+		</tr>
+		</table>
+		
+		<div class="centered">
+			<button id="login" onclick="requestLogin()" type="button">Login</button>
+		</div>
+	</fieldset>
+	<label id="createAccount" onclick="requestAccount()">Request Account</label>
+	</form>
+</div>
+
+<div id="accountCreation" class="hidden">
+	<form>
+	<fieldset>
+		<legend>Login</legend>
+		<table>
+		<tr>
+			<td><label for="username">Name: </label></td>
+			<td><input class="name" id="firstName" type="text" placeholder="First"/>
+			<input class="name" id="middleName" type="text" placeholder="Middle"/>
+			<input class="name" id="lastName" type="text" placeholder="Last"/></td>
+		</tr>
+		<tr>
+			<td><label for="emailAddress">Email Address:</label></td>
+			<td><input id="emailAddress" type="text" placeholder="example@domain.com"/></td>
+		</tr>
+		<tr>
+			<td><label for="password">Password: </label></td>
+			<td><input id="password" type="password" placeholder="Password"/></td>
+		</tr>
+		<tr>
+			<td><label for="password2">Retype Password: </label></td>
+			<td><input id="password2" type="password" placeholder="Retype Password"/></td>
+		</tr>
+		</table>
+		
+		<div class="centered">
+			<button id="login" onclick="register()" type="button">Register</button>
+		</div>
+	</fieldset>
+	</form>
+</div>
+<div id="success" class="hidden">
+	<form>
+	<fieldset>
+	<table>
+		<tr><td><label style="margin-left: 75px">Account Creation Successful!</label></td></tr>
+		<tr><td><label>Check your email to complete registration.</label></td></tr>
+	</table>
+	</fieldset>
+		<label id="returnToLogin" onclick="reload()">Return to Login</label>
+	</form>	
+</div>
 </body>
 </html>
