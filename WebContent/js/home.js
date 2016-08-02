@@ -14,6 +14,8 @@ function loadHome()
 		},
 		complete: function(data)
 		{
+			if(data.responseText == '') return;
+
 			if(data.responseJSON.length > 0)
 				for(var i = 0; i < data.responseJSON.length; i++)
 					internshipsAndMentorships.push(data.responseJSON[i]);

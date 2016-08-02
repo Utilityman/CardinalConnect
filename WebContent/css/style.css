@@ -55,12 +55,19 @@ html, body
 
 #title span
 {
+	cursor: default;
 	font-family: "Arial Black", Gadget, sans-serif;
 	border-top: 3px solid #e5a91c;
 	border-bottom: 3px solid #e5a91c;
 	color: #232021;
 	font-size: 42px;
 	vertical-align: middle;
+	-webkit-touch-callout: none; /* iOS Safari */
+	-webkit-user-select: none;   /* Chrome/Safari/Opera */
+	-khtml-user-select: none;    /* Konqueror */
+	-moz-user-select: none;      /* Firefox */
+	-ms-user-select: none;       /* Internet Explorer/Edge */
+	user-select: none;   
 }
 
 #logo
