@@ -26,10 +26,10 @@ function navigate(location)
 			window.location.href = "events.html" + navigateParam;
 			break;
 		case "logout":
-			console.log("logout");
+			logout();
 			break;
 		case "account":
-			console.log("account");
+			window.location.href = "account.html";
 			break;
 	}
 }
@@ -88,6 +88,31 @@ function getEvents(param)
 {
 	navigateParam = "?&id=" + param;
 }
+
+function logout()
+{
+	if(confirm("Are you sure you want to logout?"))
+	{
+		console.log("logging out!");
+		$.ajax({
+			type: 'POST',
+			url: 'Home', 
+			data: 
+			{
+				'action': 'logout',
+			},
+			complete: function(data)
+			{
+				window.location.href = "index.html";
+			},
+		});
+	}
+	else
+	{
+		console.log("loljk");
+	}
+}
+
 
 
 

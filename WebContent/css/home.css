@@ -11,6 +11,9 @@
 	height: 100%;
 	float: left;
 	background: #ff8;
+	-webkit-box-shadow: -10px 10px 25px 0px rgba(0,0,0,0.50);
+	-moz-box-shadow: -10px 10px 25px 0px rgba(0,0,0,0.50);
+	box-shadow: -10px 10px 25px 0px rgba(0,0,0,0.50);
 }
 
 #content-1
@@ -20,6 +23,9 @@
 	float: right;
 	height: 100%;
 	overflow-y: auto;
+	-webkit-box-shadow: 10px 10px 25px 0px rgba(0,0,0,0.50);
+	-moz-box-shadow: 10px 10px 25px 0px rgba(0,0,0,0.50);
+	box-shadow: 10px 10px 25px 0px rgba(0,0,0,0.50);
 }
 
 

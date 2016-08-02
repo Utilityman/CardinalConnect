@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.connect.cardinal.secure.SessionTracker;
 import com.connect.cardinal.util.RequestParser;
 
 /**
@@ -33,6 +34,8 @@ public class Home extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
+		if(!SessionTracker.verify(request)) return;
+		
 		response.setContentType("application/json");
 		out = response.getWriter();
 		String messageOut = "hello: javascript";
@@ -42,6 +45,10 @@ public class Home extends HttpServlet {
 		if(parameters.get("action").equals("getHomeData"))
 		{
 			
+		}
+		if(parameters.get("action").equals("logout"))
+		{
+			request.getSession().invalidate();
 		}
 		
 		out.println(messageOut);
