@@ -15,10 +15,10 @@ html, body
 
  #success
  {
- 	margin-left: 30%;
+ 	margin-left: 35%;
  	margin-top: 18%;
  	width: 270px;
-	height: 60px;
+	height: 30px;
  }
 
 #accountCreation
@@ -33,7 +33,6 @@ html, body
 {
 	width: 100%;
 	height: 100%;
-	
 }
 
 #loginWindow legend, #accountCreation legend
@@ -43,7 +42,6 @@ html, body
 	color: #CCCCCC;
 	border-radius: 4px;
 	margin-left: 8px;
-	
 	-webkit-box-shadow: 0px -5px 15px 0px rgba(0,0,0,0.5);
 	-moz-box-shadow: 0px -5px 15px 0px rgba(0,0,0,0.50);
 	box-shadow: 0px -5px 15px 0px rgba(0,0,0,0.50);
@@ -131,13 +129,13 @@ html, body
 
 #createAccount, #returnToLogin 
 {
-	margin-left: 200px;
+	margin-left: 225px;
 	color: white;
 	font-size: 13px;
 	font-weight: bold;
 	white-space: nowrap;	
 }
-#returnToLogin{margin-left: 335px;}
+#returnToLogin{margin-left: 225px;}
 
 #createAccount:hover, #returnToLogin:hover
 {
