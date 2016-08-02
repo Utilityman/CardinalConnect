@@ -2,10 +2,12 @@ package com.connect.cardinal.util;
 
 import java.util.List;
 
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
 import com.connect.cardinal.hibernate.HibernateUtil;
+import com.connect.cardinal.objects.User;
 import com.google.gson.Gson;
 
 /**
@@ -67,5 +69,23 @@ public class ObjectRetriever
 		@SuppressWarnings("rawtypes")
 		List results = query.list();
 		return gson.toJson(results);		
+	}
+	
+	@SuppressWarnings("rawtypes")
+	public static List getUsers()
+	{
+		Session session = HibernateUtil.getSession();
+		Criteria criteria = session.createCriteria(User.class);
+		return criteria.list();
+	}
+	
+	@SuppressWarnings("rawtypes")
+	public static List getUsernamesMatching(String string)
+	{
+		Session session = HibernateUtil.getSession();
+		String usernames = "FROM com.connect.cardinal.objects.User E where E.email = '" + string + "'";
+		Query query = session.createQuery(usernames);
+		return query.list();
+		
 	}
 }

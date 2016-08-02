@@ -2,6 +2,7 @@ package com.connect.cardinal.servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletException;
@@ -12,8 +13,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.connect.cardinal.objects.Internship;
 import com.connect.cardinal.objects.Mentorship;
+import com.connect.cardinal.objects.User;
+import com.connect.cardinal.secure.SessionTracker;
 import com.connect.cardinal.util.ObjectRetriever;
 import com.connect.cardinal.util.RequestParser;
+import com.google.gson.Gson;
 
 /**
  * Servlet implementation class Data
@@ -38,6 +42,8 @@ public class Data extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
+		if(!SessionTracker.verify(request)) return;
+		
 		response.setContentType("application/json");
 		out = response.getWriter();
 		Map<String, String> parameters = RequestParser.getParameters(request.getParameterMap());
@@ -45,7 +51,7 @@ public class Data extends HttpServlet {
 		System.out.println("Params: " + parameters);
 		String resp = "";
 		
-		System.out.println(request.getSession().getId());
+		System.out.println("Session ID: " + request.getSession().getId());
 		
 		
 		if(parameters.get("action").equals("getInternships"))
@@ -69,6 +75,13 @@ public class Data extends HttpServlet {
 		else if(parameters.get("action").equals("postMentorship"))
 		{
 			resp = Mentorship.createAndCommitMentorshipFromForm(parameters);
+		}
+		else if(parameters.get("action").equals("getUserAccount"))
+		{
+			Gson gson = new Gson();
+			List user = ObjectRetriever.getUsernamesMatching((String)request.getSession().getAttribute("userName"));
+			if(user != null && user.size() != 0)
+				resp = gson.toJson((User)user.get(0));
 		}
 
 		

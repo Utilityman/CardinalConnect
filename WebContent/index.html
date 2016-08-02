@@ -19,7 +19,7 @@
 <div id="loginWindow">
 	<form>
 	<fieldset>
-		<legend>Login</legend>
+		<legend>User Sign-In</legend>
 		<p id="failedLogin"></p>
 		<table>
 		<tr>
@@ -41,7 +41,7 @@
 <div id="accountCreation" class="hidden">
 	<form>
 	<fieldset>
-		<legend>Login</legend>
+		<legend>Create Account</legend>
 		<table>
 		<tr>
 			<td><label for="username">Name: </label></td>
@@ -54,17 +54,20 @@
 			<td><input id="emailAddress" type="text" placeholder="example@domain.com"/></td>
 		</tr>
 		<tr>
-			<td><label for="password">Password: </label></td>
-			<td><input id="password" type="password" placeholder="Password"/></td>
+			<td><label for="password1">Password: </label></td>
+			<td><input id="password1" type="password" placeholder="Password"/></td>
 		</tr>
 		<tr>
 			<td><label for="password2">Retype Password: </label></td>
 			<td><input id="password2" type="password" placeholder="Retype Password"/></td>
 		</tr>
+		<tr>
+		<td><button id="login" onclick="register()" type="button">Register</button></td>
+		<td><label id="errorString"></label></td>
+		</tr>
 		</table>
 		
 		<div class="centered">
-			<button id="login" onclick="register()" type="button">Register</button>
 		</div>
 	</fieldset>
 	</form>
@@ -73,8 +76,8 @@
 	<form>
 	<fieldset>
 	<table>
-		<tr><td><label style="margin-left: 75px">Account Creation Successful!</label></td></tr>
-		<tr><td><label>Check your email to complete registration.</label></td></tr>
+		<tr><td><label>Account Creation Successful!</label></td></tr>
+		<!-- <tr><td><label>Check your email to complete registration.</label></td></tr> -->
 	</table>
 	</fieldset>
 		<label id="returnToLogin" onclick="reload()">Return to Login</label>
