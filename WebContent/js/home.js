@@ -14,7 +14,7 @@ function loadHome()
 		},
 		complete: function(data)
 		{
-			if(data.responseText == '') return;
+			if(data.responseText == '') {returnToLogin(); return;} 
 
 			if(data.responseJSON.length > 0)
 				for(var i = 0; i < data.responseJSON.length; i++)

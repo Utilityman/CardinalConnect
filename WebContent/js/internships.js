@@ -15,7 +15,7 @@ function loadInternships()
 		complete: function(data)
 		{
 			console.log(data);
-			if(data.responseText == '') return;
+			if(data.responseText == '') {returnToLogin(); return;} 
 			if(data.responseJSON.length > 0)
 				fillField(data.responseJSON);
 			else
