@@ -1,6 +1,7 @@
 package com.connect.cardinal.objects;
 
 import java.util.Date;
+import java.util.Map;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -93,5 +94,14 @@ public class Event extends DBObject
 
 	public void setEventDate(Date eventDate) {
 		this.eventDate = eventDate;
+	}
+
+	/**
+	 * @param parameters
+	 * @return
+	 */
+	public static String createAndCommitEventFromForm(Map<String, String> parameters) 
+	{
+		return "";
 	}
 }

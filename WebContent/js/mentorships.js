@@ -13,7 +13,7 @@ function loadMentorships()
 		},
 		complete: function(data)
 		{
-			if(data.responseText == '') return;
+			if(data.responseText == '') {returnToLogin(); return;} 
 
 			if(data.responseJSON.length > 0)
 				fillField(data.responseJSON);

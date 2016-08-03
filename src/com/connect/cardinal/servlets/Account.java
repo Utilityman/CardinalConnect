@@ -2,6 +2,7 @@ package com.connect.cardinal.servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletException;
@@ -10,27 +11,24 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.connect.cardinal.objects.Event;
-import com.connect.cardinal.objects.Internship;
-import com.connect.cardinal.objects.Mentorship;
+import com.connect.cardinal.objects.User;
 import com.connect.cardinal.secure.SessionTracker;
 import com.connect.cardinal.util.ObjectRetriever;
 import com.connect.cardinal.util.RequestParser;
+import com.google.gson.Gson;
 
 /**
- * Servlet implementation class Data
- * @author jmackin
+ * Servlet implementation class Account
  */
-@WebServlet("/Data")
-public class Data extends HttpServlet {
+@WebServlet("/Account")
+public class Account extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     private static PrintWriter out;
-
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Data() {
+    public Account() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -38,6 +36,7 @@ public class Data extends HttpServlet {
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
+	@SuppressWarnings("rawtypes")
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
 		if(!SessionTracker.verify(request)) return;
@@ -51,41 +50,25 @@ public class Data extends HttpServlet {
 		
 		System.out.println("Session ID: " + request.getSession().getId());
 		
-		
-		if(parameters.get("action").equals("getInternships"))
+		if(parameters.get("action").equals("getUserAccount"))
 		{
-			if(parameters.get("filter").equals(""))
-				resp = ObjectRetriever.getActiveInternships();
-			else
-				resp = ObjectRetriever.getInternshipsWithFilter(parameters.get("filter"));
+			Gson gson = new Gson();
+			List user = ObjectRetriever.getUsernamesMatching((String)request.getSession().getAttribute("userName"));
+			if(user != null && user.size() != 0)
+				resp = gson.toJson((User)user.get(0));
 		}
-		else if(parameters.get("action").equals("postInternship"))
+		else if(parameters.get("action").equals("editStudentOrAlum"))
 		{
-			resp = Internship.createAndCommitInternshipFromForm(parameters);
+			resp = User.editStudentOrAlum(parameters);
 		}
-		else if(parameters.get("action").equals("getMentorships"))
+		else if(parameters.get("action").equals("editFocus"))
 		{
-			if(parameters.get("filter").equals(""))
-				resp = ObjectRetriever.getActiveMentorships();
-			else
-				resp = ObjectRetriever.getMentorshipssWithFilter(parameters.get("filter"));
+			resp = User.editFocus(parameters);
 		}
-		else if(parameters.get("action").equals("postMentorship"))
+		else if(parameters.get("action").equals("editCompany"))
 		{
-			resp = Mentorship.createAndCommitMentorshipFromForm(parameters);
+			resp = User.editCompany(parameters);
 		}
-		else if(parameters.get("action").equals("submitEvent"))
-		{
-			resp = Event.createAndCommitEventFromForm(parameters);
-		}
-		else if(parameters.get("action").equals("getEvents"))
-		{
-			if(parameters.get("filter").equals(""))
-				resp = ObjectRetriever.getEvents();
-			else
-				resp = ObjectRetriever.getEventsWithFilter(parameters.get("filter"));
-		}
-		
 		
 		
 		System.out.println("Response: " + resp);
@@ -93,5 +76,4 @@ public class Data extends HttpServlet {
 
 		out.println(resp);
 	}
-
 }
