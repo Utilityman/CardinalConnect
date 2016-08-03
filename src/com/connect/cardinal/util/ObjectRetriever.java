@@ -88,4 +88,32 @@ public class ObjectRetriever
 		return query.list();
 		
 	}
+
+	/**
+	 * @param string
+	 * @return
+	 */
+	public static String getEventsWithFilter(String string) 
+	{
+		Session session = HibernateUtil.getSession();
+		Gson gson = new Gson();
+		String filteredInternships = "FROM com.connect.cardinal.objects.Event E";
+		Query query = session.createQuery(filteredInternships);
+		@SuppressWarnings("rawtypes")
+		List results = query.list();
+		return gson.toJson(results);	}
+
+	/**
+	 * @return
+	 */
+	public static String getEvents()
+	{
+		Session session = HibernateUtil.getSession();
+		Gson gson = new Gson();
+		String filteredInternships = "FROM com.connect.cardinal.objects.Event E";
+		Query query = session.createQuery(filteredInternships);
+		@SuppressWarnings("rawtypes")
+		List results = query.list();
+		return gson.toJson(results);
+	}
 }

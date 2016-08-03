@@ -1,7 +1,14 @@
 package com.connect.cardinal.objects;
 
+import java.util.Map;
+
 import javax.persistence.Entity;
 import javax.persistence.Table;
+
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+
+import com.connect.cardinal.hibernate.HibernateUtil;
 
 /**
  * @author jmackin
@@ -103,5 +110,74 @@ public class User extends DBObject
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+
+	/**
+	 * @param parameters
+	 * @return
+	 */
+	public static String editStudentOrAlum(Map<String, String> parameters) 
+	{
+		String idString = parameters.get("ACCOUNT_ID");
+		String studentOrAlum = parameters.get("studentOrAlum");
+		
+		Session session = HibernateUtil.getSession();
+		Transaction tx = session.beginTransaction();
+
+
+		User user = session.load(User.class, Long.parseLong(idString));
+		user.setStatus(studentOrAlum);
+		
+		session.merge(user);
+		tx.commit();
+		session.flush();
+		
+		return "UPDATED STATUS";
+	}
+
+	/**
+	 * @param parameters
+	 * @return
+	 */
+	public static String editFocus(Map<String, String> parameters) 
+	{
+		String idString = parameters.get("ACCOUNT_ID");
+		String studentOrAlum = parameters.get("focus");
+		
+		Session session = HibernateUtil.getSession();
+		Transaction tx = session.beginTransaction();
+
+
+		User user = session.load(User.class, Long.parseLong(idString));
+		user.setFocus(studentOrAlum);
+		
+		session.merge(user);
+		tx.commit();
+		session.flush();
+		
+		return "UPDATED FOCUS";
+	}
+
+	/**
+	 * @param parameters
+	 * @return
+	 */
+	public static String editCompany(Map<String, String> parameters) 
+	{
+		String idString = parameters.get("ACCOUNT_ID");
+		String studentOrAlum = parameters.get("company");
+		
+		Session session = HibernateUtil.getSession();
+		Transaction tx = session.beginTransaction();
+
+
+		User user = session.load(User.class, Long.parseLong(idString));
+		user.setCompany(studentOrAlum);
+		
+		session.merge(user);
+		tx.commit();
+		session.flush();
+		
+		return "UPDATED COMPANY";
 	}
 }

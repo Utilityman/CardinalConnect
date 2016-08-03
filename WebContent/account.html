@@ -53,10 +53,41 @@
 	<table>
 		<tr><td></td><td>Account Information</td></tr>
 		<tr><td>Name: </td><td id="name"></td></tr>
-		<tr><td>Email Address: </td><td id="email"></td></tr>
-		<tr><td>Student/Alumni: </td><td id="status"></td></tr>
-		<tr><td>Primary Focus: </td><td id="focus"></td></tr>
-		<tr><td>Company: </td><td id="company"></td></tr>
+		<tr><td>Email Address: </td><td id="email"></td>
+					<!--<td class="hidden" id="emailChanger"></td><td class="hidden" id="emailSaver"></td>--></tr>
+		<tr class="hoverable"><td onclick="toggleStudentSelector()">Student/Alumni: </td><td id="status"></td>
+					<td class="hidden" id="studentAlumSelector">
+						<select id="studentOrAlumChoice">
+							<option>Choose One</option>
+							<option>Student</option>
+							<option>Alumni</option>
+						</select><br>
+						<button onclick="saveStudentOrAlum()">Save Change</button>
+					</td>			
+		</tr>
+		<tr class="hoverable"><td onclick="toggleFocusSelector()">Primary Focus: </td><td id="focus"></td>
+					<td class="hidden" id="focusSelector">
+						<select id="focusChoice">
+							<option>Choose One</option>
+							<option>Biology</option>
+							<option>Business</option>
+							<option>Chemistry</option>
+							<option>English</option>
+							<option>Social Studies</option>
+							<option>Technology</option>
+						</select><br>
+						<button onclick="saveFocus()">Save Change</button>
+					</td>
+		</tr>
+		<tr class="hoverable"><td onclick="toggleCompanySelector()">Company: </td><td id="company"></td>
+					<td class="hidden" id="companySelector">
+						<input id="companyName" type="text" placeholder="Company Name"/><br>		
+						<button onclick="saveCompany()">Save Change</button>
+					</td>
+		</tr>
+		<tr>
+		<td>Click a field to edit it</td>
+		</tr>
 	</table>
 </div>
 

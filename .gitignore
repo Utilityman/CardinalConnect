@@ -3,6 +3,9 @@
 .project
 .settings/
 
+## Other Stuff
+*.cfg.*
+
 ## Java Stuff
 *.class
 /build/
