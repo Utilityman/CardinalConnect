@@ -16,6 +16,7 @@ import com.connect.cardinal.secure.SessionTracker;
 import com.connect.cardinal.util.ObjectRetriever;
 import com.connect.cardinal.util.RequestParser;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 /**
  * Servlet implementation class Account
@@ -52,7 +53,9 @@ public class Account extends HttpServlet {
 		
 		if(parameters.get("action").equals("getUserAccount"))
 		{
-			Gson gson = new Gson();
+			GsonBuilder builder = new GsonBuilder();
+			builder.excludeFieldsWithoutExposeAnnotation();
+			Gson gson = builder.create();
 			List user = ObjectRetriever.getUsernamesMatching((String)request.getSession().getAttribute("userName"));
 			if(user != null && user.size() != 0)
 				resp = gson.toJson((User)user.get(0));

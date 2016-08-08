@@ -96,50 +96,52 @@
 			<form id="internDetails">
 				<fieldset>
 					<legend>Internship Details</legend>
-					<ol>
-						<li>
-							<label for="firstName">Name:</label>
+					<table>
+						<tr>
+							<td><label for="firstName">Name:</label></td>
+							<td>
 							<input id="firstName" type="text" placeholder="First Name"/>
 							<input id="lastName" type="text" placeholder="Last Name"/>
-						</li>
-						<li>
-							<label for="internshipTitle">Internship Title:</label>
-							<input id="internshipTitle" type="text" placeholder="Title"/>
-						</li>
-						<li>
-							<label for="company">Company:</label>
-							<input id="company" type="text" placeholder="Company"/>
-						</li>
-						<li>
-							<label for="location">Location:</label>
-							<input id="location" type="text" placeholder="City, State"/>
-						</li>
-						<li>
-							<label>Salary:</label><br>
-							<input id="paid" type="radio" name="salary" value="paid"/>Paid<br>
-							<input id="unpaid" type="radio" name="salary" value="unpaid"/>Unpaid<br>
-						</li>
-						<li>
-							<label for="description">Description:</label>
-							<textarea id="description" rows=5></textarea>
-						</li>
-						<li>
-							<label for="contact">Contact Email:</label>
-							<input id="contact" type="text" placeholder="contact"/>
-						</li>
-						<li>
-							<label for="availability">Availability:</label>
-							<input id="availability" type="text" placeholder="Fall 2016">
-						</li>
-						<li>
-							<label for="focus">Focus:</label>
-							<select id="focus">
+							</td>
+						</tr>
+						<tr>
+							<td><label for="internshipTitle">Internship Title:</label></td>
+							<td><input id="internshipTitle" type="text" placeholder="Title"/></td>
+						</tr>
+						<tr>
+							<td><label for="company">Company:</label></td>
+							<td><input id="company" type="text" placeholder="Company"/></td>
+						</tr>
+						<tr>
+							<td><label for="location">Location:</label></td>
+							<td><input id="location" type="text" placeholder="City, State"/></td>
+						</tr>
+						<tr>
+							<td><label>Salary:</label></td>
+							<td><input id="paid" type="radio" name="salary" value="paid"/>Paid<br>
+							<input id="unpaid" type="radio" name="salary" value="unpaid"/>Unpaid<br></td>
+						</tr>
+						<tr>
+							<td><label for="description">Description:</label></td>
+							<td><textarea id="description" rows=5></textarea></td>
+						</tr>
+						<tr>
+							<td><label for="contact">Contact Email:</label></td>
+							<td><input id="contact" type="text" placeholder="example@email.com"/></td>
+						</tr>
+						<tr>
+							<td><label for="availability">Availability:</label></td>
+							<td><input id="availability" type="text" placeholder="Fall 2016"></td>
+						</tr>
+						<tr>
+							<td><label for="focus">Focus:</label></td>
+							<td><select id="focus">
 							
-							</select>
-						</li>
-					</ol>
+							</select></td>
+						</tr>
+				</table>
 				</fieldset>
-				<button onclick="postInternship()" type="button">Submit Internship</button>
+				<button id="submitButton" onclick="postInternship()" type="button">Submit Internship</button>
 			</form>
 			</div>
 			<div id="successDiv" class="hidden">
