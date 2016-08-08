@@ -9,6 +9,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import com.connect.cardinal.hibernate.HibernateUtil;
+import com.google.gson.annotations.Expose;
 
 /**
  * @author jmackin
@@ -18,13 +19,20 @@ import com.connect.cardinal.hibernate.HibernateUtil;
 @Table(name = "user")
 public class User extends DBObject
 {
+	@Expose
 	private String firstName;
+	@Expose
 	private String middleName;
+	@Expose
 	private String lastName;
+	@Expose
 	private String email;
 	private String password;
+	@Expose
 	private String focus;
+	@Expose
 	private String company;
+	@Expose
 	private String status;
 	
 	/**
