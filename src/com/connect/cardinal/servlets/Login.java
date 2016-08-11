@@ -22,6 +22,7 @@ import com.connect.cardinal.objects.User;
 import com.connect.cardinal.secure.HashGen;
 import com.connect.cardinal.util.ObjectRetriever;
 import com.connect.cardinal.util.RequestParser;
+import com.google.gson.Gson;
 
 /**
  * Servlet implementation class Login
@@ -57,6 +58,8 @@ public class Login extends HttpServlet
 			messageOut = login(parameters.get("username"), parameters.get("password"));
 			if(messageOut.equals("LOGIN_SUCCESS"))
 			{
+				Gson gson = new Gson();
+				messageOut = gson.toJson(messageOut);
 				request.getSession().setAttribute("verified", "true");
 				request.getSession().setAttribute("userName", parameters.get("username"));
 				request.getSession().setMaxInactiveInterval(20 * 60);
@@ -66,6 +69,8 @@ public class Login extends HttpServlet
 		{
 			messageOut = register(parameters.get("username"), parameters.get("password"), 
 								parameters.get("firstName"), parameters.get("middleName"), parameters.get("lastName"));
+			Gson gson = new Gson();
+			messageOut = gson.toJson(messageOut);
 		}
 		
 		System.out.println();

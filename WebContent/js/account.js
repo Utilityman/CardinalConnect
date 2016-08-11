@@ -12,6 +12,7 @@ function loadAccountDetails()
 		},
 		complete: function(data)
 		{
+			console.log(data);
 			if(data.responseText == '') {returnToLogin(); return;} 
 			ACCOUNT = data.responseJSON;
 			fillInformation(data.responseJSON);
@@ -86,6 +87,7 @@ function toggleCompanySelector()
 
 function saveStudentOrAlum()
 {
+	console.log(ACCOUNT.id);
 	var studentOrAlum = $("#studentOrAlumChoice").val();
 	if(studentOrAlum != 'Choose One')
 	{
