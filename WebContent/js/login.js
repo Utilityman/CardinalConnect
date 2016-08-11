@@ -20,7 +20,7 @@ function requestLogin()
 				console.log(data);
 				var responseText = data.responseText.slice(0, -1);
 				console.log(escape(responseText));
-				if('LOGIN_SUCCESS' == responseText)
+				if('LOGIN_SUCCESS' == data.responseJSON)
 					window.location.href = "home.html";//
 				else
 					$("#failedLogin").text("Invalid Credentials!");
@@ -78,7 +78,7 @@ function register()
 			console.log(data);
 			$("#password1").val("");
 			$("#password2").val("");
-			var responseText = data.responseText.slice(0, -1);
+			var responseText = data.responseJSON;
 			if(responseText == 'ACCOUNT_CREATED')
 			{
 				success = true;
