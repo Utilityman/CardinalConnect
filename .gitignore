@@ -4,9 +4,10 @@
 .settings/
 
 ## Other Stuff
-*.cfg.*
+*.cfg.xml
 
 ## Java Stuff
 *.class
 /build/
+target/classes/
 /target/
