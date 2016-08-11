@@ -7,6 +7,8 @@ import javax.persistence.MappedSuperclass;
 
 import org.hibernate.NonUniqueObjectException;
 
+import com.google.gson.annotations.Expose;
+
 
 /**
  * @author jmackin
@@ -18,6 +20,7 @@ public class DBObject
 	/**
 	 * The database id of this object
 	 */
+	@Expose
 	Long id;
 	
 	/**
