@@ -113,3 +113,14 @@ li:hover, tr:hover
 {
 	background-color: #f7e5ba;	
 }
+
+#footer
+{
+	font-family: Arial, Helvetica, sans-serif;
+	
+	font-size: 12px;
+	color: white;
+	clear: both;
+	margin-top: 8px;
+	
+}

@@ -1,0 +1,27 @@
+<html>
+<head>
+	<script type="text/javascript" src="js/jquery.js"></script>
+	<script type="text/javascript" src="js/feedback.js"></script>
+	
+	<link href="css/style.css" type="text/css" rel="stylesheet"></link>
+	<link href="css/feedback.css" type="text/css" rel="stylesheet"></link>
+	<title>Feedback</title>
+</head>
+<body>
+	<div id="title">
+		<img id="logo" src="res/logo.png" alt="Logo">
+		<span>CALVERT HALL COLLEGE</span>
+	</div>
+
+	<div id='feedbackForm'>
+			<p style='font-size: 32px;'>Feedback Form</p>
+	
+		<table>
+		<tr><td>Page of Interest:</td><td><input id='page' type="text"></td></tr>
+		<tr id='descriptionRow'><td>Description:</td><td><textarea id='description'></textarea></td></tr>
+		<tr><td>Suggestion (if any!)</td><td><textarea id='suggestion'></textarea></td></tr>
+		</table>
+		<button onclick='submitFeedback()'>Submit</button>
+	</div>
+</body>
+</html>
