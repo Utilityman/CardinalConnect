@@ -119,6 +119,12 @@ function returnToLogin()
 		window.location.href = "index.html";
 }
 
+function openFeedbackTab()
+{
+	window.open('feedback.html');
+}
+
+
 
 
 

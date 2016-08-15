@@ -7,6 +7,7 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 
+import com.connect.cardinal.objects.Feedback;
 import com.connect.cardinal.objects.Internship;
 import com.connect.cardinal.objects.Mentorship;
 import com.connect.cardinal.objects.User;
@@ -58,5 +59,6 @@ public class HibernateUtil
 		configuration.addAnnotatedClass(Mentorship.class);
 		configuration.addAnnotatedClass(Event.class);
 		configuration.addAnnotatedClass(User.class);
+		configuration.addAnnotatedClass(Feedback.class);
 	}
 }
