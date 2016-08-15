@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.connect.cardinal.objects.Event;
+import com.connect.cardinal.objects.Feedback;
 import com.connect.cardinal.objects.Internship;
 import com.connect.cardinal.objects.Mentorship;
 import com.connect.cardinal.secure.SessionTracker;
@@ -84,6 +85,10 @@ public class Data extends HttpServlet {
 				resp = ObjectRetriever.getEvents();
 			else
 				resp = ObjectRetriever.getEventsWithFilter(parameters.get("filter"));
+		}
+		else if(parameters.get("action").equals("postFeedback"))
+		{
+			resp = Feedback.createAndCommitFeedbackFromForm(parameters);
 		}
 		
 		
