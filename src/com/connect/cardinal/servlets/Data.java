@@ -17,6 +17,7 @@ import com.connect.cardinal.objects.Mentorship;
 import com.connect.cardinal.secure.SessionTracker;
 import com.connect.cardinal.util.ObjectRetriever;
 import com.connect.cardinal.util.RequestParser;
+import com.google.gson.Gson;
 
 /**
  * Servlet implementation class Data
@@ -88,14 +89,13 @@ public class Data extends HttpServlet {
 		}
 		else if(parameters.get("action").equals("postFeedback"))
 		{
-			resp = Feedback.createAndCommitFeedbackFromForm(parameters);
+			Gson gson = new Gson();	
+			resp = gson.toJson(Feedback.createAndCommitFeedbackFromForm((String)request.getSession().getAttribute("userName"), parameters));
 		}
-		
 		
 		
 		System.out.println("Response: " + resp);
 		System.out.println();
-
 		out.println(resp);
 	}
 
