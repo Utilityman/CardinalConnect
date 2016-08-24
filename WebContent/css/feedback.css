@@ -17,10 +17,7 @@ table, tr, td, p
 {
 	color: white;
 }
-
-#descriptionRow
-{line-height: 250px;}
-
+td{padding-top: 8px;}
 
 
 td:last-child
