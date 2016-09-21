@@ -1,6 +1,7 @@
 package com.connect.cardinal.util;
 
 import java.util.List;
+import java.util.Map;
 
 import org.hibernate.Criteria;
 import org.hibernate.Query;
@@ -9,6 +10,7 @@ import org.hibernate.Session;
 import com.connect.cardinal.hibernate.HibernateUtil;
 import com.connect.cardinal.objects.User;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 /**
  * @author jmackin
@@ -112,6 +114,24 @@ public class ObjectRetriever
 		Gson gson = new Gson();
 		String filteredInternships = "FROM com.connect.cardinal.objects.Event E";
 		Query query = session.createQuery(filteredInternships);
+		@SuppressWarnings("rawtypes")
+		List results = query.list();
+		return gson.toJson(results);
+	}
+
+	/**
+	 * @param parameters
+	 * @return
+	 */
+	public static String getAccounts(Map<String, String> parameters) 
+	{
+		Session session = HibernateUtil.getSession();
+		GsonBuilder builder = new GsonBuilder();
+		builder.excludeFieldsWithoutExposeAnnotation();
+		Gson gson = builder.create();
+		String accounts = "FROM com.connect.cardinal.objects.User";
+		Query query = session.createQuery(accounts);
+		
 		@SuppressWarnings("rawtypes")
 		List results = query.list();
 		return gson.toJson(results);

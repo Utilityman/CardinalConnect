@@ -42,18 +42,19 @@ public class Data extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
-		if(!SessionTracker.verify(request)) return;
-		
+		Gson gson = new Gson();	
 		response.setContentType("application/json");
 		out = response.getWriter();
+		String resp = "";
+		
+		if(!SessionTracker.verify(request)) {resp = gson.toJson(resp);out.println(resp);return;}
+
 		Map<String, String> parameters = RequestParser.getParameters(request.getParameterMap());
 		
 		System.out.println("Params: " + parameters);
-		String resp = "";
-		
 		System.out.println("Session ID: " + request.getSession().getId());
 		
-		
+		if(parameters.get("action") == null){resp = gson.toJson(resp);out.println(resp);return;}
 		if(parameters.get("action").equals("getInternships"))
 		{
 			if(parameters.get("filter").equals(""))
@@ -82,15 +83,24 @@ public class Data extends HttpServlet {
 		}
 		else if(parameters.get("action").equals("getEvents"))
 		{
-			if(parameters.get("filter").equals(""))
+			if(parameters.get("filter") == null || parameters.get("filter").equals(""))
 				resp = ObjectRetriever.getEvents();
 			else
 				resp = ObjectRetriever.getEventsWithFilter(parameters.get("filter"));
 		}
 		else if(parameters.get("action").equals("postFeedback"))
 		{
-			Gson gson = new Gson();	
 			resp = gson.toJson(Feedback.createAndCommitFeedbackFromForm((String)request.getSession().getAttribute("userName"), parameters));
+		}
+		else if(parameters.get("action").equals("getAccounts"))
+		{
+			if(!SessionTracker.verifyAdmin(request)) {resp = gson.toJson("NOT_ADMIN_USER");out.println(resp);return;}
+			
+			resp = ObjectRetriever.getAccounts(parameters);
+		}
+		else
+		{
+			resp = gson.toJson(resp);
 		}
 		
 		

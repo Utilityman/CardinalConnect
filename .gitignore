@@ -12,4 +12,7 @@
 target/classes/
 /target/
 
+## OS Specific
+.DS_Store
+
 target/classes/hibernate.cfg.xml

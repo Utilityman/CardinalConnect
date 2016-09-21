@@ -31,8 +31,8 @@ li:hover, tr:hover
 
 #titleBar li
 {
-	border-left: 1.5px solid #232020;
-	float: right;
+	border-right: 1.5px solid #232020;
+	float: left;
 	display: inline-block;
 	color: #ffb60d;
 	padding: 8px 16px;	

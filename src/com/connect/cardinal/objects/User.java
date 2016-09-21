@@ -3,10 +3,15 @@ package com.connect.cardinal.objects;
 import java.util.Map;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import com.connect.cardinal.hibernate.HibernateUtil;
 import com.google.gson.annotations.Expose;
@@ -21,19 +26,27 @@ public class User extends DBObject
 {
 	@Expose
 	private String firstName;
+	
 	@Expose
 	private String middleName;
+	
 	@Expose
 	private String lastName;
+	
 	@Expose
 	private String email;
-	private String password;
+	
+	// password is not exposed
+	private String password;	
+	
 	@Expose
 	private String focus;
+	
 	@Expose
 	private String company;
+	
 	@Expose
-	private String status;
+	private UserStatus status;
 	
 	/**
 	 * @param firstName
@@ -48,7 +61,7 @@ public class User extends DBObject
 		this.lastName = lastName;
 		this.email = email;
 		this.password = password;
-		this.status = "";
+		this.status = null;
 		this.focus = "";
 		this.company = "";
 	}
@@ -112,11 +125,14 @@ public class User extends DBObject
 		this.company = company;
 	}
 
-	public String getStatus() {
+	@OneToOne(fetch = FetchType.EAGER)
+	@Fetch(FetchMode.SELECT)
+	@JoinColumn
+	public UserStatus getStatus() {
 		return status;
 	}
 
-	public void setStatus(String status) {
+	public void setStatus(UserStatus status) {
 		this.status = status;
 	}
 
@@ -134,7 +150,7 @@ public class User extends DBObject
 
 
 		User user = session.load(User.class, Long.parseLong(idString));
-		user.setStatus(studentOrAlum);
+		//user.setStatus(studentOrAlum);
 		
 		session.merge(user);
 		tx.commit();

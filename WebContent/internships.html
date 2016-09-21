@@ -16,14 +16,17 @@
 	<img id="logo" src="res/logo.png" alt="Logo">
 	<span>CALVERT HALL COLLEGE</span>
 </div>
-<ul id="titlebar">
-		<li onclick="navigate(this)" id="logout">Logout</li>
-		<li onclick="navigate(this)" id="account">Account</li>
-		<li onclick="navigate(this)" id="events" class="dropdown">
-			<a class="dropbtn">Events</a>
+	<ul id="titlebar">
+		<li onclick="navigate(this)" id="home">Home</li>		
+		<li id="mentorships" onclick="navigate(this)" class="dropdown">
+			<a class="dropbtn">Mentorships</a>
 			<div class="dropdown-content">
-				<a onclick="getEvents('students')">Student Events</a>
-				<a onclick="getEvents('alumni')">Alumni Events</a>
+				<a onclick="findMentorships('biology')">Biology</a>
+				<a onclick="findMentorships('business')">Business</a>
+				<a onclick="findMentorships('chemistry')">Chemistry</a>
+				<a onclick="findMentorships('english')">English</a>
+				<a onclick="findMentorships('social sciences')">Social Sciences</a>
+				<a onclick="findMentorships('technology')">Technology</a>
 			</div>
 		</li>
 		<li id="internships" onclick="navigate(this)" class="dropdown active">
@@ -36,20 +39,17 @@
 				<a onclick="findInternships('social sciences')">Social Sciences</a>
 				<a onclick="findInternships('technology')">Technology</a>
 			</div>
-		</li>
-		<li id="mentorships" onclick="navigate(this)" class="dropdown">
-			<a class="dropbtn">Mentorships</a>
+		</li>	
+		<li onclick="navigate(this)" id="events" class="dropdown">
+			<a class="dropbtn">Events</a>
 			<div class="dropdown-content">
-				<a onclick="findMentorships('biology')">Biology</a>
-				<a onclick="findMentorships('business')">Business</a>
-				<a onclick="findMentorships('chemistry')">Chemistry</a>
-				<a onclick="findMentorships('english')">English</a>
-				<a onclick="findMentorships('social sciences')">Social Sciences</a>
-				<a onclick="findMentorships('technology')">Technology</a>
+				<a onclick="getEvents('students')">Student Events</a>
+				<a onclick="getEvents('alumni')">Alumni Events</a>
 			</div>
-		</li>		
-		<li onclick="navigate(this)" id="home">Home</li>		
-	</ul>		
+		</li>
+		<li onclick="navigate(this)" id="account">Account</li>
+		<li onclick="navigate(this)" id="logout">Logout</li>
+	</ul>	
 	
 	<div id="controls">
 		<button onclick="showFilterPopup()">Filter</button>

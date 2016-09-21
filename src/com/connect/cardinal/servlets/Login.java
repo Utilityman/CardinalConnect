@@ -49,31 +49,33 @@ public class Login extends HttpServlet
 	{
 		response.setContentType("json/application");
 		out = response.getWriter();
-		String messageOut = "hello";
+		String messageOut = "";
 		Map<String, String> parameters = RequestParser.getParameters(request.getParameterMap());
 		System.out.println(parameters);
 	
 		if(parameters.get("action").equals("login"))
 		{
 			messageOut = login(parameters.get("username"), parameters.get("password"));
-			if(messageOut.equals("LOGIN_SUCCESS"))
+			if(messageOut.equals("LOGIN_SUCCESS") || messageOut.equals("LOGIN_ADMIN"))
 			{
-				Gson gson = new Gson();
-				messageOut = gson.toJson(messageOut);
 				request.getSession().setAttribute("verified", "true");
 				request.getSession().setAttribute("userName", parameters.get("username"));
-				request.getSession().setMaxInactiveInterval(20 * 60);
+				if(messageOut.equals("LOGIN_ADMIN"))
+					request.getSession().setAttribute("status", "admin");
+				else
+					request.getSession().setAttribute("status", "user");
+				request.getSession().setMaxInactiveInterval(60 * 60);
 			}
 		}
 		else if(parameters.get("action").equals("register"))
 		{
 			messageOut = register(parameters.get("username"), parameters.get("password"), 
 								parameters.get("firstName"), parameters.get("middleName"), parameters.get("lastName"));
-			Gson gson = new Gson();
-			messageOut = gson.toJson(messageOut);
 		}
 		
-		System.out.println();
+		System.out.println(messageOut);
+		Gson gson = new Gson();
+		messageOut = gson.toJson(messageOut);
 		out.println(messageOut);
 	}
 	
@@ -137,12 +139,12 @@ public class Login extends HttpServlet
 		
 		@SuppressWarnings("unchecked")
 		List<User> users = ObjectRetriever.getUsernamesMatching(username);
-		System.out.println(users);
 		for(int i = 0; i < users.size(); i++)
 		{
 			if(users.get(i).getEmail().equals(username) && users.get(i).getPassword().equals(hashPass))
-			{
-				
+			{	
+				if(users.get(i).getStatus() != null && users.get(i).getStatus().getUserStatus().equals("Admin"))
+					return "LOGIN_ADMIN";
 				return "LOGIN_SUCCESS";
 			}
 		}

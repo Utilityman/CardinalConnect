@@ -1,0 +1,100 @@
+<html>
+<head>
+	<script type="text/javascript" src="js/jquery.js"></script>
+	<script type="text/javascript" src="js/base.js"></script>
+ 	<script type="text/javascript" src="js/admin.js"></script>
+ 
+	
+	<link href="css/style.css" type="text/css" rel="stylesheet"></link>
+	<link href="css/admin.css" type="text/css" rel="stylesheet"></link>
+	
+	<title>Cardinal Home</title>
+</head>
+<body onload="loadDashboard()" onresize="resize()">
+
+<div id="title">
+	<img id="logo" src="res/logo.png" alt="Logo">
+	<span>CALVERT HALL COLLEGE</span>	
+</div>
+
+	<ul id="titleBar">
+		<li onclick="showTab(this, 'dashboardTab')" class="active" id="dashboard">Admin Dashboard</li>
+		<li onclick="showTab(this, 'accountTab')" id="account">Manage Accounts</li>	
+		<li onclick="showTab(this, 'internshipTab')" id="internship">Manage Internships</li>
+		<li onclick="showTab(this, 'mentorshipTab')" id="mentorship">Manage Mentorships</li>
+		<li onclick="returnToSite()" style="float:right;" id="home">Return to Homepage</li>	
+	</ul>
+	
+	<div class="tab-content active" id="dashboardTab">
+	<br>
+	<div class="dashboardField">
+	<p>Accounts</p>
+		<table>
+			<tr>
+				<td>Student Accounts:</td>
+				<td id="studentAccounts">---</td>
+			</tr>
+			<tr>
+				<td>Advisor Accounts</td>
+				<td id="advisorAccounts">---</td>
+			</tr>
+			<tr>
+				<td>Pending Accounts:</td>
+				<td id="pendingAccounts">---</td>
+			</tr>
+			<tr>
+				<td>Change of Information Requests:</td>
+				<td id="changeOfInformationRequests">---</td>
+			</tr>
+		</table>
+	</div>
+	
+	<br>
+	<div class="dashboardField">
+	<p>Internships and Mentorships</p>
+		<table>
+			<tr>
+				<td>Pending Internships:</td>
+				<td id="pendingInternships">1</td>
+			</tr>
+			<tr>
+				<td>Total Amount of Listed Internships:</td>
+				<td id="listedInternships">2</td>
+			</tr>
+			<tr>
+				<td>Pending Mentorships:</td>
+				<td id="pendingMentorships">1</td>
+			</tr>
+			<tr>
+				<td>Total Amount of Listed Mentorships:</td>
+				<td id="listedMentorships">1</td>
+			</tr>
+		</table>
+	</div>
+			
+	</div>
+	
+	
+	<div class="tab-content" id="accountTab">
+		<ul>
+			<li id="pendingAccounts" onclick="showAccounts('pendingAccounts')">
+							Pending Accounts<span class='expanded'>+</span></li>
+			<li id='changeInformation' onclick="showAccounts('changeInformation')">
+							Change of Information Requests<span class='expanded'>+</span></li>
+			<li id='registeredAccounts' onclick="showAccounts('registeredAccounts')">
+							All Registered Accounts<span class='expanded'>+</span></li>
+		</ul>
+	</div>
+	
+	<div class="tab-content" id="internshipTab">
+	<br>
+		Internship Tab
+	</div>
+	
+	<div class="tab-content" id="mentorshipTab">
+	<br>
+		Mentorship Tab
+	</div>
+
+</body>
+</html>

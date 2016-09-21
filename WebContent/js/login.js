@@ -18,10 +18,10 @@ function requestLogin()
 			complete: function(data)
 			{
 				console.log(data);
-				var responseText = data.responseText.slice(0, -1);
-				console.log(escape(responseText));
 				if('LOGIN_SUCCESS' == data.responseJSON)
-					window.location.href = "home.html";//
+					window.location.href = "home.html";
+				else if('LOGIN_ADMIN' == data.responseJSON)
+					window.location.href = "admin.html";
 				else
 					$("#failedLogin").text("Invalid Credentials!");
 			},
