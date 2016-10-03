@@ -22,6 +22,8 @@ function requestLogin()
 					window.location.href = "home.html";
 				else if('LOGIN_ADMIN' == data.responseJSON)
 					window.location.href = "admin.html";
+				else if("ACCOUNT_INACTIVE" == data.responseJSON)
+					$('#failedLogin').text("Account Not Active");
 				else
 					$("#failedLogin").text("Invalid Credentials!");
 			},
@@ -72,6 +74,7 @@ function register()
 			'firstName': firstName,
 			'middleName': middleName,
 			'lastName': lastName,
+			'status': "Student",
 		},
 		complete: function(data)
 		{

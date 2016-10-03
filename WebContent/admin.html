@@ -8,7 +8,7 @@
 	<link href="css/style.css" type="text/css" rel="stylesheet"></link>
 	<link href="css/admin.css" type="text/css" rel="stylesheet"></link>
 	
-	<title>Cardinal Home</title>
+	<title>Cardinal Admin</title>
 </head>
 <body onload="loadDashboard()" onresize="resize()">
 
@@ -18,7 +18,7 @@
 </div>
 
 	<ul id="titleBar">
-		<li onclick="showTab(this, 'dashboardTab')" class="active" id="dashboard">Admin Dashboard</li>
+		<li onclick="showTab(this, 'dashboardTab')" class="active" id="dashboard">Dashboard</li>
 		<li onclick="showTab(this, 'accountTab')" id="account">Manage Accounts</li>	
 		<li onclick="showTab(this, 'internshipTab')" id="internship">Manage Internships</li>
 		<li onclick="showTab(this, 'mentorshipTab')" id="mentorship">Manage Mentorships</li>
@@ -41,10 +41,6 @@
 			<tr>
 				<td>Pending Accounts:</td>
 				<td id="pendingAccounts">---</td>
-			</tr>
-			<tr>
-				<td>Change of Information Requests:</td>
-				<td id="changeOfInformationRequests">---</td>
 			</tr>
 		</table>
 	</div>
@@ -76,24 +72,34 @@
 	
 	
 	<div class="tab-content" id="accountTab">
-		<ul>
+		<ul id="accountHolder">
 			<li id="pendingAccounts" onclick="showAccounts('pendingAccounts')">
 							Pending Accounts<span class='expanded'>+</span></li>
-			<li id='changeInformation' onclick="showAccounts('changeInformation')">
-							Change of Information Requests<span class='expanded'>+</span></li>
+			<li id="studentAccounts" onclick="showAccounts('studentAccounts')">
+							Student Accounts<span class='expanded'>+</span></li>
+			<li id="advisorAccounts" onclick="showAccounts('advisorAccounts')">
+							Advisor Accounts<span class="expanded">+</span></li>
 			<li id='registeredAccounts' onclick="showAccounts('registeredAccounts')">
 							All Registered Accounts<span class='expanded'>+</span></li>
 		</ul>
 	</div>
 	
 	<div class="tab-content" id="internshipTab">
-	<br>
-		Internship Tab
+		<ul>
+			<li id="pendingAccounts" onclick="showAccounts('pendingAccounts')">
+							Pending Internships<span class='expanded'>+</span></li>
+			<li id='registeredAccounts' onclick="showAccounts('registeredAccounts')">
+							All Internships<span class='expanded'>+</span></li>
+		</ul>
 	</div>
 	
 	<div class="tab-content" id="mentorshipTab">
-	<br>
-		Mentorship Tab
+		<ul>
+			<li id="pendingAccounts" onclick="showAccounts('pendingAccounts')">
+							Pending Mentorships<span class='expanded'>+</span></li>
+			<li id='registeredAccounts' onclick="showAccounts('registeredAccounts')">
+							All Mentorships<span class='expanded'>+</span></li>
+		</ul>
 	</div>
 
 </body>

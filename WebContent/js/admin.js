@@ -23,7 +23,7 @@ function loadDashboard()
 		},
 		complete: function(data)
 		{
-			if(data.responseText == '' || data.responseText == 'NOT_ADMIN_USER') {returnToLogin(); return;} 
+			if(data.responseText == '' || data.responseText == 'NOT_ADMIN_USER') {forceReturnToLogin(); return;} 
 			accounts = data.responseJSON;
 			getInternships();
 		},
@@ -42,7 +42,7 @@ function getInternships()
 		},
 		complete: function(data)
 		{
-			if(data.responseText == '') {returnToLogin(); return;} 
+			if(data.responseText == '') {forceReturnToLogin(); return;} 
 			internships = data.responseJSON;
 			getMentorships();
 		},
@@ -61,7 +61,7 @@ function getMentorships()
 		},
 		complete: function(data)
 		{
-			if(data.responseText == '') {returnToLogin(); return;} 
+			if(data.responseText == '') {forceReturnToLogin(); return;} 
 			mentorships = data.responseJSON;
 			fillTabs();
 		},
@@ -77,18 +77,36 @@ function fillTabs()
 	var studentAccounts = 0;
 	var advisorAccounts = 0;
 	var pendingAccounts = 0;
-	var changeRequests = 0;
 	for(var i = 0; i < accounts.length; i++)
 	{
+		if(accounts[i].active == 0)
+		{
+			pendingAccounts++;
+			$('#accountHolder #pendingAccounts').after('<li id="' + accounts[i].email +
+														'" class="pendingAccounts miniAccount hidden"' + 
+														'>Name: ' + accounts[i].firstName + 
+														' ' + accounts[i].lastName + 
+														' -- Email: ' + accounts[i].email + 
+														' -- Status: ' + accounts[i].status.userStatus + 
+														'<button>Decline</button>' + 
+														'<button class="acceptDecline">Accept</button>' + 
+														'</li>');
+			continue;
+		}
 		if(accounts[i].status.userStatus == 'Student')
+		{
 			studentAccounts++;
+			continue;
+		}
 		else if(accounts[i].status.userStatus == 'Advisor')
+		{
 			advisorAccounts++;
+			continue;
+		}
 	}
 	$('#studentAccounts').html(studentAccounts);
 	$('#advisorAccounts').html(advisorAccounts);
 	$('#pendingAccounts').html(pendingAccounts);
-	$('#changeOfInformationRequests').html(changeRequests);
 	
 	var pendingInternships = 0;
 	var activeInternships = 0;
@@ -117,8 +135,25 @@ function fillTabs()
 
 function showAccounts(source)
 {
-	$('.expanded').html('+');
-	$('#' + source + " > span").html("-");
+	$('.miniAccount').addClass('hidden');
+	if($('#' + source + " > span").html() == "+")
+	{
+		$('.expanded').html('+');
+
+		$('#' + source + " > span").html("-");
+		$('.' + source).removeClass('hidden');
+	}
+	else
+	{
+		$('.expanded').html('+');
+	}
+	
 }
+
+function returnToSite()
+{
+	window.location.href = "home.html";
+}
+
 
 

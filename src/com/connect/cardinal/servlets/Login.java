@@ -19,6 +19,7 @@ import org.hibernate.criterion.Restrictions;
 
 import com.connect.cardinal.hibernate.HibernateUtil;
 import com.connect.cardinal.objects.User;
+import com.connect.cardinal.objects.UserStatus;
 import com.connect.cardinal.secure.HashGen;
 import com.connect.cardinal.util.ObjectRetriever;
 import com.connect.cardinal.util.RequestParser;
@@ -70,7 +71,8 @@ public class Login extends HttpServlet
 		else if(parameters.get("action").equals("register"))
 		{
 			messageOut = register(parameters.get("username"), parameters.get("password"), 
-								parameters.get("firstName"), parameters.get("middleName"), parameters.get("lastName"));
+								parameters.get("firstName"), parameters.get("middleName"), 
+								parameters.get("lastName"), ObjectRetriever.getUserStatus(parameters.get("status")));
 		}
 		
 		System.out.println(messageOut);
@@ -88,7 +90,7 @@ public class Login extends HttpServlet
 	 * @param lastName
 	 * @return
 	 */
-	private String register(String username, String password, String firstName, String middleName, String lastName) {
+	private String register(String username, String password, String firstName, String middleName, String lastName, UserStatus status) {
 		
 		Criteria criteria = HibernateUtil.getSession().createCriteria(User.class);
 		criteria.add(Restrictions.eqOrIsNull("email", username));
@@ -110,7 +112,7 @@ public class Login extends HttpServlet
 				if(hashPass == null)
 					return "INTERNAL_ERROR";
 			}
-			User user = new User(firstName, middleName, lastName, username, hashPass);
+			User user = new User(firstName, middleName, lastName, username, hashPass, status);
 			Session session = HibernateUtil.getSession();
 			Transaction tx = session.beginTransaction();
 			
@@ -141,12 +143,16 @@ public class Login extends HttpServlet
 		List<User> users = ObjectRetriever.getUsernamesMatching(username);
 		for(int i = 0; i < users.size(); i++)
 		{
-			if(users.get(i).getEmail().equals(username) && users.get(i).getPassword().equals(hashPass))
+			if(users.get(i).getEmail().equals(username) && 
+					users.get(i).getPassword().equals(hashPass))
 			{	
+				if(users.get(i).getActive() == 0)
+					return "ACCOUNT_INACTIVE";
 				if(users.get(i).getStatus() != null && users.get(i).getStatus().getUserStatus().equals("Admin"))
 					return "LOGIN_ADMIN";
 				return "LOGIN_SUCCESS";
 			}
+			
 		}
 		
 		return "INVALID_CREDENTIALS";

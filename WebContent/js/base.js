@@ -2,7 +2,7 @@
  * 	Base functions that are applicable for more than one page
  */
 
-var focuses = ['Biology', 'Business', 'Chemistry', 'English', 'General', 'Social Sciences', 'Technology'];
+var focuses = ['Business', 'Finance', 'Law', 'Medicine', 'Teaching', 'Trade', 'Other'];
 var navigateParam = ""
 
 /**
@@ -117,6 +117,11 @@ function returnToLogin()
 {
 	if(confirm("Login Session has expired. Would you like to relogin?"))
 		window.location.href = "index.html";
+}
+
+function forceReturnToLogin()
+{
+	window.location.href = "index.html";
 }
 
 function openFeedbackTab()

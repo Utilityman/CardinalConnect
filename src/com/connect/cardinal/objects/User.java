@@ -48,6 +48,9 @@ public class User extends DBObject
 	@Expose
 	private UserStatus status;
 	
+	@Expose
+	private int active;
+	
 	/**
 	 * @param firstName
 	 * @param middleName
@@ -55,15 +58,16 @@ public class User extends DBObject
 	 * @param email
 	 * @param password
 	 */
-	public User(String firstName, String middleName, String lastName, String email, String password) {
+	public User(String firstName, String middleName, String lastName, String email, String password, UserStatus status) {
 		this.firstName = firstName;
 		this.middleName = middleName;
 		this.lastName = lastName;
 		this.email = email;
 		this.password = password;
-		this.status = null;
+		this.status = status;
 		this.focus = "";
 		this.company = "";
+		setActive(0);
 	}
 	
 	public User()
@@ -76,6 +80,7 @@ public class User extends DBObject
 		this.status = null;
 		this.focus = null;
 		this.company = null;
+		setActive(0);
 	}
 	
 	public String getFirstName() {
@@ -203,5 +208,13 @@ public class User extends DBObject
 		session.flush();
 		
 		return "UPDATED COMPANY";
+	}
+
+	public int getActive() {
+		return active;
+	}
+
+	public void setActive(int active) {
+		this.active = active;
 	}
 }

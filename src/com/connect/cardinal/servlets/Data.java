@@ -47,14 +47,14 @@ public class Data extends HttpServlet {
 		out = response.getWriter();
 		String resp = "";
 		
-		if(!SessionTracker.verify(request)) {resp = gson.toJson(resp);out.println(resp);return;}
+		if(!SessionTracker.verify(request)) {returnNothing(gson, out);return;}
 
 		Map<String, String> parameters = RequestParser.getParameters(request.getParameterMap());
 		
 		System.out.println("Params: " + parameters);
 		System.out.println("Session ID: " + request.getSession().getId());
 		
-		if(parameters.get("action") == null){resp = gson.toJson(resp);out.println(resp);return;}
+		if(parameters.get("action") == null){returnNothing(gson, out);return;}
 		if(parameters.get("action").equals("getInternships"))
 		{
 			if(parameters.get("filter").equals(""))
@@ -107,6 +107,11 @@ public class Data extends HttpServlet {
 		System.out.println("Response: " + resp);
 		System.out.println();
 		out.println(resp);
+	}
+	
+	private static void returnNothing(Gson gson, PrintWriter out)
+	{
+		out.println(gson.toJson(""));
 	}
 
 }
