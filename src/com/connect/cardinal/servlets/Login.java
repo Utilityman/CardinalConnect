@@ -1,7 +1,6 @@
 package com.connect.cardinal.servlets;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.Map;
@@ -22,17 +21,14 @@ import com.connect.cardinal.objects.User;
 import com.connect.cardinal.objects.UserStatus;
 import com.connect.cardinal.secure.HashGen;
 import com.connect.cardinal.util.ObjectRetriever;
-import com.connect.cardinal.util.RequestParser;
-import com.google.gson.Gson;
 
 /**
  * Servlet implementation class Login
  */
 @WebServlet("/Login")
-public class Login extends HttpServlet 
+public class Login extends BaseServlet 
 {
 	private static final long serialVersionUID = 1L;
-    private static PrintWriter out;
 
        
     /**
@@ -40,7 +36,6 @@ public class Login extends HttpServlet
      */
     public Login() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
@@ -48,20 +43,24 @@ public class Login extends HttpServlet
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
-		response.setContentType("json/application");
-		out = response.getWriter();
-		String messageOut = "";
-		Map<String, String> parameters = RequestParser.getParameters(request.getParameterMap());
-		System.out.println(parameters);
+
+		Map<String, String> parameters = shouldContinue(request, response);
+
+		if(parameters == null)
+		{
+			returnNothing(out);
+			return;
+		}
 	
 		if(parameters.get("action").equals("login"))
 		{
-			messageOut = login(parameters.get("username"), parameters.get("password"));
-			if(messageOut.equals("LOGIN_SUCCESS") || messageOut.equals("LOGIN_ADMIN"))
+			resp = login(parameters.get("username"), parameters.get("password"));
+
+			if(resp.equals("LOGIN_SUCCESS") || resp.equals("LOGIN_ADMIN"))
 			{
 				request.getSession().setAttribute("verified", "true");
 				request.getSession().setAttribute("userName", parameters.get("username"));
-				if(messageOut.equals("LOGIN_ADMIN"))
+				if(resp.equals("LOGIN_ADMIN"))
 					request.getSession().setAttribute("status", "admin");
 				else
 					request.getSession().setAttribute("status", "user");
@@ -70,15 +69,12 @@ public class Login extends HttpServlet
 		}
 		else if(parameters.get("action").equals("register"))
 		{
-			messageOut = register(parameters.get("username"), parameters.get("password"), 
+			resp = register(parameters.get("username"), parameters.get("password"), 
 								parameters.get("firstName"), parameters.get("middleName"), 
 								parameters.get("lastName"), ObjectRetriever.getUserStatus(parameters.get("status")));
 		}
 		
-		System.out.println(messageOut);
-		Gson gson = new Gson();
-		messageOut = gson.toJson(messageOut);
-		out.println(messageOut);
+		respondToRequest();
 	}
 	
 	/**
@@ -139,20 +135,17 @@ public class Login extends HttpServlet
 		}
 		finally { if(hashPass == null) return "INTERNAL_ERROR"; }
 		
-		@SuppressWarnings("unchecked")
-		List<User> users = ObjectRetriever.getUsernamesMatching(username);
-		for(int i = 0; i < users.size(); i++)
-		{
-			if(users.get(i).getEmail().equals(username) && 
-					users.get(i).getPassword().equals(hashPass))
-			{	
-				if(users.get(i).getActive() == 0)
-					return "ACCOUNT_INACTIVE";
-				if(users.get(i).getStatus() != null && users.get(i).getStatus().getUserStatus().equals("Admin"))
-					return "LOGIN_ADMIN";
-				return "LOGIN_SUCCESS";
-			}
-			
+		User user = ObjectRetriever.getUsernamesMatching(username);
+		if(user == null) return "INVALID_CREDENTIALS";
+		
+		if(user.getEmail().equals(username) && 
+				user.getPassword().equals(hashPass))
+		{	
+			if(user.getStatus() != null && user.getStatus().getUserStatus().equals("Admin"))
+				return "LOGIN_ADMIN";
+			if(user.getActive() == 0)
+				return "ACCOUNT_INACTIVE";
+			return "LOGIN_SUCCESS";
 		}
 		
 		return "INVALID_CREDENTIALS";

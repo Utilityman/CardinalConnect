@@ -86,7 +86,9 @@
 	background-color: #282828;
 }
 
-#accountHolder > li > button
+#accountHolder > li > button,
+#mentorshipHolder > li > button,
+#internshipHolder > li > button
 {
 	float: right;
 	padding: 4px 4px;

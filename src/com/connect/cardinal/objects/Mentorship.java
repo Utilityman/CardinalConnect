@@ -161,5 +161,42 @@ public class Mentorship extends DBObject
 
 	public void setFocus(String focus) {
 		this.focus = focus;
+	}
+
+	/**
+	 * @param parameters
+	 * @return
+	 */
+	public static Object AcceptOrDeny(Map<String, String> parameters) 
+	{
+		String mentorshipId = parameters.get("mentorshipId");
+		String accepted = parameters.get("accepted");
+		
+		Session session = HibernateUtil.getSession();
+		Transaction tx = session.beginTransaction();
+
+		Mentorship mentorship = session.load(Mentorship.class, Long.parseLong(mentorshipId));
+		
+		if(accepted.equals("true"))
+		{
+			mentorship.setActive(1);
+		}
+		else if(accepted.equals("false"))
+		{
+			mentorship.setActive(0);
+		}
+		else
+		{
+			System.out.println("unhandled case: " + accepted);
+			tx.commit();
+			session.flush();
+			return "INTERNAL_ERROR";
+		}
+		
+		session.merge(mentorship);
+		tx.commit();
+		session.flush();
+		
+		return "UPDATED_MENTORSHIP";
 	}	
 }

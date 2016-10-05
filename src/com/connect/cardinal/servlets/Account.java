@@ -1,8 +1,6 @@
 package com.connect.cardinal.servlets;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletException;
@@ -12,19 +10,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.connect.cardinal.objects.User;
-import com.connect.cardinal.secure.SessionTracker;
 import com.connect.cardinal.util.ObjectRetriever;
-import com.connect.cardinal.util.RequestParser;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 /**
  * Servlet implementation class Account
  */
 @WebServlet("/Account")
-public class Account extends HttpServlet {
+public class Account extends BaseServlet {
 	private static final long serialVersionUID = 1L;
-    private static PrintWriter out;
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -37,29 +30,22 @@ public class Account extends HttpServlet {
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	@SuppressWarnings("rawtypes")
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
-		if(!SessionTracker.verify(request)) return;
 		
-		response.setContentType("application/json");
-		out = response.getWriter();
-		Map<String, String> parameters = RequestParser.getParameters(request.getParameterMap());
-		
-		System.out.println("Params: " + parameters);
-		String resp = "";
-		
-		System.out.println("Session ID: " + request.getSession().getId());
+		Map<String, String> parameters = shouldContinue(request, response);
+		if(parameters == null)
+		{
+			returnNothing(out);
+			return;
+		}
 		
 		if(parameters.get("action").equals("getUserAccount"))
 		{
-			GsonBuilder builder = new GsonBuilder();
-			builder.excludeFieldsWithoutExposeAnnotation();
-			Gson gson = builder.create();
-			List user = ObjectRetriever.getUsernamesMatching((String)request.getSession().getAttribute("userName"));
-			if(user != null && user.size() != 0)
-				resp = gson.toJson((User)user.get(0));
+			createSecureGsonObject();
+			resp = ObjectRetriever.getUsernamesMatching((String)request.getSession().getAttribute("userName"));
 		}
+		// TODO: Make sure these work! (cause they don't probably!)
 		else if(parameters.get("action").equals("editStudentOrAlum"))
 		{
 			resp = User.editStudentOrAlum(parameters);
@@ -72,11 +58,12 @@ public class Account extends HttpServlet {
 		{
 			resp = User.editCompany(parameters);
 		}
+		else if(parameters.get("action").equals("acceptOrDenyAccount"))
+		{
+			resp = User.AcceptOrDeny(parameters);
+		}
 		
 		
-		System.out.println("Response: " + resp);
-		System.out.println();
-
-		out.println(resp);
+		respondToRequest();
 	}
 }

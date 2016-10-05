@@ -121,12 +121,18 @@ function returnToLogin()
 
 function forceReturnToLogin()
 {
+	console.log('hey');
 	window.location.href = "index.html";
 }
 
 function openFeedbackTab()
 {
 	window.open('feedback.html');
+}
+
+function comingSoon(param)
+{
+	$(param).html("Coming Soon!");
 }
 
 

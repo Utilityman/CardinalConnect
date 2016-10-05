@@ -10,7 +10,7 @@
 	
 	<title>Cardinal Admin</title>
 </head>
-<body onload="loadDashboard()" onresize="resize()">
+<body onload="loadDashboard()">
 
 <div id="title">
 	<img id="logo" src="res/logo.png" alt="Logo">
@@ -32,15 +32,15 @@
 		<table>
 			<tr>
 				<td>Student Accounts:</td>
-				<td id="studentAccounts">---</td>
+				<td id="numOfStudentAccounts">---</td>
 			</tr>
 			<tr>
 				<td>Advisor Accounts</td>
-				<td id="advisorAccounts">---</td>
+				<td id="numOfAdvisorAccounts">---</td>
 			</tr>
 			<tr>
 				<td>Pending Accounts:</td>
-				<td id="pendingAccounts">---</td>
+				<td id="numOfPendingAccounts">---</td>
 			</tr>
 		</table>
 	</div>
@@ -51,19 +51,19 @@
 		<table>
 			<tr>
 				<td>Pending Internships:</td>
-				<td id="pendingInternships">1</td>
+				<td id="numOfPendingInternships">---</td>
 			</tr>
 			<tr>
-				<td>Total Amount of Listed Internships:</td>
-				<td id="listedInternships">2</td>
+				<td>Approved Internships:</td>
+				<td id="numOfListedInternships">---</td>
 			</tr>
 			<tr>
 				<td>Pending Mentorships:</td>
-				<td id="pendingMentorships">1</td>
+				<td id="numOfPendingMentorships">---</td>
 			</tr>
 			<tr>
-				<td>Total Amount of Listed Mentorships:</td>
-				<td id="listedMentorships">1</td>
+				<td>Approved Mentorships:</td>
+				<td id="numOfListedMentorships">---</td>
 			</tr>
 		</table>
 	</div>
@@ -73,32 +73,32 @@
 	
 	<div class="tab-content" id="accountTab">
 		<ul id="accountHolder">
-			<li id="pendingAccounts" onclick="showAccounts('pendingAccounts')">
+			<li id="pendingAccounts" onclick="show('pendingAccounts')">
 							Pending Accounts<span class='expanded'>+</span></li>
-			<li id="studentAccounts" onclick="showAccounts('studentAccounts')">
+			<li id="studentAccounts" onclick="show('studentAccounts')">
 							Student Accounts<span class='expanded'>+</span></li>
-			<li id="advisorAccounts" onclick="showAccounts('advisorAccounts')">
+			<li id="advisorAccounts" onclick="show('advisorAccounts')">
 							Advisor Accounts<span class="expanded">+</span></li>
-			<li id='registeredAccounts' onclick="showAccounts('registeredAccounts')">
+			<li id='registeredAccounts' onclick="show('registeredAccounts')">
 							All Registered Accounts<span class='expanded'>+</span></li>
 		</ul>
 	</div>
 	
 	<div class="tab-content" id="internshipTab">
 		<ul>
-			<li id="pendingAccounts" onclick="showAccounts('pendingAccounts')">
+			<li id="pendingInternships" onclick="show('pendingInternships')">
 							Pending Internships<span class='expanded'>+</span></li>
-			<li id='registeredAccounts' onclick="showAccounts('registeredAccounts')">
+			<li id='allInternships' onclick="show('allInternships')">
 							All Internships<span class='expanded'>+</span></li>
 		</ul>
 	</div>
 	
 	<div class="tab-content" id="mentorshipTab">
-		<ul>
-			<li id="pendingAccounts" onclick="showAccounts('pendingAccounts')">
+		<ul id="mentorshipHolder">
+			<li id="pendingMentorships" onclick="show('pendingMentorships')">
 							Pending Mentorships<span class='expanded'>+</span></li>
-			<li id='registeredAccounts' onclick="showAccounts('registeredAccounts')">
-							All Mentorships<span class='expanded'>+</span></li>
+			<li id='allMentorships' onclick="show('allMentorships')">
+							Listed Mentorships<span class='expanded'>+</span></li>
 		</ul>
 	</div>
 

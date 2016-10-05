@@ -195,4 +195,42 @@ public class Internship extends DBObject
 	public void setFocus(String focus) {
 		this.focus = focus;
 	}
+
+
+	/**
+	 * @param parameters
+	 * @return
+	 */
+	public static Object AcceptOrDeny(Map<String, String> parameters) 
+	{
+		String intnershipId = parameters.get("mentorshipId");
+		String accepted = parameters.get("accepted");
+		
+		Session session = HibernateUtil.getSession();
+		Transaction tx = session.beginTransaction();
+
+		Internship internship = session.load(Internship.class, Long.parseLong(intnershipId));
+		
+		if(accepted.equals("true"))
+		{
+			internship.setActive(1);
+		}
+		else if(accepted.equals("false"))
+		{
+			internship.setActive(0);
+		}
+		else
+		{
+			System.out.println("unhandled case: " + accepted);
+			tx.commit();
+			session.flush();
+			return "INTERNAL_ERROR";
+		}
+		
+		session.merge(internship);
+		tx.commit();
+		session.flush();
+		
+		return "UPDATED_INTNERNSHIP";
+	}
 }

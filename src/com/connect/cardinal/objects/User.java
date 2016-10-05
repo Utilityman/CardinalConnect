@@ -217,4 +217,41 @@ public class User extends DBObject
 	public void setActive(int active) {
 		this.active = active;
 	}
+
+	/**
+	 * @param parameters
+	 * @return
+	 */
+	public static String AcceptOrDeny(Map<String, String> parameters)
+	{
+		String accountId = parameters.get("accountId");
+		String accepted = parameters.get("accepted");
+		
+		Session session = HibernateUtil.getSession();
+		Transaction tx = session.beginTransaction();
+
+		User user = session.load(User.class, Long.parseLong(accountId));
+		
+		if(accepted.equals("true"))
+		{
+			user.setActive(1);
+		}
+		else if(accepted.equals("false"))
+		{
+			user.setActive(0);
+		}
+		else
+		{
+			System.out.println("unhandled case: " + accepted);
+			tx.commit();
+			session.flush();
+			return "INTERNAL_ERROR";
+		}
+		
+		session.merge(user);
+		tx.commit();
+		session.flush();
+		
+		return "UPDATED_ACCOUNT";
+	}
 }

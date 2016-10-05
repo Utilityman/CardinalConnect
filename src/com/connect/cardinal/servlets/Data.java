@@ -1,7 +1,6 @@
 package com.connect.cardinal.servlets;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.Map;
 
 import javax.servlet.ServletException;
@@ -16,18 +15,15 @@ import com.connect.cardinal.objects.Internship;
 import com.connect.cardinal.objects.Mentorship;
 import com.connect.cardinal.secure.SessionTracker;
 import com.connect.cardinal.util.ObjectRetriever;
-import com.connect.cardinal.util.RequestParser;
-import com.google.gson.Gson;
 
 /**
  * Servlet implementation class Data
  * @author jmackin
  */
 @WebServlet("/Data")
-public class Data extends HttpServlet {
+public class Data extends BaseServlet 
+{
 	private static final long serialVersionUID = 1L;
-    private static PrintWriter out;
-
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -42,19 +38,13 @@ public class Data extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
-		Gson gson = new Gson();	
-		response.setContentType("application/json");
-		out = response.getWriter();
-		String resp = "";
-		
-		if(!SessionTracker.verify(request)) {returnNothing(gson, out);return;}
-
-		Map<String, String> parameters = RequestParser.getParameters(request.getParameterMap());
-		
-		System.out.println("Params: " + parameters);
-		System.out.println("Session ID: " + request.getSession().getId());
-		
-		if(parameters.get("action") == null){returnNothing(gson, out);return;}
+		Map<String, String> parameters = shouldContinue(request, response);
+		if(parameters == null)
+		{
+			returnNothing(out);
+			return;
+		}
+				
 		if(parameters.get("action").equals("getInternships"))
 		{
 			if(parameters.get("filter").equals(""))
@@ -69,7 +59,7 @@ public class Data extends HttpServlet {
 		else if(parameters.get("action").equals("getMentorships"))
 		{
 			if(parameters.get("filter").equals(""))
-				resp = ObjectRetriever.getActiveMentorships();
+				resp = ObjectRetriever.getMentorships();
 			else
 				resp = ObjectRetriever.getMentorshipssWithFilter(parameters.get("filter"));
 		}
@@ -94,24 +84,21 @@ public class Data extends HttpServlet {
 		}
 		else if(parameters.get("action").equals("getAccounts"))
 		{
-			if(!SessionTracker.verifyAdmin(request)) {resp = gson.toJson("NOT_ADMIN_USER");out.println(resp);return;}
+			if(!SessionTracker.verifyAdmin(request)) {resp = "NOT_ADMIN_USER";out.println(resp);return;}
 			
+			createSecureGsonObject();
 			resp = ObjectRetriever.getAccounts(parameters);
 		}
-		else
+		else if(parameters.get("action").equals("acceptOrDenyMentorship"))
 		{
-			resp = gson.toJson(resp);
+			resp = Mentorship.AcceptOrDeny(parameters);
 		}
-		
-		
-		System.out.println("Response: " + resp);
-		System.out.println();
-		out.println(resp);
-	}
-	
-	private static void returnNothing(Gson gson, PrintWriter out)
-	{
-		out.println(gson.toJson(""));
-	}
+		else if(parameters.get("action").equals("acceptOrDenyInternship"))
+		{
+			resp = Internship.AcceptOrDeny(parameters);
+		}
 
+		
+		respondToRequest();
+	}
 }

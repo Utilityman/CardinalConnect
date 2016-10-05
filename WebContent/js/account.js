@@ -12,7 +12,7 @@ function loadAccountDetails()
 		},
 		complete: function(data)
 		{
-			console.log(data);
+			console.log(data.responseJSON);
 			if(data.responseText == '') {returnToLogin(); return;} 
 			ACCOUNT = data.responseJSON;
 			fillInformation(data.responseJSON);

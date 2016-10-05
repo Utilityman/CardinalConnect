@@ -75,16 +75,19 @@ function fillField(json)
 {
 	for(var i = 0; i < json.length; i++)
 	{
-		var node = document.createElement("li");
-		node.onclick = function(){expand(this)};
-
-		$(node).append("<p class='title'>" + json[i].mentorshipTitle + "</p>");
-		$(node).append("<p class='name hidden'>" + json[i].description + "</p>");
-		$(node).append("<p class='name hidden'>Poster: " + json[i].firstName + " " + 
-									json[i].lastName + " - " + json[i].contact + "</p>");
-		$(node).append("<p class='name hidden'>Location: " + json[i].location + " at " +  json[i].company + "</p>");
-		
-		$("#mentorshipList").append(node);
+		if(json[i].active)
+		{
+			var node = document.createElement("li");
+			node.onclick = function(){expand(this)};
+	
+			$(node).append("<p class='title'>" + json[i].mentorshipTitle + "</p>");
+			$(node).append("<p class='name hidden'>" + json[i].description + "</p>");
+			$(node).append("<p class='name hidden'>Poster: " + json[i].firstName + " " + 
+										json[i].lastName + " - " + json[i].contact + "</p>");
+			$(node).append("<p class='name hidden'>Location: " + json[i].location + " at " +  json[i].company + "</p>");
+			
+			$("#mentorshipList").append(node);
+		}
 	}
 }
 

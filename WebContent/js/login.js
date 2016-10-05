@@ -1,4 +1,15 @@
 
+/*
+ *  e.which == the enter key
+ */
+$(document).keypress(function (e)
+{
+	if(e.which == 13)
+	{
+		requestLogin();
+	}
+});
+
 function requestLogin()
 {
 	var username = $("#username").val();
