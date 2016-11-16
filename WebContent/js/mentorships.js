@@ -73,6 +73,7 @@ function postMentorship()
 
 function fillField(json)
 {
+	console.log(json);
 	for(var i = 0; i < json.length; i++)
 	{
 		if(json[i].active)

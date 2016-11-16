@@ -164,14 +164,32 @@ function fillTabs()
 		if(internships[i].active == 0)
 		{
 			pendingInternships++;
+			$('#internshipHolder #pendingInternships').after('<li id="' + internships[i].id +
+					   '" class="pendingInternships miniAccount hidden"' + 
+					   '>Company: ' + internships[i].company + 
+						'<button onclick="handleInternship(this, false)">Decline</button>' + 
+						'<button onclick="handleInternship(this, true)">Accept</button>' + 
+					   '<button onclick="goToInternshipPage(this)">Internship Page</button>' + 
+					   '</li>');
 		}
 		else if(internships[i].active == 1)
 		{
 			activeInternships++;
+			$('#internshipHolder #allInternships').after('<li id="' + internships[i].id +
+					   '" class="allInternships miniAccount hidden"' + 
+					   '>Company: ' + internships[i].company + 
+						'<button onclick="handleInternship(this, false)">Decline</button>' + 
+						'<button onclick="handleInternship(this, true)">Accept</button>' + 
+					   '<button onclick="goToInternshipPage(this)">Internship Page</button>' + 
+					   '</li>');
 		}
 	}
 	$('#numOfPendingInternships').html(pendingInternships);
+	$('#pendingInternships').html("Pending Internships (" + pendingInternships + ")" + "<span class='expanded'>+</span>");
+
 	$('#numOfListedInternships').html(activeInternships);
+	$('#allInternships').html("Accepted Internships (" + activeInternships + ")" + "<span class='expanded'>+</span>");
+
 	
 	var pendingMentorships = 0;
 	var activeMentorships = 0;
@@ -192,7 +210,7 @@ function fillTabs()
 		{
 			activeMentorships++;
 			$('#mentorshipHolder #allMentorships').after('<li id="' + mentorships[i].id +
-					   '" class="pendingMentorships miniAccount hidden"' + 
+					   '" class="allMentorships miniAccount hidden"' + 
 					   '>Company: ' + mentorships[i].company + 
 					   '<button onclick="goToMentorshipPage(this)">Mentorship Page</button>' + 
 					   '</li>');
@@ -201,11 +219,12 @@ function fillTabs()
 	$('#numOfPendingMentorships').html(pendingMentorships);
 	$('#pendingMentorships').html("Pending Mentorships (" + pendingMentorships + ")" + "<span class='expanded'>+</span>");
 	$('#numOfListedMentorships').html(activeMentorships);	
-	$('#allMentorships').html("Listed Mentorships (" + activeMentorships + ")" + "<span class='expanded'>+</span>");
+	$('#allMentorships').html("Accepted Mentorships (" + activeMentorships + ")" + "<span class='expanded'>+</span>");
 }
 
 function show(source)
 {
+	console.log("showing: " + source);
 	$('.miniAccount').addClass('hidden');
 	if($('#' + source + " > span").html() == "+")
 	{

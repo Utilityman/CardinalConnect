@@ -48,7 +48,7 @@ public class Data extends BaseServlet
 		if(parameters.get("action").equals("getInternships"))
 		{
 			if(parameters.get("filter").equals(""))
-				resp = ObjectRetriever.getActiveInternships();
+				resp = ObjectRetriever.getInternships();
 			else
 				resp = ObjectRetriever.getInternshipsWithFilter(parameters.get("filter"));
 		}

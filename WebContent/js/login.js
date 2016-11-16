@@ -60,7 +60,8 @@ function register()
 	var password = $("#password1").val();
 	var password2 = $("#password2").val();
 	
-	console.log(password +  " " +  password2);
+	var status = $('#status').val();
+	
 	if(firstName == "" || middleName == "" || lastName == "" || email == "" || password == "" || password2 == "")
 	{
 		$("#errorString").text("All fields required!");
@@ -85,7 +86,7 @@ function register()
 			'firstName': firstName,
 			'middleName': middleName,
 			'lastName': lastName,
-			'status': "Student",
+			'status': status,
 		},
 		complete: function(data)
 		{

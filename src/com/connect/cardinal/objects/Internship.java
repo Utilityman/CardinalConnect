@@ -203,7 +203,7 @@ public class Internship extends DBObject
 	 */
 	public static Object AcceptOrDeny(Map<String, String> parameters) 
 	{
-		String intnershipId = parameters.get("mentorshipId");
+		String intnershipId = parameters.get("internshipId");
 		String accepted = parameters.get("accepted");
 		
 		Session session = HibernateUtil.getSession();

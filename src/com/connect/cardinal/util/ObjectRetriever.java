@@ -63,6 +63,15 @@ public class ObjectRetriever
 		List results = query.list();
 		return results;
 	}
+	
+	public static List getInternships()
+	{
+		Session session = HibernateUtil.getSession();
+		String activeInternships = FROM + "Internship";
+		Query query = session.createQuery(activeInternships);
+		List results = query.list();
+		return results;
+	}
 
 	/**
 	 * @param string
