@@ -7,6 +7,8 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 
 import com.connect.cardinal.hibernate.HibernateUtil;
+import com.connect.cardinal.objects.Internship;
+import com.connect.cardinal.objects.Mentorship;
 import com.connect.cardinal.objects.User;
 import com.connect.cardinal.objects.UserStatus;
 
@@ -91,13 +93,41 @@ public class ObjectRetriever
 	 * @param string
 	 * @return
 	 */
-	public static List getMentorshipssWithFilter(String string) 
+	public static Object getInternshipsByID(String string) 
+	{
+		Session session = HibernateUtil.getSession();
+
+		Internship internship = (Internship) session.get(Internship.class, Long.parseLong(string));
+		
+		return internship;
+	}
+	
+	/**
+	 * @param string
+	 * @return
+	 */
+	public static Object getMentorshipsByID(String string) 
+	{
+		Session session = HibernateUtil.getSession();
+		
+		Mentorship mentorship = (Mentorship) session.get(Mentorship.class, Long.parseLong(string));
+		
+		return mentorship;
+	}
+	
+	/**
+	 * @param string
+	 * @return
+	 */
+	public static Object getMentorshipssWithFilter(String string) 
 	{
 		Session session = HibernateUtil.getSession();
 		String filteredInternships = FROM + "Mentorship E where E.focus = '" + string + 
 									"' and E.active = " + RETRIEVAL_METHOD;
 		Query query = session.createQuery(filteredInternships);
 		List results = query.list();
+
+		
 		return results;		
 	}
 	

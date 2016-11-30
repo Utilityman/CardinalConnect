@@ -1,0 +1,64 @@
+<html>
+<head>
+	<script type="text/javascript" src="js/jquery.js"></script>
+	<script type="text/javascript" src="js/base.js"></script>
+	<script type="text/javascript" src="js/informationPage.js"></script>
+
+	<link href="css/style.css" type="text/css" rel="stylesheet"></link>
+		<link href="css/account.css" type="text/css" rel="stylesheet"></link>
+	<title>Cardinal Mentorship</title>
+</head>
+<body onload="loadMentorshipByParams()">
+
+<div id="title">
+	<img id="logo" src="res/logo.png" alt="Logo">
+	<span>CALVERT HALL COLLEGE</span>
+</div>
+	<ul id="titlebar">
+		<li onclick="returnToPreviousByURLParam()">Return to Previous Page</li>
+		<li onclick='showInternshipInformation(this)' class='active'>Mentorship Information</li>
+		<li onclick='showApplicants(this)'>Applicants</li>
+		<li onclick='showAdmin(this)'>Admin</li>
+	</ul>
+
+<div id='information' class="accountDetails active">
+	<table>
+		<tr><td></td><td>Mentorship Information</td></tr>
+		
+		<tr><td>Mentorship Title</td><td id='internshipTitle'></td></tr>
+		
+		<tr><td>Host: </td><td id="name"></td></tr>
+		
+		<tr><td>Company: </td><td id="company"></td></tr>
+		
+		<tr><td>Contact Information: </td><td id="contact"></td></tr>
+		
+		<tr><td>Location: </td><td id='location'></td></tr>
+		
+		<tr><td>Description: </td><td id="description"></td></tr>
+		
+		<tr><td>Focus: </td><td id="focus"></td></tr>
+		
+		<tr>
+		<td></td>
+		</tr>
+	</table>
+</div>
+
+<div id='applicants' class='accountDetails hidden'>
+	<p>Applicants</p>
+	<ul>
+		<li>Joe</li>
+		<li>Sue</li>
+	</ul>
+</div>
+
+<div id='admin' class='accountDetails hidden'>
+	<button>List Mentorship</button> <button disabled>Unlist Mentorship</button>
+	<p>Notes:</p>
+	<textarea style='width:80%; height:100px;margin-left: 10%'>
+	</textarea>
+</div>
+
+</body>
+</html>

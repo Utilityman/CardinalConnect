@@ -12,7 +12,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "event")
-public class Event extends DBObject
+public class Event extends DatabaseObject
 {
 	private String title;
 	private String description;

@@ -135,6 +135,27 @@ function comingSoon(param)
 	$(param).html("Coming Soon!");
 }
 
+function returnToPageID(id)
+{
+	switch(id)
+	{
+		case '0':
+			window.location.href = 'admin.html';
+			break;
+		default:
+			alert('Return Page Undefined, Returning Home!');
+			window.location.href = 'home.html';
+			break;
+	}
+}
+
+function returnToPreviousByURLParam()
+{
+	var id = getParameterByName('returnPage');
+	returnToPageID(id);
+}
+
+
 
 
 

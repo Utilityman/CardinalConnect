@@ -1,4 +1,4 @@
-#accountDetails
+.accountDetails
 {
 	margin-top: 16px;
 	width: 70%;
@@ -13,7 +13,7 @@
 	box-shadow: 0px 10px 25px 0px rgba(0,0,0,0.75);
 }
 
-#accountDetails table
+.accountDetails table
 {
 	width: 100%;
 	color: white;
@@ -21,18 +21,18 @@
 	border-collapse: collapse;
 }
 
-#accountDetails table tr:first-child
+.accountDetails table tr:first-child
 {
 	font-size: 20px;
 	padding-top: 0;
 }
 
-#accountDetails table tr
+.accountDetails table tr
 {
 	width: 100%;
 }
 
-#accountDetails table td
+.accountDetails table td
 {
 	padding: 4px 4px; 
 	padding-top: 24px;
@@ -40,29 +40,29 @@
 	vertical-align: middle;
 }
 
-#accountDetails table tr:not(:first-child)
+.accountDetails table tr:not(:first-child)
 {
 	border-bottom: 1.5px solid #6f6a6c;
 }
 
-#accountDetails table tr.hoverable:hover
+.accountDetails table tr.hoverable:hover
 {
 	background-color: #5d585a;
 }
 
-#accountDetails table tr:first-child > td
+.accountDetails table tr:first-child > td
 {
 	padding-top: 0;
 }
 
-#accountDetails table tr:last-child
+.accountDetails table tr:last-child
 {
 	font-size: 12px;
 	color: #BBBBBB;
 	border: 0;
 }
 
-#accountDetails select
+.accountDetails select
 {
 	-webkit-appearance: menulist-button; font-size: 14px;	
 	margin-bottom: 8px;
@@ -71,13 +71,13 @@
 	padding: 0;
 }
 
-#accountDetails button, input
+.accountDetails button, input
 {
 	font-size: 14px;
 	margin-bottom: 4px;
 }
 
-#accountDetails input
+.accountDetails input
 {
 	width: 100%;
 	margin-right: 8px;

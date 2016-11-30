@@ -19,7 +19,7 @@ import com.connect.cardinal.hibernate.HibernateUtil;
  */
 @Entity
 @Table(name = "feedback")
-public class Feedback extends DBObject
+public class Feedback extends DatabaseObject
 {
 	private String title;
 	private String author;

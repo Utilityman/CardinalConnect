@@ -9,7 +9,7 @@ function loadInternships()
 		url: 'Data', 
 		data: 
 		{
-			'action': 'getInternships',
+			'action': 'getActiveInternships',
 			'filter': filter,
 		},
 		complete: function(data)

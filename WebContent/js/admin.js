@@ -1,6 +1,7 @@
 var accounts = null;
 var internships = null;
 var mentorships = null;
+var RETURN_ID = 0;
 
 function showTab(source, param)
 {
@@ -366,8 +367,21 @@ function goToAccountPage(param)
 
 function goToMentorshipPage(param)
 {
-	comingSoon(param);
+	if($(param).parents('li').length == 1)
+		window.location.href = 'mentorshipInfo.html?&id=' + 
+										$(param).parents('li').attr('id') + 
+										"&returnPage=" + RETURN_ID;
 }
+
+function goToInternshipPage(param)
+{
+	console.log($(param).parents('li'));
+	if($(param).parents('li').length == 1)
+		window.location.href = "internshipInfo.html?&id=" + 
+									$(param).parents('li').attr('id') + 
+									"&returnPage=" + RETURN_ID;
+}
+
 
 
 

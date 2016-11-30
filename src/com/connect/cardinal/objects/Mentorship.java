@@ -16,7 +16,7 @@ import com.connect.cardinal.hibernate.HibernateUtil;
  */
 @Entity
 @Table(name = "mentorship")
-public class Mentorship extends DBObject
+public class Mentorship extends DatabaseObject
 {
 	private String firstName;
 	private String lastName;
@@ -199,4 +199,10 @@ public class Mentorship extends DBObject
 		
 		return "UPDATED_MENTORSHIP";
 	}	
+	
+	public String toString()
+	{
+		return "Mentorship " + id + ": " + company + " " + description + "\n";
+
+	}
 }

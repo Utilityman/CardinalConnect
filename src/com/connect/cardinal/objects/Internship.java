@@ -16,7 +16,7 @@ import com.connect.cardinal.hibernate.HibernateUtil;
  */
 @Entity
 @Table(name = "internship")
-public class Internship extends DBObject
+public class Internship extends DatabaseObject
 {
 	private String firstName;
 	private String lastName;
@@ -163,7 +163,7 @@ public class Internship extends DBObject
 	
 	public String toString()
 	{
-		return firstName + " " + lastName + " " + description;
+		return "Internship " + id + ": " + company + " " + description + "\n";
 	}
 
 

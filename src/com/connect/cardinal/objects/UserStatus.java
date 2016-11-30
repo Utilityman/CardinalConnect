@@ -11,7 +11,7 @@ import com.google.gson.annotations.Expose;
  */
 @Entity
 @Table(name = "userStatus")
-public class UserStatus extends DBObject
+public class UserStatus extends DatabaseObject
 {
 	@Expose
 	private String userStatus;

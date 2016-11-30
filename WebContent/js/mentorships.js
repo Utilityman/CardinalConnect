@@ -8,7 +8,7 @@ function loadMentorships()
 		url: 'Data', 
 		data: 
 		{
-			'action': 'getMentorships',
+			'action': 'getActiveMentorships',
 			'filter': filter,
 		},
 		complete: function(data)

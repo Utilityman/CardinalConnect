@@ -52,6 +52,14 @@ public class Data extends BaseServlet
 			else
 				resp = ObjectRetriever.getInternshipsWithFilter(parameters.get("filter"));
 		}
+		else if(parameters.get("action").equals("getInternshipByID"))
+		{
+			resp = ObjectRetriever.getInternshipsByID(parameters.get("internshipID"));
+		}
+		else if(parameters.get("action").equals("getActiveInternships"))
+		{
+			resp = ObjectRetriever.getActiveInternships();
+		}
 		else if(parameters.get("action").equals("postInternship"))
 		{
 			resp = Internship.createAndCommitInternshipFromForm(parameters);
@@ -62,6 +70,14 @@ public class Data extends BaseServlet
 				resp = ObjectRetriever.getMentorships();
 			else
 				resp = ObjectRetriever.getMentorshipssWithFilter(parameters.get("filter"));
+		}
+		else if(parameters.get("action").equals("getActiveMentorships"))
+		{
+			resp = ObjectRetriever.getActiveMentorships();
+		}
+		else if(parameters.get("action").equals("getMentorshipByID"))
+		{
+			resp = ObjectRetriever.getMentorshipsByID(parameters.get("mentorshipID"));
 		}
 		else if(parameters.get("action").equals("postMentorship"))
 		{

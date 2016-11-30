@@ -12,10 +12,9 @@ import com.google.gson.annotations.Expose;
 
 /**
  * @author jmackin
- *
  */
 @MappedSuperclass
-public class DBObject 
+public class DatabaseObject 
 {
 	/**
 	 * The database id of this object

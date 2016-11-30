@@ -22,7 +22,7 @@ import com.google.gson.annotations.Expose;
  */
 @Entity
 @Table(name = "user")
-public class User extends DBObject
+public class User extends DatabaseObject
 {
 	@Expose
 	private String firstName;
@@ -148,7 +148,7 @@ public class User extends DBObject
 	public static String editStudentOrAlum(Map<String, String> parameters) 
 	{
 		String idString = parameters.get("ACCOUNT_ID");
-		String studentOrAlum = parameters.get("studentOrAlum");
+		//String studentOrAlum = parameters.get("studentOrAlum");
 		
 		Session session = HibernateUtil.getSession();
 		Transaction tx = session.beginTransaction();
