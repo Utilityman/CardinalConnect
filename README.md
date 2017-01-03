@@ -79,7 +79,7 @@ If you're lost, here's a few resources for you.
 [Maybe check out this project with a similar (if not the same) fundamental structure](https://github.com/MillerIntern/MillerRebuilt)
 
 
-Lastly, if you have any other questions feel free to contact and of the previous developer.
+Lastly, if you have any other questions feel free to contact and of the previous developer~~s~~.
 
     
     
