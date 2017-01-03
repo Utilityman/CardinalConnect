@@ -16,9 +16,7 @@ The hope of this system is to bring a school together by bringing together the s
 
 ## Setup
 
-Requirements:  
-
-      Java (and eclipse), Javascript/CSS/HTML, MySQL (and an appropriate bitnami amp stack), Tomcat, Maven, git
+Requirements: Java (and eclipse), Javascript/CSS/HTML, MySQL (and an appropriate bitnami amp stack), Tomcat, Maven, git (use version control!)
      
 Beginning with the backend, the database to this application is simply a MySQL database. In order to get the application
 setup, it is recommended to run the database locally with a bitnami amp stack. 
@@ -54,7 +52,7 @@ we can make calls to query and to add to the database even more easily than it i
 command line. 
 
     Query query = session.createQuery(activeInternships);
-		List results = query.list();
+    List results = query.list();
     
 Hibernate lets our application wrap up our database objects into neat little objects which then can be accessed as like any
 ordinary Java object. This allows us to manipulate and mess with the data safely and securely before sending it to the 
@@ -73,10 +71,13 @@ the ability to execute and run HTML and Javascript.
 If you're lost, here's a few resources for you.
 
 [Getting Started with Servlets and Tomcat](https://www.ntu.edu.sg/home/ehchua/programming/howto/Tomcat_HowTo.html)
+
 [Configuring Eclipse with WebTools and Tomcat](http://www.vogella.com/tutorials/EclipseWTP/article.html)
+
 [Maven in Eclipse](http://stackoverflow.com/questions/8620127/maven-in-eclipse-step-by-step-installation)
 
 [Maybe check out this project with a similar (if not the same) fundamental structure](https://github.com/MillerIntern/MillerRebuilt)
+
 
 Lastly, if you have any other questions feel free to contact and of the previous developer.
 
