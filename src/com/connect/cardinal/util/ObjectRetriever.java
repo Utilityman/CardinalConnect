@@ -7,12 +7,13 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 
 import com.connect.cardinal.hibernate.HibernateUtil;
-import com.connect.cardinal.objects.Internship;
-import com.connect.cardinal.objects.Mentorship;
 import com.connect.cardinal.objects.User;
 import com.connect.cardinal.objects.UserStatus;
 
 /**
+ * TODO: Do object retrieval here or statically from the objects themselves?
+ * TODO: Object retrieval in respective objects or else this file will become a disgusting monster
+ * TOOD: Have 
  * @author jmackin
  *
  */
@@ -22,6 +23,8 @@ public class ObjectRetriever
 	private static final String FROM = "FROM com.connect.cardinal.objects.";
 	private static final int INACTIVE = 0;
 	private static final int ACTIVE = 1;
+	
+	// FOR DEBUGGING
 	private static final int RETRIEVAL_METHOD = ACTIVE;
 	
 	public static List getActiveInternships()
@@ -88,32 +91,7 @@ public class ObjectRetriever
 		List results = query.list();
 		return results;		
 	}
-	
-	/**
-	 * @param string
-	 * @return
-	 */
-	public static Object getInternshipsByID(String string) 
-	{
-		Session session = HibernateUtil.getSession();
 
-		Internship internship = (Internship) session.get(Internship.class, Long.parseLong(string));
-		
-		return internship;
-	}
-	
-	/**
-	 * @param string
-	 * @return
-	 */
-	public static Object getMentorshipsByID(String string) 
-	{
-		Session session = HibernateUtil.getSession();
-		
-		Mentorship mentorship = (Mentorship) session.get(Mentorship.class, Long.parseLong(string));
-		
-		return mentorship;
-	}
 	
 	/**
 	 * @param string

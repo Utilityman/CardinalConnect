@@ -20,7 +20,7 @@ public class DatabaseObject
 	 * The database id of this object
 	 */
 	@Expose
-	Long id;
+	protected Long id;
 	
 	/**
 	 * This method returns the id of this object. The annotation of the method
@@ -29,8 +29,6 @@ public class DatabaseObject
 	 * @return
 	 */
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	//@GeneratedValue(strategy=GenerationType.AUTO, generator="my_entity_seq_gen")
-	//@SequenceGenerator(name="my_entity_seq_gen", sequenceName="MY_ENTITY_SEQ")
 	@Id
 	public Long getId()throws NonUniqueObjectException {
 		return id;

@@ -1,12 +1,20 @@
 package com.connect.cardinal.objects;
 
 import java.util.Map;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import com.connect.cardinal.hibernate.HibernateUtil;
 
@@ -27,6 +35,38 @@ public class Mentorship extends DatabaseObject
 	private String company;
 	private int active;
 	private String focus;
+	private User owner;
+	private Set<User> subscribers;
+
+	
+	/**
+	 * @param string
+	 * @return
+	 */
+	public static Object getMentorshipsByID(String string) 
+	{
+		Session session = HibernateUtil.getSession();
+		
+		Mentorship mentorship = (Mentorship) session.get(Mentorship.class, Long.parseLong(string));
+		
+		return mentorship;
+	}
+	
+	/**
+	 * @param ship
+	 */
+	public static boolean saveMentorshipObject(Mentorship ship) 
+	{
+		Transaction tx = null;
+		Session session = HibernateUtil.getSession();
+		tx = session.beginTransaction();
+		
+		session.saveOrUpdate(ship);
+		System.out.println("Internship: "  + ship.id + " saved or updated");
+		tx.commit();
+		session.flush();
+		return true;		
+	}
 	
 	/**
 	 * @param parameters
@@ -204,5 +244,27 @@ public class Mentorship extends DatabaseObject
 	{
 		return "Mentorship " + id + ": " + company + " " + description + "\n";
 
+	}
+
+	@OneToOne(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	@Fetch(FetchMode.SELECT)
+	@JoinColumn
+	public User getOwner() {
+		return owner;
+	}
+
+	public void setOwner(User owner) {
+		this.owner = owner;
+	}
+
+	@ManyToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	@Fetch(FetchMode.SELECT)
+	@JoinColumn
+	public Set<User> getSubscribers() {
+		return subscribers;
+	}
+
+	public void setSubscribers(Set<User> subscribers) {
+		this.subscribers = subscribers;
 	}
 }

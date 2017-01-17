@@ -62,7 +62,7 @@ function findInternships(param)
 
 /**
  * 	Expands tabs on the mentorship, internships, and events pages
- * 	TODO: use html classes to generalize this ie. find all children with class (.hideme) and toggle hidden 
+ * 	TODO: use html classes to generalize this ie. find all children with class (.hideme) and toggle .hidden 
  */
 function expand(tab)
 {

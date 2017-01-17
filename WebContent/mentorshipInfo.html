@@ -18,7 +18,7 @@
 		<li onclick="returnToPreviousByURLParam()">Return to Previous Page</li>
 		<li onclick='showInternshipInformation(this)' class='active'>Mentorship Information</li>
 		<li onclick='showApplicants(this)'>Applicants</li>
-		<li onclick='showAdmin(this)'>Admin</li>
+		<li id="adminStuff" onclick='showAdmin(this)'>Admin</li>
 	</ul>
 
 <div id='information' class="accountDetails active">
@@ -54,7 +54,8 @@
 </div>
 
 <div id='admin' class='accountDetails hidden'>
-	<button>List Mentorship</button> <button disabled>Unlist Mentorship</button>
+	<button id="mentorshipListerButton" onclick="listMentorship()">List Mentorship</button> 
+	<button id="mentroshipUnlisterButton" onclick="unlistMentorship()" disabled>Unlist Mentorship</button>
 	<p>Notes:</p>
 	<textarea style='width:80%; height:100px;margin-left: 10%'>
 	</textarea>

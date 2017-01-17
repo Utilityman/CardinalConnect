@@ -1,0 +1,12 @@
+TODO: GET RID OF THIS FILE!!!!
+TODO: ITS SO BAD ITS CRAZY
+
+TODO: FOR THE LONG TERM THIS FILE WILL BECOME HUGE AND SCARY
+TODO: FOR THE SHORT TERM - IN ORDER TO FIND THE RETREIVAL THAT YOU WANT YOU HAVE TO SIFT THROUGH SO MUCH OTHER GARBAGE
+
+ * TODO: split all these actions into more appropriate servlets
+ or example internships and mentorships could be moved to something like Posts
+ so that they reside in /CardinalConnect/Posts?params---
+ admin stuff should be moved to /CardinalConnect/Admin
+ 
+ 

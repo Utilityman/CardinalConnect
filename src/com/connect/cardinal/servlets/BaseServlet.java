@@ -102,6 +102,8 @@ public abstract class BaseServlet extends HttpServlet
 	
 	protected void respondToRequest()
 	{
+		if(resp == null)
+			resp = "NULL_RESPONSE";
 		System.out.println("Response: " + resp);
 		System.out.println();
 		

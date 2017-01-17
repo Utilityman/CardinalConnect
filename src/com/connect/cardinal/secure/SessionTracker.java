@@ -3,7 +3,7 @@ package com.connect.cardinal.secure;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * Session tracker keeps track of the tomcat users by id and stores
+ * Session tracker keeps track of the tomcat users by storing id and other data in the session
  * them in an object called WebSession. 
  * @author jmackin
  *

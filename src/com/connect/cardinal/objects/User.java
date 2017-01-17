@@ -1,5 +1,6 @@
 package com.connect.cardinal.objects;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.persistence.Entity;
@@ -8,6 +9,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.annotations.Fetch;
@@ -50,6 +52,22 @@ public class User extends DatabaseObject
 	
 	@Expose
 	private int active;
+	
+	
+	//TODO: Would be more secure by ID instead of username
+	public static User getUserByUsername(String username)
+	{
+		System.out.println(username);
+		/*Session session = HibernateUtil.getSession();
+		String usernames = FROM + "User E where E.email = '" + string + "'";
+		Query query = session.createQuery(usernames);
+		List user = query.list();
+		if(user != null && user.size() == 1)
+			return (User) user.get(0);
+		return null;*/
+		return null;
+	}
+	
 	
 	/**
 	 * @param firstName

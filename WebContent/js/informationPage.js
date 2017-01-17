@@ -1,3 +1,9 @@
+/**
+ * javascript page associated with mentorshipInfo and internshipInfo
+ * contains similar but not same methods to handle both cases
+ */
+
+// internship or mentorship generalized as SHIP
 var SHIP;
 
 
@@ -24,6 +30,11 @@ function loadInternshipByParams()
 	});
 }
 
+function checkUser()
+{
+
+}
+
 function loadMentorshipByParams()
 {
 	var mentorshipID = getParameterByName('id');
@@ -43,6 +54,7 @@ function loadMentorshipByParams()
 			if(data.responseText == '') {returnToLogin(); return;} 
 			SHIP = data.responseJSON;
 			fillMentorshipInformation(data.responseJSON);
+			$('#adminStuff').css('display', 'none');
 		},
 	});
 }
@@ -57,6 +69,16 @@ function fillInternshipInformation(json)
 	$('#description').html(json.description);
 	$('#focus').html(json.focus);
 	$('#paid').html(json.paid);
+	if(json.active)
+	{
+		$('#internshipListerButton').prop('disabled', true);
+		$('#internshipUnlisterButton').prop('disabled', false);
+	}
+	else
+	{
+		$('#internshipListerButton').prop('disabled', false);
+		$('#internshipUnlisterButton').prop('disabled', true);	
+	}
 }
 
 function fillMentorshipInformation(json)
@@ -68,6 +90,17 @@ function fillMentorshipInformation(json)
 	$('#location').html(json.location);
 	$('#description').html(json.description);
 	$('#focus').html(json.focus);
+	
+	if(json.active)
+	{
+		$('#mentorshipListerButton').prop('disabled', true);
+		$('#mentroshipUnlisterButton').prop('disabled', false);
+	}
+	else
+	{
+		$('#mentorshipListerButton').prop('disabled', false);
+		$('#mentroshipUnlisterButton').prop('disabled', true);	
+	}
 }
 
 
@@ -94,3 +127,94 @@ function showAdmin(source)
 	$(source).addClass('active');
 	$('#admin').removeClass('hidden');
 }
+
+function listInternship()
+{
+	$.ajax({
+		type: 'POST',
+		url: 'Internships', 
+		data: 
+		{
+			'action': 'listInternship',
+			'internshipID': SHIP.id,
+		},
+		complete: function(data)
+		{
+			console.log(data.responseJSON);
+			if(data.responseJSON == true)
+			{
+				$('#internshipListerButton').prop('disabled', true);
+				$('#internshipUnlisterButton').prop('disabled', false);
+			}
+		},
+	});
+}
+
+function unlistInternship()
+{
+	$.ajax({
+		type: 'POST',
+		url: 'Internships', 
+		data: 
+		{
+			'action': 'unlistInternship',
+			'internshipID': SHIP.id,
+		},
+		complete: function(data)
+		{
+			console.log(data.responseJSON);
+			if(data.responseJSON == true)
+			{
+				$('#internshipListerButton').prop('disabled', false);
+				$('#internshipUnlisterButton').prop('disabled', true);
+			}
+		},
+	});
+}
+
+function listMentorship()
+{
+	$.ajax({
+		type: 'POST',
+		url: 'Mentorships', 
+		data: 
+		{
+			'action': 'listMentorship',
+			'mentorshipID': SHIP.id,
+		},
+		complete: function(data)
+		{
+			console.log(data);
+			if(data.responseJSON == true)
+			{
+				$('#mentorshipListerButton').prop('disabled', true);
+				$('#mentroshipUnlisterButton').prop('disabled', false);
+			}
+			
+		},
+	});
+}
+
+function unlistMentorship()
+{
+	$.ajax({
+		type: 'POST',
+		url: 'Mentorships', 
+		data: 
+		{
+			'action': 'unlistMentorship',
+			'mentorshipID': SHIP.id,
+		},
+		complete: function(data)
+		{
+			console.log(data);
+			if(data.responseJSON == true)
+			{
+				$('#mentorshipListerButton').prop('disabled', false);
+				$('#mentroshipUnlisterButton').prop('disabled', true);
+			}
+			
+		},
+	});
+}
+

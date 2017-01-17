@@ -18,6 +18,7 @@ import com.connect.cardinal.util.ObjectRetriever;
 
 /**
  * Servlet implementation class Data
+ *  
  * @author jmackin
  */
 @WebServlet("/Data")
@@ -54,7 +55,7 @@ public class Data extends BaseServlet
 		}
 		else if(parameters.get("action").equals("getInternshipByID"))
 		{
-			resp = ObjectRetriever.getInternshipsByID(parameters.get("internshipID"));
+			resp = Internship.getInternshipsByID(parameters.get("internshipID"));
 		}
 		else if(parameters.get("action").equals("getActiveInternships"))
 		{
@@ -62,7 +63,8 @@ public class Data extends BaseServlet
 		}
 		else if(parameters.get("action").equals("postInternship"))
 		{
-			resp = Internship.createAndCommitInternshipFromForm(parameters);
+			//TODO: WOAH THIS IS GONE - AND BROKEN
+			//resp = Internship.createAndCommitInternshipFromForm(parameters);
 		}
 		else if(parameters.get("action").equals("getMentorships"))
 		{
@@ -77,7 +79,7 @@ public class Data extends BaseServlet
 		}
 		else if(parameters.get("action").equals("getMentorshipByID"))
 		{
-			resp = ObjectRetriever.getMentorshipsByID(parameters.get("mentorshipID"));
+			resp = Mentorship.getMentorshipsByID(parameters.get("mentorshipID"));
 		}
 		else if(parameters.get("action").equals("postMentorship"))
 		{

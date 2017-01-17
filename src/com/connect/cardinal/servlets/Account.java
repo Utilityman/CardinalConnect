@@ -24,7 +24,6 @@ public class Account extends BaseServlet {
      */
     public Account() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**

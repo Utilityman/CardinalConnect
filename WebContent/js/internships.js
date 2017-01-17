@@ -93,6 +93,8 @@ function fillField(json)
 			$(node).append("<p class='name hidden'>Location: " + json[i].location + " at " +  json[i].company + "</p>");
 			$(node).append("<p class='name hidden'>Availability: " + json[i].availability + "</p>");
 			
+			//$(node).append("<span style='float:right;margin-top: -100px'>Hello</span>");
+			
 			$("#internshipList").append(node);
 		}
 	}

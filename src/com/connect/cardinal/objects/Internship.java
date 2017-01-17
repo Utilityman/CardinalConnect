@@ -1,12 +1,22 @@
 package com.connect.cardinal.objects;
 
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.servlet.http.HttpServletRequest;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import com.connect.cardinal.hibernate.HibernateUtil;
 
@@ -29,37 +39,68 @@ public class Internship extends DatabaseObject
 	private String company;
 	private String availability;
 	private String focus;
+	private User owner;
+	private Set<User> subscribers;
+	
+	/**
+	 * @param string
+	 * @return generic object so that the same caller can make generic object returns 
+	 */
+	public static Object getInternshipsByID(String string) 
+	{
+		Session session = HibernateUtil.getSession();
+
+		Internship internship = (Internship) session.get(Internship.class, Long.parseLong(string));
+		return internship;
+	}
+	
+	public static boolean saveInternshipObject(Internship internship)
+	{
+		Transaction tx = null;
+		Session session = HibernateUtil.getSession();
+		tx = session.beginTransaction();
+		
+		session.saveOrUpdate(internship);
+		System.out.println("Internship: "  + internship.id + " saved or updated");
+		tx.commit();
+		session.flush();
+		return true;
+	}
 	
 	/**
 	 * @param parameters
 	 * @return
 	 */
-	public static String createAndCommitInternshipFromForm(Map<String, String> parameters)
+	public static String createAndCommitInternshipFromForm(Map<String, String> parameters, HttpServletRequest request)
 	{
 		Transaction tx = null;
 		Internship internship = new Internship();
+		
 		internship.setActive(0);
 		internship.setContact(parameters.get("contact"));
 		internship.setDescription(parameters.get("description"));
 		internship.setLocation(parameters.get("location"));
 		internship.setPaid(parameters.get("paid"));
 		internship.setInternshipTitle(parameters.get("internshipTitle"));
+		
+		if(parameters.get("firstName").equals("") || parameters.get("lastName").equals(""))
+		{
+			///User.getUserByUsername((String) request.getSession().getAttribute("userName"));
+		}
 		internship.setLastName(parameters.get("lastName"));
 		internship.setFirstName(parameters.get("firstName"));
 		internship.setCompany(parameters.get("company"));
 		internship.setAvailability(parameters.get("availability"));
 		internship.setFocus(parameters.get("focus"));
-		System.out.println(parameters.get("availability"));
-		System.out.println(internship.getAvailability());
+
 		
-		
-		Session session = HibernateUtil.getSession();
+		/*Session session = HibernateUtil.getSession();
 		tx = session.beginTransaction();
 		
 		System.out.println("Internship:" + session.save(internship) + " saved to the database");
 
 		tx.commit();
-		session.flush();
+		session.flush();*/
 		
 		return "internship creation success";
 	}
@@ -74,7 +115,8 @@ public class Internship extends DatabaseObject
 	 * @param description
 	 */
 	public Internship(String firstName, String lastName, String internshipTitle, String location, String paid,
-			String description, String contact, int active, String company, String availability, String focus) {
+			String description, String contact, int active, String company, String availability, String focus,
+			User owner, Set<User> subs) {
 		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -87,6 +129,9 @@ public class Internship extends DatabaseObject
 		this.company = company;
 		this.availability = availability;
 		this.focus = focus;
+		this.setOwner(owner);
+		this.setSubscribers(subs);
+		System.out.println("here?");
 	}
 	
 	/**
@@ -106,6 +151,8 @@ public class Internship extends DatabaseObject
 		this.company = null;
 		this.availability = null;
 		this.focus = null;
+		this.setOwner(null);
+		this.setSubscribers(new HashSet<User>());
 	}
 
 	public String getFirstName() {
@@ -232,5 +279,30 @@ public class Internship extends DatabaseObject
 		session.flush();
 		
 		return "UPDATED_INTNERNSHIP";
+	}
+
+	@OneToOne(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	@Fetch(FetchMode.SELECT)
+	@JoinColumn
+	public User getOwner() {
+		return owner;
+	}
+
+
+	public void setOwner(User owner) {
+		this.owner = owner;
+	}
+
+
+	@ManyToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	@Fetch(FetchMode.SELECT)
+	@JoinColumn
+	public Set<User> getSubscribers() {
+		return subscribers;
+	}
+
+
+	public void setSubscribers(Set<User> subscribers) {
+		this.subscribers = subscribers;
 	}
 }
