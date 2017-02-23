@@ -1,5 +1,6 @@
 package com.connect.cardinal.objects;
 
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -10,6 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.servlet.http.HttpServletRequest;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -26,8 +28,8 @@ import com.connect.cardinal.hibernate.HibernateUtil;
 @Table(name = "mentorship")
 public class Mentorship extends DatabaseObject
 {
-	private String firstName;
-	private String lastName;
+	//private String firstName;
+	//private String lastName;
 	private String contact;
 	private String mentorshipTitle;
 	private String location;
@@ -72,31 +74,63 @@ public class Mentorship extends DatabaseObject
 	 * @param parameters
 	 * @return
 	 */
-	public static String createAndCommitMentorshipFromForm(Map<String, String> parameters) 
+	public static String createAndCommitMentorshipFromForm(Map<String, String> parameters,HttpServletRequest request) 
 	{
 		Transaction tx = null;
 		Mentorship mentorship = new Mentorship();
+		
+		//default field
 		mentorship.setActive(0);
+
+		// fields from form
 		mentorship.setContact(parameters.get("contact"));
 		mentorship.setDescription(parameters.get("description"));
 		mentorship.setLocation(parameters.get("location"));
 		mentorship.setMentorshipTitle(parameters.get("mentorshipTitle"));
-		mentorship.setLastName(parameters.get("lastName"));
-		mentorship.setFirstName(parameters.get("firstName"));
 		mentorship.setCompany(parameters.get("company"));
 		mentorship.setFocus(parameters.get("focus"));
-		System.out.println(mentorship);
+		//System.out.println(mentorship);
+		
+		
+		
+		User owner = User.getUserByUsername((String) request.getSession().getAttribute("userName"));
+		if(owner == null) return "USERNAME RETRIEVAL FAILED";
+		mentorship.setOwner(owner);
+		
+		
 		
 		Session session = HibernateUtil.getSession();
 		tx = session.beginTransaction();
 		
-		System.out.println("Internship:" + session.save(mentorship) + " saved to the database");
+		System.out.println("Mentorship:" + session.save(mentorship) + " saved to the database");
 
 		tx.commit();
 		session.flush();
 		
 		return "mentorship creation success";
 	}
+	
+	
+	public static Object subscribeUser(Map<String, String> parameters, HttpServletRequest request) {
+		User subscriber = User.getUserByUsername((String) request.getSession().getAttribute("userName"));
+		if(subscriber == null) return "USERNAME RETRIEVAL FAILED";
+		
+		Mentorship mentorship = (Mentorship) Mentorship.getMentorshipsByID(parameters.get("mentorshipID"));
+		
+		Set<User> currentSubs = mentorship.getSubscribers();
+		// TODO: Check that subscriber isnt owner 
+		currentSubs.add(subscriber);
+		mentorship.setSubscribers(currentSubs);
+		
+		Mentorship.saveMentorshipObject(mentorship);
+		
+		return "USER_SUBSCRIBED";
+	}
+	
+	
+	
+	
+	
 	
 	/**
 	 * @param name
@@ -106,29 +140,34 @@ public class Mentorship extends DatabaseObject
 	 * @param company
 	 */
 	public Mentorship(String firstName, String lastName, String title, String location, String description, 
-			String company, int active, String contact, String focus) {
-		this.firstName = firstName;
-		this.lastName = lastName;
+			String company, int active, String contact, String focus, User owner, Set<User> subs) {
+		//this.firstName = firstName;
+		//this.lastName = lastName;
 		this.mentorshipTitle = title;
 		this.location = location;
 		this.description = description;
 		this.company = company;
 		this.setActive(active);
 		this.contact = contact;
+		this.setOwner(owner);
+		this.setSubscribers(subs);
 		this.focus = focus;
 	}
 	
 	public Mentorship()
 	{
-		this.firstName = null;
-		this.lastName = null;
+		//this.firstName = null;
+		//this.lastName = null;
+		this.setActive(0);
+
 		this.contact = null;
 		this.mentorshipTitle = null;
 		this.location = null;
 		this.description = null;
 		this.company = null;
-		this.setActive(0);
 		this.focus = null;
+		this.setOwner(null);
+		this.setSubscribers(new HashSet<User>());
 	}
 
 	public String getLocation() {
@@ -162,7 +201,7 @@ public class Mentorship extends DatabaseObject
 	public void setActive(int active) {
 		this.active = active;
 	}
-
+/*
 	public String getFirstName() {
 		return firstName;
 	}
@@ -178,6 +217,7 @@ public class Mentorship extends DatabaseObject
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
+	*/
 
 	public String getMentorshipTitle() {
 		return mentorshipTitle;

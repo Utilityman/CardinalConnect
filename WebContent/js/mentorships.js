@@ -26,8 +26,8 @@ function loadMentorships()
 
 function postMentorship()
 {
-	var firstName = $("#firstName").val();
-	var lastName = $("#lastName").val();
+	//var firstName = $("#firstName").val();
+	//var lastName = $("#lastName").val();
 	var mentorshipTitle = $("#mentorshipTitle").val();
 	var location = $("#location").val();
 	var company = $('#company').val();
@@ -39,7 +39,7 @@ function postMentorship()
 
 	
 	// Data Verification
-	if(firstName != "" && lastName != "" && mentorshipTitle != "" && location != "" &&
+	if(mentorshipTitle != "" && location != "" &&
 			description != "" && contact != ""  && company != "")
 		$.ajax({
 			type: "POST",
@@ -48,8 +48,8 @@ function postMentorship()
 			{
 				'action': 'postMentorship',
 				
-				'firstName': firstName,
-				'lastName': lastName,
+				//'firstName': firstName,
+				//'lastName': lastName,
 				'mentorshipTitle': mentorshipTitle,
 				'location': location,
 				'description': description,
@@ -59,7 +59,12 @@ function postMentorship()
 				'focus': focus,
 			},
 			complete: function(data)
-			{
+			{	
+				if(data.responseJSON == "username retrivel failed")
+					alert("Post Failed!");
+				else
+					alert("Post Submitted!");
+				
 				$("#formDiv").addClass("hidden");
 				$("#successDiv").removeClass("hidden");
 			},
@@ -83,8 +88,8 @@ function fillField(json)
 	
 			$(node).append("<p class='title'>" + json[i].mentorshipTitle + "</p>");
 			$(node).append("<p class='name hidden'>" + json[i].description + "</p>");
-			$(node).append("<p class='name hidden'>Poster: " + json[i].firstName + " " + 
-										json[i].lastName + " - " + json[i].contact + "</p>");
+			$(node).append("<p class='name hidden'>Poster: " + json[i].owner.firstName + " " + 
+										json[i].owner.lastName + " - " + json[i].contact + "</p>");
 			$(node).append("<p class='name hidden'>Location: " + json[i].location + " at " +  json[i].company + "</p>");
 			
 			//$(node).append("<span style='float:right;margin-top: -100px'>Hello</span>");
@@ -92,6 +97,23 @@ function fillField(json)
 			$("#mentorshipList").append(node);
 		}
 	}
+}
+
+function subscribe(mentorshipID)
+{
+	$.ajax({
+		type: 'POST',
+		url: 'Mentorships', 
+		data: 
+		{
+			'action': 'subscribeToMentorship',
+			'mentorshipID': mentorshipID
+		},
+		complete: function(data)
+		{
+
+		},
+	});	
 }
 
 

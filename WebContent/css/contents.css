@@ -66,6 +66,17 @@
 	background-color: #383838;
 }
 
+#content li > button
+{
+	margin-left: 16px;
+	margin-bottom: 8px;
+}
+
+#content li > button:hover
+{
+	background-color: #AAAAAA;
+}
+
 #content .active
 {
 	color: black;

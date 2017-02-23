@@ -20,7 +20,7 @@ import com.connect.cardinal.objects.UserStatus;
 @SuppressWarnings("rawtypes")
 public class ObjectRetriever 
 {
-	private static final String FROM = "FROM com.connect.cardinal.objects.";
+	public static final String FROM = "FROM com.connect.cardinal.objects.";
 	private static final int INACTIVE = 0;
 	private static final int ACTIVE = 1;
 	

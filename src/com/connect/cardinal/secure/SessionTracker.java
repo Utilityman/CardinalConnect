@@ -10,6 +10,12 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class SessionTracker 
 {
+	/**
+	 * call from shouldContinue (every ajax post request). 
+	 * Verfies that the user is from a logged in and registered session.
+	 * @param request
+	 * @return
+	 */
 	public static boolean verify(HttpServletRequest request)
 	{
 		if(request.getSession().getAttribute("verified") == null) return false;
