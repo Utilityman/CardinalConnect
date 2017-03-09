@@ -16,6 +16,7 @@ import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
 import com.connect.cardinal.hibernate.HibernateUtil;
+import com.connect.cardinal.util.ObjectRetriever;
 import com.google.gson.annotations.Expose;
 
 /**
@@ -58,13 +59,16 @@ public class User extends DatabaseObject
 	public static User getUserByUsername(String username)
 	{
 		System.out.println(username);
-		/*Session session = HibernateUtil.getSession();
-		String usernames = FROM + "User E where E.email = '" + string + "'";
+		Session session = HibernateUtil.getSession();
+		
+		// query string
+		String usernames = ObjectRetriever.FROM + "User E where E.email = '" + username + "'";
+		
 		Query query = session.createQuery(usernames);
 		List user = query.list();
+		
 		if(user != null && user.size() == 1)
 			return (User) user.get(0);
-		return null;*/
 		return null;
 	}
 	

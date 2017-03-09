@@ -41,18 +41,22 @@ public class Internships extends BaseServlet {
 		{
 			Internship ship = (Internship) Internship.getInternshipsByID(parameters.get("internshipID"));
 			ship.setActive(ACTIVE);
-			resp = Internship.saveInternshipObject(ship);
+			resp = Internship.updateInternshipObject(ship);
 		}
 		else if(parameters.get("action").equals("unlistInternship"))
 		{
 			Internship ship = (Internship) Internship.getInternshipsByID(parameters.get("internshipID"));
 			ship.setActive(CLOSED);
-			resp = Internship.saveInternshipObject(ship);
+			resp = Internship.updateInternshipObject(ship);
 		}
 		else if(parameters.get("action").equals("postNewInternship"))
 		{
 			System.out.println(request);
 			resp = Internship.createAndCommitInternshipFromForm(parameters, (HttpServletRequest) request);
+		}
+		else if(parameters.get("action").equals("subscribeToInternship"))
+		{
+			resp = Internship.subscribeUser(parameters, request);
 		}
 		
 		respondToRequest();

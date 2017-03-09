@@ -64,7 +64,7 @@ public abstract class BaseServlet extends HttpServlet
 		if(parameters.get("action") == null)
 			return null;
 	
-		if(!SessionTracker.verify(request) && !parameters.get("action").equals("login")) return null;
+		if(!SessionTracker.verify(request) && !parameters.get("action").equals("login")) return null; 
 
     	return parameters;
     }

@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.connect.cardinal.objects.Internship;
 import com.connect.cardinal.objects.Mentorship;
 
 /**
@@ -48,6 +49,17 @@ public class Mentorships extends BaseServlet
 			Mentorship ship = (Mentorship) Mentorship.getMentorshipsByID(parameters.get("mentorshipID"));
 			ship.setActive(0);
 			resp = Mentorship.saveMentorshipObject(ship);
+		}
+		//!!
+		else if(parameters.get("action").equals("postNewMentorship"))
+		{
+			System.out.println(request);
+			resp = Mentorship.createAndCommitMentorshipFromForm(parameters, (HttpServletRequest) request);
+		}
+		else if(parameters.get("action").equals("subscribeToMentorship"))
+		{
+			resp = Mentorship.subscribeUser(parameters, request);
+			
 		}
 		
 		respondToRequest();

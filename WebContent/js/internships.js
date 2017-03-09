@@ -27,8 +27,7 @@ function loadInternships()
 
 function postInternship()
 {
-	var firstName = $("#firstName").val();
-	var lastName = $("#lastName").val();
+
 	var internshipTitle = $("#internshipTitle").val();
 	var location = $("#location").val();
 	var paid = $('input[name=salary]:checked', '#internDetails').val();
@@ -42,18 +41,17 @@ function postInternship()
 	console.log(availability);
 	
 	// Data Verification
-	if(firstName != "" && lastName != "" && internshipTitle != "" && location != "" &&
+	if(internshipTitle != "" && location != "" &&
 			paid != 'undefined' && description != "" && contact != ""  && company != "" &&
 			availability != "")
+
 		$.ajax({
 			type: "POST",
 			url: 'Data',
 			data:
 			{
 				'action': 'postInternship',
-				
-				'firstName': firstName,
-				'lastName': lastName,
+
 				'internshipTitle': internshipTitle,
 				'location': location,
 				'paid': paid,
@@ -66,6 +64,10 @@ function postInternship()
 			},
 			complete: function(data)
 			{
+				if(data.responseJSON == "username retrieval failed")
+					alert("Post Failed!");
+				else 
+					alert("Post Submitted!");
 				$("#formDiv").addClass("hidden");
 				$("#successDiv").removeClass("hidden");
 			},
@@ -88,10 +90,12 @@ function fillField(json)
 	
 			$(node).append("<p class='title'>" + json[i].internshipTitle + "</p>");
 			$(node).append("<p class='name hidden'>" + json[i].description + "</p>");
-			$(node).append("<p class='name hidden'>Poster: " + json[i].firstName + " " + 
-										json[i].lastName + " - " + json[i].contact + "</p>");
+			$(node).append("<p class='name hidden'>Poster: " + json[i].owner.firstName + " " + 
+										json[i].owner.lastName + " - " + json[i].contact + "</p>");
 			$(node).append("<p class='name hidden'>Location: " + json[i].location + " at " +  json[i].company + "</p>");
 			$(node).append("<p class='name hidden'>Availability: " + json[i].availability + "</p>");
+			
+			$(node).append("<button onclick='subscribe(" + json[i].id + ")' class='hidden'>Subscribe</button>");
 			
 			//$(node).append("<span style='float:right;margin-top: -100px'>Hello</span>");
 			
@@ -99,4 +103,22 @@ function fillField(json)
 		}
 	}
 }
+
+function subscribe(internshipID)
+{
+	$.ajax({
+		type: 'POST',
+		url: 'Internships', 
+		data: 
+		{
+			'action': 'subscribeToInternship',
+			'internshipID': internshipID
+		},
+		complete: function(data)
+		{
+
+		},
+	});	
+}
+
 

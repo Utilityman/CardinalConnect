@@ -28,8 +28,6 @@ import com.connect.cardinal.hibernate.HibernateUtil;
 @Table(name = "internship")
 public class Internship extends DatabaseObject
 {
-	private String firstName;
-	private String lastName;
 	private String internshipTitle;
 	private String location;
 	private String paid;
@@ -46,6 +44,7 @@ public class Internship extends DatabaseObject
 	 * @param string
 	 * @return generic object so that the same caller can make generic object returns 
 	 */
+	
 	public static Object getInternshipsByID(String string) 
 	{
 		Session session = HibernateUtil.getSession();
@@ -54,7 +53,15 @@ public class Internship extends DatabaseObject
 		return internship;
 	}
 	
-	public static boolean saveInternshipObject(Internship internship)
+	public static Object getInternshipsByID(long l)
+	{
+		Session session = HibernateUtil.getSession();
+
+		Internship internship = (Internship) session.get(Internship.class, l);
+		return internship;
+	}
+	
+	public static boolean updateInternshipObject(Internship internship)
 	{
 		Transaction tx = null;
 		Session session = HibernateUtil.getSession();
@@ -76,33 +83,51 @@ public class Internship extends DatabaseObject
 		Transaction tx = null;
 		Internship internship = new Internship();
 		
+		// default fields
 		internship.setActive(0);
+		
+		// fields from form
 		internship.setContact(parameters.get("contact"));
 		internship.setDescription(parameters.get("description"));
 		internship.setLocation(parameters.get("location"));
 		internship.setPaid(parameters.get("paid"));
 		internship.setInternshipTitle(parameters.get("internshipTitle"));
-		
-		if(parameters.get("firstName").equals("") || parameters.get("lastName").equals(""))
-		{
-			///User.getUserByUsername((String) request.getSession().getAttribute("userName"));
-		}
-		internship.setLastName(parameters.get("lastName"));
-		internship.setFirstName(parameters.get("firstName"));
 		internship.setCompany(parameters.get("company"));
 		internship.setAvailability(parameters.get("availability"));
 		internship.setFocus(parameters.get("focus"));
 
 		
-		/*Session session = HibernateUtil.getSession();
+		User owner = User.getUserByUsername((String) request.getSession().getAttribute("userName"));
+		if(owner == null) return "USERNAME RETRIEVAL FAILED";
+		internship.setOwner(owner);
+
+
+		
+		Session session = HibernateUtil.getSession();
 		tx = session.beginTransaction();
 		
 		System.out.println("Internship:" + session.save(internship) + " saved to the database");
 
 		tx.commit();
-		session.flush();*/
+		session.flush();
 		
 		return "internship creation success";
+	}
+	
+	public static Object subscribeUser(Map<String, String> parameters, HttpServletRequest request) {
+		User subscriber = User.getUserByUsername((String) request.getSession().getAttribute("userName"));
+		if(subscriber == null) return "USERNAME RETRIEVAL FAILED";
+		
+		Internship internship = (Internship) Internship.getInternshipsByID(parameters.get("internshipID"));
+		
+		Set<User> currentSubs = internship.getSubscribers();
+		// TODO: Check that subscriber isnt owner 
+		currentSubs.add(subscriber);
+		internship.setSubscribers(currentSubs);
+		
+		Internship.updateInternshipObject(internship);
+		
+		return "USER_SUBSCRIBED";
 	}
 	
 	
@@ -118,8 +143,7 @@ public class Internship extends DatabaseObject
 			String description, String contact, int active, String company, String availability, String focus,
 			User owner, Set<User> subs) {
 		super();
-		this.firstName = firstName;
-		this.lastName = lastName;
+
 		this.internshipTitle = internshipTitle;
 		this.location = location;
 		this.paid = paid;
@@ -140,8 +164,7 @@ public class Internship extends DatabaseObject
 	public Internship() 
 	{
 		super();
-		this.firstName = null;
-		this.lastName = null;
+
 		this.internshipTitle = null;
 		this.location = null;
 		this.paid = null;
@@ -155,18 +178,6 @@ public class Internship extends DatabaseObject
 		this.setSubscribers(new HashSet<User>());
 	}
 
-	public String getFirstName() {
-		return firstName;
-	}
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-	public String getLastName() {
-		return lastName;
-	}
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
 	public String getInternshipTitle() {
 		return internshipTitle;
 	}
@@ -305,4 +316,6 @@ public class Internship extends DatabaseObject
 	public void setSubscribers(Set<User> subscribers) {
 		this.subscribers = subscribers;
 	}
+
+
 }
