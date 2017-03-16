@@ -85,6 +85,7 @@ function fillField(json)
 	{
 		if(json[i].active)
 		{
+			console.log(json[i]);
 			var node = document.createElement("li");
 			node.onclick = function(){expand(this)};
 	

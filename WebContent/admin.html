@@ -1,14 +1,24 @@
 <html>
 <head>
-	<script type="text/javascript" src="js/jquery.js"></script>
-	<script type="text/javascript" src="js/base.js"></script>
- 	<script type="text/javascript" src="js/admin.js"></script>
- 
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Cardinal Home</title>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 	
-	<link href="css/style.css" type="text/css" rel="stylesheet"></link>
-	<link href="css/admin.css" type="text/css" rel="stylesheet"></link>
-	
-	<title>Cardinal Admin</title>
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+	<script type='text/javascript' src='js/bootstrap-hover-dropdown.min.js'></script>
+    <script type='text/javascript' src='js/base.js'></script>
+    <script type='text/javascript' src='js/admin.js'></script>
+    
+    <!-- Bootstrap -->
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">    <link href="css/style.css" rel="stylesheet">
+    <link href='css/style.css' rel='stylesheet'>
+    <link href='css/admin.css' rel='stylesheet'>
 </head>
 <body onload="loadDashboard()">
 
@@ -16,14 +26,39 @@
 	<img id="logo" src="res/logo.png" alt="Logo">
 	<span>CALVERT HALL COLLEGE</span>	
 </div>
-
-	<ul id="titleBar">
+<div class='container'>
+	<!--  <ul id="titleBar">
 		<li onclick="showTab(this, 'dashboardTab')" class="active" id="dashboard">Dashboard</li>
 		<li onclick="showTab(this, 'accountTab')" id="account">Manage Accounts</li>	
 		<li onclick="showTab(this, 'internshipTab')" id="internship">Manage Internships</li>
 		<li onclick="showTab(this, 'mentorshipTab')" id="mentorship">Manage Mentorships</li>
 		<li onclick="returnToSite()" style="float:right;" id="home">Return to Homepage</li>	
-	</ul>
+	</ul>-->
+	
+	<nav id='navigationBar' class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      <a class="navbar-brand" href="#">Admin Panel</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+        <li class='active'><a href="#" onclick='showTab(this, "dashboardTab")' id='dashboard'>Dashboard</a></li>
+        <li class='accountTab'><a href="#" onclick="showTab(this, 'accountTab')" id='account'>Accounts</a></li>
+        <li class='internshipTab'><a href='#' onclick="showTab(this, 'internshipTab')" id="internship">Internships</a></li>
+        <li class='mentorshipTab'><a href='#' onclick="showTab(this, 'mentorshipTab')" id="mentorship">Mentorships</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#" onclick="returnToSite()"><span class="glyphicon glyphicon-home"></span> Return Home</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+	
 	
 	<div class="tab-content active" id="dashboardTab">
 	<br>
@@ -101,6 +136,6 @@
 							Accepted Mentorships<span class='expanded'>+</span></li>
 		</ul>
 	</div>
-
+</div>
 </body>
 </html>

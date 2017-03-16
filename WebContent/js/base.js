@@ -11,7 +11,7 @@ var navigateParam = ""
  */
 function navigate(location)
 {
-	switch(location.getAttribute('id'))
+	switch(location)
 	{
 		case "home":
 			window.location.href = "home.html";

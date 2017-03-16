@@ -26,8 +26,6 @@ function loadMentorships()
 
 function postMentorship()
 {
-	//var firstName = $("#firstName").val();
-	//var lastName = $("#lastName").val();
 	var mentorshipTitle = $("#mentorshipTitle").val();
 	var location = $("#location").val();
 	var company = $('#company').val();
@@ -48,8 +46,6 @@ function postMentorship()
 			{
 				'action': 'postMentorship',
 				
-				//'firstName': firstName,
-				//'lastName': lastName,
 				'mentorshipTitle': mentorshipTitle,
 				'location': location,
 				'description': description,
@@ -92,7 +88,7 @@ function fillField(json)
 										json[i].owner.lastName + " - " + json[i].contact + "</p>");
 			$(node).append("<p class='name hidden'>Location: " + json[i].location + " at " +  json[i].company + "</p>");
 			
-			//$(node).append("<span style='float:right;margin-top: -100px'>Hello</span>");
+			$(node).append("<button onclick='subscribe(" + json[i].id + ")' class='hidden'>Subscribe</button>");
 			
 			$("#mentorshipList").append(node);
 		}

@@ -54,6 +54,7 @@ public class Login extends BaseServlet
 	
 		if(parameters.get("action").equals("login"))
 		{
+			System.out.println("trying to login");
 			resp = login(parameters.get("username"), parameters.get("password"));
 
 			if(resp.equals("LOGIN_SUCCESS") || resp.equals("LOGIN_ADMIN"))
@@ -136,6 +137,7 @@ public class Login extends BaseServlet
 		finally { if(hashPass == null) return "INTERNAL_ERROR"; }
 		
 		User user = ObjectRetriever.getUsernamesMatching(username);
+
 		if(user == null) return "INVALID_CREDENTIALS";
 		
 		if(user.getEmail().equals(username) && 

@@ -5,8 +5,9 @@ var RETURN_ID = 0;
 
 function showTab(source, param)
 {
-	$(source).siblings().removeClass('active');
-	$(source).addClass('active');
+	$('.' + param).siblings().removeClass('active');
+	$('.' + param).addClass('active');
+	
 	$('.tab-content').removeClass('active');
 	$('#' + param).addClass('active');
 }

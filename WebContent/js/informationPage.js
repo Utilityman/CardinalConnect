@@ -61,8 +61,9 @@ function loadMentorshipByParams()
 
 function fillInternshipInformation(json)
 {
+	
 	$('#internshipTitle').html(json.internshipTitle);
-	$('#name').html(json.firstName + " " + json.lastName);
+	$('#name').html(json.owner.firstName + " " + json.owner.lastName);
 	$('#company').html(json.company);
 	$('#contact').html(json.contact);
 	$('#location').html(json.location + '. ' + json.availability);
@@ -84,7 +85,7 @@ function fillInternshipInformation(json)
 function fillMentorshipInformation(json)
 {
 	$('#internshipTitle').html(json.mentorshipTitle);
-	$('#name').html(json.firstName + " " + json.lastName);
+	$('#name').html(json.owner.firstName + " " + json.owner.lastName);
 	$('#company').html(json.company);
 	$('#contact').html(json.contact);
 	$('#location').html(json.location);

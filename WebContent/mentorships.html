@@ -1,15 +1,24 @@
 <html>
 <head>
-	<script type="text/javascript" src="js/jquery.js"></script>
-	<script type="text/javascript" src="js/base.js"></script>
-	<script type="text/javascript" src="js/mentorships.js"></script>
-	<script type="text/javascript" src="js/modal.js"></script>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Cardinal Home</title>
 
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 	
-	<link href="css/style.css" type="text/css" rel="stylesheet"></link>
-	<link href="css/contents.css" type="text/css" rel="stylesheet"></link>
-	<link href="css/modal.css" type="text/css" rel="stylesheet"></link>
-	<title>Mentorships</title>
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+	<script type='text/javascript' src='js/bootstrap-hover-dropdown.min.js'></script>
+    <script type='text/javascript' src='js/base.js'></script>
+    <script type='text/javascript' src='js/mentorships.js'></script>
+    <script type='text/javascript' src='js/modal.js'></script>
+    
+    <!-- Bootstrap -->
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">    <link href="css/style.css" rel="stylesheet">
+    <link href='css/style.css' rel='stylesheet'>
 </head>
 <body onload="loadMentorships()">
 
@@ -17,53 +26,64 @@
 	<img id="logo" src="res/logo.png" alt="Logo">
 	<span>CALVERT HALL COLLEGE</span>
 </div>
-	<ul id="titlebar">
-		<li onclick="navigate(this)" id="home">Home</li>		
-		<li id="mentorships" onclick="navigate(this)" class="dropdown active">
-			<a class="dropbtn">Mentorships</a>
-			<div class="dropdown-content">
-				<a onclick="findMentorships('business')">Business</a>
-				<a onclick="findMentorships('finance')">Finance</a>
-				<a onclick="findMentorships('law')">Law</a>
-				<a onclick="findMentorships('medicine')">Medicine</a>
-				<a onclick="findMentorships('teaching')">Teaching</a>
-				<a onclick="findMentorships('trade')">Trade</a>
-				<a onclick="findMentorships('other')">Other</a>
-			</div>
-		</li>
-		<li id="internships" onclick="navigate(this)" class="dropdown">
-			<a class="dropbtn">Internships</a>
-			<div class="dropdown-content">
-				<a onclick="findInternships('business')">Business</a>
-				<a onclick="findInternships('finance')">Finance</a>
-				<a onclick="findInternships('law')">Law</a>
-				<a onclick="findInternships('medicine')">Medicine</a>
-				<a onclick="findInternships('teaching')">Teaching</a>
-				<a onclick="findInternships('trade')">Trade</a>
-				<a onclick="findInternships('other')">Other</a>
-			</div>
-		</li>	
-		<li onclick="navigate(this)" id="events" class="dropdown">
-			<a class="dropbtn">Events</a>
-			<div class="dropdown-content">
-				<a onclick="getEvents('students')">Student Events</a>
-				<a onclick="getEvents('alumni')">Alumni Events</a>
-			</div>
-		</li>
-		<li onclick="navigate(this)" id="account">Account</li>
-		<li onclick="navigate(this)" id="logout">Logout</li>
-	</ul>
+
+<div class='container'>
+<nav id='navigationBar' class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      <a class="navbar-brand" href="#">Cardinal Connect</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+        <li><a href="home.html">Home</a></li>
+        <li class="dropdown active">
+          <a class="dropdown-toggle" data-toggle="dropdown" data-hover='dropdown' href="#" onclick='navigate("mentorships")'>Mentorships <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="#" onclick='navigate("mentorships")'>Business</a></li>
+            <li><a href="#" onclick='navigate("mentorships")'>Finance</a></li>
+            <li><a href="#" onclick='navigate("mentorships")'>Law</a></li>
+            <li><a href="#" onclick='navigate("mentorships")'>Medicine</a></li>
+            <li><a href="#" onclick='navigate("mentorships")'>Teaching</a></li>
+            <li><a href="#" onclick='navigate("mentorships")'>Trade</a></li>
+            <li><a href="#" onclick='navigate("mentorships")'>Other</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" data-hover='dropdown' href="#" onclick='navigate("internships")'>Internships <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="#" onclick='navigate("internships")'>Business</a></li>
+            <li><a href="#" onclick='navigate("internships")'>Finance</a></li>
+            <li><a href="#" onclick='navigate("internships")'>Law</a></li>
+            <li><a href="#" onclick='navigate("internships")'>Medicine</a></li>
+            <li><a href="#" onclick='navigate("internships")'>Teaching</a></li>
+            <li><a href="#" onclick='navigate("internships")'>Trade</a></li>
+            <li><a href="#" onclick='navigate("internships")'>Other</a></li>
+          </ul>
+        </li>        
+        <li><a href="#" onclick='navigate("events")'>Events</a></li>
+        <li><a href='#' onclick='navigate("account")'>Account</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
 	
 	<div id="controls">
 		<button onclick="showFilterPopup()">Filter</button>
 		<button onclick="showPostPopup()">Post</button>
 	</div>
 	
-	<div id="content">
 		<ul id="mentorshipList">
 			
 		</ul>
-	</div>
 	
 <!-- Filter Popup -->
 <div id="filterPopup" class="modal">
@@ -149,5 +169,8 @@
 				issues or concerns, contact the Advancement Office at 999-9999-999. 
 				<div onclick='openFeedbackTab()' 
 				style='margin-top: 8px;display: inline;text-decoration:underline;cursor:pointer'>Send Feedback!</div></div>
+				
+					</div>
+				
 </body>
 </html>
