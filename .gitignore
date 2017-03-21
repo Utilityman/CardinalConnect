@@ -1,18 +1,19 @@
-## Eclipse Stuff
-.classpath
-.project
-.settings/
 
-## Other Stuff
-*.cfg.xml
+## Node Stuff
+node_modules/
+npm-debug.log
 
-## Java Stuff
-*.class
-/build/
-target/classes/
-/target/
+## DB Stuff
+/data/
+
+## Old Stuff
+src/
+target/
+WebContent/
+
 
 ## OS Specific
 .DS_Store
 
-target/classes/hibernate.cfg.xml
+
+

@@ -1,0 +1,5 @@
+#!/usr/bin/env node
+
+// if(mongodb-check-initialized--is--false())
+    //make mongodb server
+    // make admin account

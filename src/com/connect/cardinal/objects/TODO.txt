@@ -1,2 +1,0 @@
-TODO: move retrievals into their respective objects for good maintainability of the codebase
-

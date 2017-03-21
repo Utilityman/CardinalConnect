@@ -1,0 +1,59 @@
+.eventListing {
+    display: table;
+    width: 100%;
+    padding: 5px;
+	background-color: #dfdfdf;
+	min-height: 376px;
+}
+
+.eventListing .column {
+    display: table-cell;
+    width: 50%;
+    vertical-align: top;
+   // border: 1px solid black;
+    height: 100%;
+}
+
+#calendar {
+	width: 100%;
+	height: 100%;
+}
+#eventDetails {
+	border-radius: 4px;
+	cursor: default;
+	padding: 8px;
+	position: relative;
+}
+#eventDetails > .what{
+	font-size: 22px;
+	margin-bottom: 0px;
+	font-family: "Arial Black", Gadget, sans-serif;
+	border-bottom: 1px solid black;
+}
+#eventDetails > .who, 
+#eventDetails > .where {
+	margin-bottom: 0px;
+	font-size: 16px;
+	font-family: "Arial Black", Gadget, sans-serif;
+}
+
+
+
+#eventDetails > .when {
+	
+	position: absolute;
+    bottom: 0;
+    right: 0;
+}
+#eventDetails > .why {
+	margin-top: 8px;
+	font-family: "Arial", Gadget, sans-serif;
+}
+
+
+
+
+
+
+
+

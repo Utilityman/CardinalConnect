@@ -1,0 +1,32 @@
+{
+  "name": "cardinal-connect",
+  "version": "1.0.0",
+  "description": "CardinalConnect is a system that will be used to connect students and alums with internships, mentorships and other events. Edit",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ./bin/start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Utilityman/CardinalConnect.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Utilityman/CardinalConnect/issues"
+  },
+  "homepage": "https://github.com/Utilityman/CardinalConnect#readme",
+  "dependencies": {
+    "body-parser": "^1.17.1",
+    "express": "^4.15.2",
+    "mongodb": "^2.2.25"
+  },
+  "devDependencies": {
+    "semistandard": "^10.0.0"
+  },
+  "semistandard": {
+    "ignore": [
+      "/public/js/*"
+    ]
+  }
+}

@@ -1,1 +1,0 @@
-change a lot of the <ul> <li>...</ul> fields into tables, i dont know what I was thinking.
