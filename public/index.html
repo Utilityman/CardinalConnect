@@ -64,16 +64,15 @@
 					complete: function(data)
 					{
 						console.log(data);
-						if(data.status == 500) {
+						if (data.status == 500 | 'SERVER_FAILURE' === data.responseText) {
+                            console.log('hey');
 							$('#errorText').text("Server Inactive!");
 							$('#invalidLogin').slideDown();
-							return;
-						}
-						if('LOGIN_SUCCESS' == data.responseJSON)
+						} else if('LOGIN_SUCCESS' == data.responseText) {
 							window.location.href = "home.html";
-						else if('LOGIN_ADMIN' == data.responseJSON)
+						}else if('LOGIN_ADMIN' == data.responseText)
 							window.location.href = "admin.html";
-						else if("ACCOUNT_INACTIVE" == data.responseJSON) {
+						else if("ACCOUNT_INACTIVE" == data.responseText) {
 							$('#errorText').text("Account Not Active");
 							$('#invalidLogin').slideDown();
 						} else {
@@ -113,15 +112,16 @@
 
 			$.ajax({
 				type: 'POST',
-				url: 'Login',
-				data: {
+				url: '/Register',
+                contentType: 'application/json',
+				data: JSON.stringify({
 					'action': 'register',
 					'username': email,
 					'password': password,
 					'firstName': firstName,
 					'lastName': lastName,
 					'status': accountType
-				}, complete: function (data) {
+				}), complete: function (data) {
 					console.log(data);
 
 					var responseText = data.responseJSON;
