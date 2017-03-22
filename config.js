@@ -43,7 +43,10 @@
     }
 
     if(typeof json.status === 'string') {
-      // TODO: continue this if(json.status.l)
+      if(json.status.length === 0) {
+        callback({'INVALID_FORM': 'Invalid User Status'}, null);
+        return;
+      }
     } else {
       callback({'INVALID_FORM': 'Invalid Role'}, null);
       return;
