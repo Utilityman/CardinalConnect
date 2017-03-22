@@ -15,6 +15,9 @@ var mongo = require('mongodb');
 
 var index = require('./routes/index');
 var admin = require('./routes/admin');
+var accounts = require('./routes/accounts');
+var internships = require('./routes/internships');
+var mentorships = require('./routes/mentorships');
 
 // finally the actual app that will be used
 var app = express();
@@ -26,7 +29,11 @@ app.use(bodyParser.json());
 app.use('/', express.static(path.join(__dirname, 'public')));
 
 // map public routes to the '/'
+/* TODO: eventually app.use('/Index', index) to access more specific /Index/Register */
 app.use('/', index);
 app.use('/', admin);
+app.use('/', accounts);
+app.use('/', internships);
+app.use('/', mentorships);
 
 module.exports = app;

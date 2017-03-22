@@ -64,8 +64,7 @@
 					complete: function(data)
 					{
 						console.log(data);
-						if (data.status == 500 | 'SERVER_FAILURE' === data.responseText) {
-                            console.log('hey');
+						if (data.status == 500 | 'SERVER_ERROR' === data.responseText) {
 							$('#errorText').text("Server Inactive!");
 							$('#invalidLogin').slideDown();
 						} else if('LOGIN_SUCCESS' == data.responseText) {
@@ -133,7 +132,7 @@
 						$('#success').slideDown();
 					} else if (responseText === 'ACOUNT_EXISTS') {
 						//$('#registerForm').css('display', 'none');
-					} else if (responseText === 'INTERNAL_ERROR') {
+					} else if (responseText === 'SERVER_ERROR') {
 						$('#registerForm').css('display', 'none');
 						$('#errorText').text('Server Error!');
 						$('#loginForm').fadeIn();

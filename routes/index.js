@@ -35,17 +35,16 @@ function login(json, callback) {
 
     MongoClient.connect(globals.MONGO_URL, function (err, db) {
       if (err) {
-        console.log(err);
-        callback('SERVER_FAILURE');
+        console.log('err@index.js.login().MongoClient.connect - ' + err);
+        callback('SERVER_ERROR');
       } else {
         let collection = db.collection('users');
 
         collection.find({email: username}).toArray(function (err, result) {
           // if error, server failure
           if (err) {
+            callback('SERVER_ERROR');
             db.close();
-            callback('SERVER_FAILURE');
-
           } else if (result.length) { // else if there are users in the database
             // if there is one result
             if (result.length === 1 && result[0].email === username) {
@@ -66,7 +65,7 @@ function login(json, callback) {
               }
             } else {
               console.log('err: found multiple users with the same email!');
-              callback('SERVER_FAILURE');
+              callback('SERVER_ERROR');
             }
             db.close();
           } else {  // if the user is not the database (invalid id)
@@ -81,39 +80,43 @@ function login(json, callback) {
 
 function register(json, callback) {
   if(json.action !== 'register') {
-    console.log(json.action);
     callback('INCORRECT_ACTION_TYPE');
   } else {
     let MongoClient = mongodb.MongoClient;
     MongoClient.connect(globals.MONGO_URL, function (err, db) {
       if (err) {
         console.log(err);
-        callback('SERVER_FAILURE');
+        callback('SERVER_ERROR');
       } else {
-        let collection = db.collection('users');
-
-        let user = globals.createUserObject(json, function(err) {
+        globals.createUserObject(json, function(err, user) {
           if(err) {
-            console.log('woa');
+            console.log('err@index.js:register() - ' + err);
+            callback(err);
+          } else {
+            let collection = db.collection('users');
+            collection.find({email:user.email}).toArray(function (err, result) {
+              if (err) {
+                callback('SERVER_ERROR');
+                db.close();
+              } else if (result.length) {
+                callback('ACCOUNT_EXISTS');
+              } else {
+                collection.insert([user], function (err, done) {
+                  if (err) {
+                    console.log('err@index.js:register() - ' + err);
+                    callback('SERVER_ERROR');
+                  } else {
+                    callback('ACCOUNT_CREATED');
+                  }
+                  db.close();
+                });
+              }
+            });
           }
-        });
-        //console.log(user);
-        callback('TODO_SAVE_USER');
-      }
-      /*let collection = db.collection('users');
-
-      let user = {email: json.email, firstName: json.firstName};
-
-      collection.insert([user], function (err, result) {
-        if (err) {
-          console.log(err);
-        } else {
-          db.close();
-          res.send('you done good kid');
-        }
-      });*/
-    });
-  }
+        }); // end createUserObject callback
+      } // end MongoClient else branch
+    }); // end MongoClient.connect
+  } // end register else branch
 }
 
 module.exports = router;

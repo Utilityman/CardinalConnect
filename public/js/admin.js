@@ -3,18 +3,16 @@ var internships = null;
 var mentorships = null;
 var RETURN_ID = 0;
 
-function showTab(source, param)
-{
+function showTab (source, param) {
 	$('.' + param).siblings().removeClass('active');
 	$('.' + param).addClass('active');
-	
+
 	$('.tab-content').removeClass('active');
 	$('#' + param).addClass('active');
 }
 
 
-function loadDashboard()
-{
+function loadDashboard () {
 	var tab = getParameterByName("id");
 	if(tab == 'mentorship')
 		showTab($('#mentorship'), 'mentorshipTab');
@@ -22,20 +20,21 @@ function loadDashboard()
 		showTab($('#internship'), 'internshipTab');
 	else if(tab == 'account')
 		showTab($('#account'), 'accountTab');
-	
+
 	$.ajax({
 		type: 'POST',
-		url: 'Data', 
-		data: 
-		{
+		url: '/GetAccounts',
+		contentType: 'application/json',
+		data: JSON.stringify({
 			'action': 'getAccounts',
-			'filter': "",
-		},
-		complete: function(data)
+		}), complete: function(data)
 		{
-			if(data.responseJSON == 'NOT_ADMIN_USER') {forceReturnToLogin();}
-			else
-			{
+			console.log(data);
+			if(data.responseText === 'SERVER_ERROR') {
+					return alert('Server Error');
+			}
+
+			if(data.responseJSON) {
 				accounts = data.responseJSON;
 				getInternships();
 			}
@@ -47,15 +46,12 @@ function getInternships()
 {
 	$.ajax({
 		type: 'POST',
-		url: 'Data', 
-		data: 
-		{
+		url: '/GetInternships',
+		contentType: 'application/json',
+		data: JSON.stringify({
 			'action': 'getInternships',
-			'filter': "",
-		},
-		complete: function(data)
-		{
-			if(data.responseJSON == 'NOT_ADMIN_USER') {forceReturnToLogin(); return;} 
+		}), complete: function(data) {
+			console.log(data);
 			internships = data.responseJSON;
 			getMentorships();
 		},
@@ -66,17 +62,15 @@ function getMentorships()
 {
 	$.ajax({
 		type: 'POST',
-		url: 'Data', 
-		data: 
-		{
+		url: '/GetMentorships',
+		contentType: 'application/json',
+		data: JSON.stringify({
 			'action': 'getMentorships',
-			'filter': "",
-		},
-		complete: function(data)
-		{
-			if(data.responseJSON == 'NOT_ADMIN_USER') {forceReturnToLogin(); return;} 
+		}), complete: function(data) {
+			console.log(data);
 			mentorships = data.responseJSON;
-			fillTabs();			
+
+			//fillTabs();
 		},
 	});
 }
@@ -86,7 +80,7 @@ function fillTabs()
 	console.log(accounts);
 	console.log(internships);
 	console.log(mentorships);
-	
+
 	var studentAccounts = 0;
 	var advisorAccounts = 0;
 	var pendingAccounts = 0;
@@ -96,14 +90,14 @@ function fillTabs()
 		{
 			pendingAccounts++;
 			$('#accountHolder #pendingAccounts').after('<li id="' + accounts[i].id +
-														'" class="pendingAccounts miniAccount hidden"' + 
-														'>Name: ' + accounts[i].firstName + 
-														' ' + accounts[i].lastName + 
-														' -- Email: ' + accounts[i].email + 
-														' -- As Status: ' + accounts[i].status.userStatus + 
-														'<button onclick="handleAccount(this, false)">Decline</button>' + 
-														'<button onclick="handleAccount(this, true)">Accept</button>' + 
-														'<button onclick="goToAccountPage(this)">Account Page</button>' + 
+														'" class="pendingAccounts miniAccount hidden"' +
+														'>Name: ' + accounts[i].firstName +
+														' ' + accounts[i].lastName +
+														' -- Email: ' + accounts[i].email +
+														' -- As Status: ' + accounts[i].status.userStatus +
+														'<button onclick="handleAccount(this, false)">Decline</button>' +
+														'<button onclick="handleAccount(this, true)">Accept</button>' +
+														'<button onclick="goToAccountPage(this)">Account Page</button>' +
 														'</li>');
 			continue;
 		}
@@ -111,20 +105,20 @@ function fillTabs()
 		{
 			studentAccounts++;
 			$('#accountHolder #studentAccounts').after('<li id="' + accounts[i].id +
-													   '" class="studentAccounts miniAccount hidden"' + 
-													   '>Name: ' + accounts[i].firstName + 
-													   ' ' + accounts[i].lastName + 
-													   ' -- Email: ' + accounts[i].email + 
-													   ' -- Status: ' + accounts[i].status.userStatus + 
-													   '<button onclick="goToAccountPage(this)">Account Page</button>' + 
+													   '" class="studentAccounts miniAccount hidden"' +
+													   '>Name: ' + accounts[i].firstName +
+													   ' ' + accounts[i].lastName +
+													   ' -- Email: ' + accounts[i].email +
+													   ' -- Status: ' + accounts[i].status.userStatus +
+													   '<button onclick="goToAccountPage(this)">Account Page</button>' +
 													   '</li>');
 			$('#accountHolder #registeredAccounts').after('<li id="' + accounts[i].id +
-					   '" class="registeredAccounts miniAccount hidden"' + 
-					   '>Name: ' + accounts[i].firstName + 
-					   ' ' + accounts[i].lastName + 
-					   ' -- Email: ' + accounts[i].email + 
-					   ' -- Status: ' + accounts[i].status.userStatus + 
-					   '<button onclick="goToAccountPage(this)">Account Page</button>' + 
+					   '" class="registeredAccounts miniAccount hidden"' +
+					   '>Name: ' + accounts[i].firstName +
+					   ' ' + accounts[i].lastName +
+					   ' -- Email: ' + accounts[i].email +
+					   ' -- Status: ' + accounts[i].status.userStatus +
+					   '<button onclick="goToAccountPage(this)">Account Page</button>' +
 					   '</li>');
 			continue;
 		}
@@ -132,21 +126,21 @@ function fillTabs()
 		{
 			advisorAccounts++;
 			$('#accountHolder #advisorAccounts').after('<li id="' + accounts[i].id +
-					   '" class="advisorAccounts miniAccount hidden"' + 
-					   '>Name: ' + accounts[i].firstName + 
-					   ' ' + accounts[i].lastName + 
-					   ' -- Email: ' + accounts[i].email + 
-					   ' -- Status: ' + accounts[i].status.userStatus + 
-					   '<button onclick="goToAccountPage(this)">Account Page</button>' + 
+					   '" class="advisorAccounts miniAccount hidden"' +
+					   '>Name: ' + accounts[i].firstName +
+					   ' ' + accounts[i].lastName +
+					   ' -- Email: ' + accounts[i].email +
+					   ' -- Status: ' + accounts[i].status.userStatus +
+					   '<button onclick="goToAccountPage(this)">Account Page</button>' +
 					   '</li>');
-			
+
 			$('#accountHolder #registeredAccounts').after('<li id="' + accounts[i].id +
-					   '" class="registeredAccounts miniAccount hidden"' + 
-					   '>Name: ' + accounts[i].firstName + 
-					   ' ' + accounts[i].lastName + 
-					   ' -- Email: ' + accounts[i].email + 
-					   ' -- Status: ' + accounts[i].status.userStatus + 
-					   '<button onclick="goToAccountPage(this)">Account Page</button>' + 
+					   '" class="registeredAccounts miniAccount hidden"' +
+					   '>Name: ' + accounts[i].firstName +
+					   ' ' + accounts[i].lastName +
+					   ' -- Email: ' + accounts[i].email +
+					   ' -- Status: ' + accounts[i].status.userStatus +
+					   '<button onclick="goToAccountPage(this)">Account Page</button>' +
 					   '</li>');
 			continue;
 		}
@@ -158,7 +152,7 @@ function fillTabs()
 	$('#numOfPendingAccounts').html(pendingAccounts);
 	$('#pendingAccounts').html("Pending Accounts (" + pendingAccounts + ")" + "<span class='expanded'>+</span>");
 	$('#registeredAccounts').html('All Registered Accounts (' + (advisorAccounts + studentAccounts) + ")" + "<span class='expanded'>+</span>");
-	
+
 	var pendingInternships = 0;
 	var activeInternships = 0;
 	for(var i = 0; i < internships.length; i++)
@@ -167,22 +161,22 @@ function fillTabs()
 		{
 			pendingInternships++;
 			$('#internshipHolder #pendingInternships').after('<li id="' + internships[i].id +
-					   '" class="pendingInternships miniAccount hidden"' + 
-					   '>Company: ' + internships[i].company + 
-						'<button onclick="handleInternship(this, false)">Decline</button>' + 
-						'<button onclick="handleInternship(this, true)">Accept</button>' + 
-					   '<button onclick="goToInternshipPage(this)">Internship Page</button>' + 
+					   '" class="pendingInternships miniAccount hidden"' +
+					   '>Company: ' + internships[i].company +
+						'<button onclick="handleInternship(this, false)">Decline</button>' +
+						'<button onclick="handleInternship(this, true)">Accept</button>' +
+					   '<button onclick="goToInternshipPage(this)">Internship Page</button>' +
 					   '</li>');
 		}
 		else if(internships[i].active == 1)
 		{
 			activeInternships++;
 			$('#internshipHolder #allInternships').after('<li id="' + internships[i].id +
-					   '" class="allInternships miniAccount hidden"' + 
-					   '>Company: ' + internships[i].company + 
-						'<button onclick="handleInternship(this, false)">Decline</button>' + 
-						'<button onclick="handleInternship(this, true)">Accept</button>' + 
-					   '<button onclick="goToInternshipPage(this)">Internship Page</button>' + 
+					   '" class="allInternships miniAccount hidden"' +
+					   '>Company: ' + internships[i].company +
+						'<button onclick="handleInternship(this, false)">Decline</button>' +
+						'<button onclick="handleInternship(this, true)">Accept</button>' +
+					   '<button onclick="goToInternshipPage(this)">Internship Page</button>' +
 					   '</li>');
 		}
 	}
@@ -192,7 +186,7 @@ function fillTabs()
 	$('#numOfListedInternships').html(activeInternships);
 	$('#allInternships').html("Accepted Internships (" + activeInternships + ")" + "<span class='expanded'>+</span>");
 
-	
+
 	var pendingMentorships = 0;
 	var activeMentorships = 0;
 	for(var i = 0; i < mentorships.length; i++)
@@ -201,26 +195,26 @@ function fillTabs()
 		{
 			pendingMentorships++;
 			$('#mentorshipHolder #pendingMentorships').after('<li id="' + mentorships[i].id +
-					   '" class="pendingMentorships miniAccount hidden"' + 
-					   '>Company: ' + mentorships[i].company + 
-						'<button onclick="handleMentorship(this, false)">Decline</button>' + 
-						'<button onclick="handleMentorship(this, true)">Accept</button>' + 
-					   '<button onclick="goToMentorshipPage(this)">Mentorship Page</button>' + 
+					   '" class="pendingMentorships miniAccount hidden"' +
+					   '>Company: ' + mentorships[i].company +
+						'<button onclick="handleMentorship(this, false)">Decline</button>' +
+						'<button onclick="handleMentorship(this, true)">Accept</button>' +
+					   '<button onclick="goToMentorshipPage(this)">Mentorship Page</button>' +
 					   '</li>');
 		}
 		else if(mentorships[i].active == 1)
 		{
 			activeMentorships++;
 			$('#mentorshipHolder #allMentorships').after('<li id="' + mentorships[i].id +
-					   '" class="allMentorships miniAccount hidden"' + 
-					   '>Company: ' + mentorships[i].company + 
-					   '<button onclick="goToMentorshipPage(this)">Mentorship Page</button>' + 
+					   '" class="allMentorships miniAccount hidden"' +
+					   '>Company: ' + mentorships[i].company +
+					   '<button onclick="goToMentorshipPage(this)">Mentorship Page</button>' +
 					   '</li>');
 		}
 	}
 	$('#numOfPendingMentorships').html(pendingMentorships);
 	$('#pendingMentorships').html("Pending Mentorships (" + pendingMentorships + ")" + "<span class='expanded'>+</span>");
-	$('#numOfListedMentorships').html(activeMentorships);	
+	$('#numOfListedMentorships').html(activeMentorships);
 	$('#allMentorships').html("Accepted Mentorships (" + activeMentorships + ")" + "<span class='expanded'>+</span>");
 }
 
@@ -239,7 +233,7 @@ function show(source)
 	{
 		$('.expanded').html('+');
 	}
-	
+
 }
 
 function returnToSite()
@@ -251,22 +245,22 @@ function handleAccount(param, handle)
 {
 	var parentElement = $(param).parents()[0];
 	if(parentElement == null) { alert('Something has gone wrong!'); return;}
-	
+
 	var accepted = "";
 	if(handle)
 		accepted = "true";
 	else
 		accepted = "false";
-	
+
 	var mesg = handle ? "ACCEPT": "DECLINE";
 	var accountId = $(parentElement).attr('id');
-	if(confirm('Are you sure that you want to ' + 
+	if(confirm('Are you sure that you want to ' +
 					mesg + ' this ACCOUNT?'))
 	{
 		$.ajax({
 			type: 'POST',
-			url: 'Account', 
-			data: 
+			url: 'Account',
+			data:
 			{
 				'action': 'acceptOrDenyAccount',
 				'accountId': accountId,
@@ -274,7 +268,7 @@ function handleAccount(param, handle)
 			},
 			complete: function(data)
 			{
-				if(data.responseText == '') {alert('Something has gone wrong!'); return;} 
+				if(data.responseText == '') {alert('Something has gone wrong!'); return;}
 				else
 				{
 					alert('Account ' + mesg + "ED");
@@ -289,22 +283,22 @@ function handleMentorship(param, handle)
 {
 	var parentElement = $(param).parents()[0];
 	if(parentElement == null) { alert('Something has gone wrong!'); return;}
-	
+
 	var accepted = "";
 	if(handle)
 		accepted = "true";
 	else
 		accepted = "false";
-		
+
 	var mesg = handle ? 'ACCEPT': 'DECLINE';
 	var accountId = $(parentElement).attr('id');
-	if(confirm('Are you sure that you want to ' + 
+	if(confirm('Are you sure that you want to ' +
 			 mesg + ' this MENTORSHIP?'))
 	{
 		$.ajax({
 			type: 'POST',
-			url: 'Data', 
-			data: 
+			url: 'Data',
+			data:
 			{
 				'action': 'acceptOrDenyMentorship',
 				'mentorshipId': accountId,
@@ -312,7 +306,7 @@ function handleMentorship(param, handle)
 			},
 			complete: function(data)
 			{
-				if(data.responseText == '') {alert('Something has gone wrong!'); return;} 
+				if(data.responseText == '') {alert('Something has gone wrong!'); return;}
 				else
 				{
 					alert('Mentorship ' + mesg + "ED");
@@ -327,22 +321,22 @@ function handleInternship(param, handle)
 {
 	var parentElement = $(param).parents()[0];
 	if(parentElement == null) { alert('Something has gone wrong!'); return;}
-	
+
 	var accepted = "";
 	if(handle)
 		accepted = "true";
 	else
 		accepted = "false";
-		
+
 	var mesg = handle ? 'ACCEPT': 'DECLINE';
 	var accountId = $(parentElement).attr('id');
-	if(confirm('Are you sure that you want to ' + 
+	if(confirm('Are you sure that you want to ' +
 			 mesg + ' this INTERNSHIP?'))
 	{
 		$.ajax({
 			type: 'POST',
-			url: 'Data', 
-			data: 
+			url: 'Data',
+			data:
 			{
 				'action': 'acceptOrDenyInternship',
 				'internshipId': accountId,
@@ -350,7 +344,7 @@ function handleInternship(param, handle)
 			},
 			complete: function(data)
 			{
-				if(data.responseText == '') {alert('Something has gone wrong!'); return;} 
+				if(data.responseText == '') {alert('Something has gone wrong!'); return;}
 				else
 				{
 					alert('Internship ' + mesg + "ED");
@@ -369,8 +363,8 @@ function goToAccountPage(param)
 function goToMentorshipPage(param)
 {
 	if($(param).parents('li').length == 1)
-		window.location.href = 'mentorshipInfo.html?&id=' + 
-										$(param).parents('li').attr('id') + 
+		window.location.href = 'mentorshipInfo.html?&id=' +
+										$(param).parents('li').attr('id') +
 										"&returnPage=" + RETURN_ID;
 }
 
@@ -378,13 +372,7 @@ function goToInternshipPage(param)
 {
 	console.log($(param).parents('li'));
 	if($(param).parents('li').length == 1)
-		window.location.href = "internshipInfo.html?&id=" + 
-									$(param).parents('li').attr('id') + 
+		window.location.href = "internshipInfo.html?&id=" +
+									$(param).parents('li').attr('id') +
 									"&returnPage=" + RETURN_ID;
 }
-
-
-
-
-
-

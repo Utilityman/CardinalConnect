@@ -4,7 +4,9 @@
   "description": "CardinalConnect is a system that will be used to connect students and alums with internships, mentorships and other events. Edit",
   "main": "index.js",
   "scripts": {
-    "start": "node ./bin/start"
+    "start": "node ./bin/start",
+    "mongo-start": "mongod --dbpath data/",
+    "prestartup": "node ./bin/init"
   },
   "repository": {
     "type": "git",

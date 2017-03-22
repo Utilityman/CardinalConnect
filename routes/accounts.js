@@ -6,7 +6,7 @@ let mongodb = require('mongodb');
 let Globals = require('../config');
 let globals = new Globals();
 
-router.post('/GetMentorships', function (req, res, next) {
+router.post('/GetAccounts', function (req, res, next) {
   let t0 = new Date().getTime();
   getAccounts(req.body, function(response) {
     let t1 = new Date().getTime();
@@ -16,16 +16,16 @@ router.post('/GetMentorships', function (req, res, next) {
 });
 
 function getAccounts(json, callback) {
-  if(json.action !== 'getMentorships') {
+  if(json.action !== 'getAccounts') {
     callback('INCORRECT_ACTION_TYPE');
   } else {
     let MongoClient = mongodb.MongoClient;
     MongoClient.connect(globals.MONGO_URL, function (err, db) {
       if (err) {
-        console.log('err@mentorships.js.getAccounts().MongoClient.connect - ' + err);
+        console.log('err@accounts.js.getAccounts().MongoClient.connect - ' + err);
         callback('SERVER_ERROR');
       } else {
-        let collection = db.collection('mentorships');
+        let collection = db.collection('users');
         collection.find().toArray(function (err, results) {
           if (err) {
             callback('SERVER_ERROR');
