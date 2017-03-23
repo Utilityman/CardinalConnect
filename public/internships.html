@@ -4,17 +4,16 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>Cardinal Home</title>
+    <title>Internships</title>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-	
+
 	<!-- Latest compiled and minified JavaScript -->
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 	<script type='text/javascript' src='js/bootstrap-hover-dropdown.min.js'></script>
     <script type='text/javascript' src='js/base.js'></script>
-    <script type='text/javascript' src='js/internships.js'></script>
-    <script type='text/javascript' src='js/modal.js'></script>
-    
+    <script type='text/javascript' src='js/client-internships.js'></script>
+
     <!-- Bootstrap -->
 	<!-- Latest compiled and minified CSS -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">    <link href="css/style.css" rel="stylesheet">
@@ -23,7 +22,7 @@
 <body onload="loadInternships()">
 
 <div id="title">
-	<img id="logo" src="res/logo.png" alt="Logo">
+	<img id="logo" src="imgs/logo.png" alt="Logo">
 	<span>CALVERT HALL COLLEGE</span>
 </div>
 
@@ -34,7 +33,7 @@
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
-        <span class="icon-bar"></span>                        
+        <span class="icon-bar"></span>
       </button>
       <a class="navbar-brand" href="#">Cardinal Connect</a>
     </div>
@@ -64,7 +63,7 @@
             <li><a href="#" onclick='navigate("internships")'>Trade</a></li>
             <li><a href="#" onclick='navigate("internships")'>Other</a></li>
           </ul>
-        </li>        
+        </li>
         <li><a href="#" onclick='navigate("events")'>Events</a></li>
         <li><a href='#' onclick='navigate("account")'>Account</a></li>
       </ul>
@@ -75,105 +74,17 @@
   </div>
 </nav>
 
-	
 	<div id="controls">
-		<button onclick="showFilterPopup()">Filter</button>
-		<button onclick="showPostPopup()">Post</button>
+		<button><a href='internshipForm.html'>Post</a></button>
 	</div>
-	
+
 		<ul id="internshipList">
 
 		</ul>
-	
-<!-- Filter Popup -->
-<div id="filterPopup" class="modal">
-	<!-- Popup content -->
-  	<div class="modal-content">
-    	<div class="modal-header">
-      		<span onclick="closeFilterPopup()" class="close">X</span>
-      		<h2>Filter By</h2>
-    	</div>
-	    <div class="modal-body">
-	    <button id="addFilter" style="float:right">Add Filter</button>
-	    <br>
-	    	<select class="filterKeys">
-	    		<option>Please select an option</option>
-	    	</select>
-	    	<select class="filterValues">
-	    		<option>---</option>
-	    	</select>
-	    	<br>
-	    </div>
-  </div>
-</div>
 
-<div id="postPopup" class="modal">
-	<!-- Popup content -->
-  	<div class="modal-content">
-    	<div class="modal-header">
-      		<span onclick="closePostPopup()" class="close">X</span>
-      		<h2>Post Internship</h2>
-    	</div>
-	    <div class="modal-body">
-	   		<div id="formDiv">
-			<form id="internDetails">
-				<fieldset>
-					<legend>Internship Details</legend>
-					<table>
-
-						<tr>
-							<td><label for="internshipTitle">Internship Title:</label></td>
-							<td><input id="internshipTitle" type="text" placeholder="Title"/></td>
-						</tr>
-						<tr>
-							<td><label for="company">Company:</label></td>
-							<td><input id="company" type="text" placeholder="Company"/></td>
-						</tr>
-						<tr>
-							<td><label for="location">Location:</label></td>
-							<td><input id="location" type="text" placeholder="City, State"/></td>
-						</tr>
-						<tr>
-							<td><label>Salary:</label></td>
-							<td><input id="paid" type="radio" name="salary" value="paid"/>Paid<br>
-							<input id="unpaid" type="radio" name="salary" value="unpaid"/>Unpaid<br></td>
-						</tr>
-						<tr>
-							<td><label for="description">Description:</label></td>
-							<td><textarea id="description" rows=5></textarea></td>
-						</tr>
-						<tr>
-							<td><label for="contact">Contact Email:</label></td>
-							<td><input id="contact" type="text" placeholder="example@email.com"/></td>
-						</tr>
-						<tr>
-							<td><label for="availability">Availability:</label></td>
-							<td><input id="availability" type="text" placeholder="Fall 2016"></td>
-						</tr>
-						<tr>
-							<td><label for="focus">Focus:</label></td>
-							<td><select id="focus">
-							
-							</select></td>
-						</tr>
-				</table>
-				</fieldset>
-				<button id="submitButton" onclick="postInternship()" type="button">Submit Internship</button>
-			</form>
-			</div>
-			<div id="successDiv" class="hidden">
-				Success! Your post is now pending approval.
-			</div>
-	    </div>
-    <div class="modal-footer">
-      <h4>Submissions will be submitted to administration 
-      before approval! <br>All fields required.</h4>
-    </div>
-  </div>
-</div>
-<div id="footer">Calvert Hall College, Cardinal Connect. 2016. If there are any 
-				issues or concerns, contact the Advancement Office at 999-9999-999. 
-				<div onclick='openFeedbackTab()' 
+<div id="footer">Calvert Hall College, Cardinal Connect. 2016. If there are any
+				issues or concerns, contact the Advancement Office at 999-9999-999.
+				<div onclick='openFeedbackTab()'
 				style='margin-top: 8px;display: inline;text-decoration:underline;cursor:pointer'>Send Feedback!</div></div>
 
 	</div>

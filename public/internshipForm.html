@@ -1,55 +1,144 @@
-<!DOCTYPE html>
 <html>
 <head>
-	<script type="text/javascript" src="js/jquery.js"></script>
-	<script type="text/javascript" src="js/internshipForm.js"></script>
-	
-	<link href="css/style.css" type="text/css" rel="stylesheet"></link>
-	<link href="css/login.css" type="text/css" rel="stylesheet"></link>
-	
-<meta charset="UTF-8">
-<title>Internship Form</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Internships</title>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+	<script type='text/javascript' src='js/bootstrap-hover-dropdown.min.js'></script>
+    <script type='text/javascript' src='js/base.js'></script>
+
+    <!-- Bootstrap -->
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">    <link href="css/style.css" rel="stylesheet">
+    <link href='css/style.css' rel='stylesheet'>
+
+	<script>
+
+
+
+	</script>
 </head>
-<body onload="notifyUser()">
-	<ul id="titlebar">
-		<li onclick="returnToPreviousByURLParam()">Return to Previous Page</li>
-	</ul>
+<body>
 
-<label style="display:none">Skipped Fields: firstName, lastName.</label>
-<label id="user"></label>
-<form>
-	<table>
-		<tr>
-			<th>Field</th><th>Entry</th>
-		</tr>
-		<tr>
-			<td>Availability</td><td><input id="available" placeholder="When is the internship available?" value="Summer 2016"/></td>
-		</tr>
-		<tr>
-			<td>Company</td><td><input id="company" placeholder="What company is it for?" value="The Good Company"/></td>
-		</tr>
-		<tr>
-			<td>Contact</td><td><input id="contact" placeholder="What email should be contacted?" value="good@company.gov"/></td>
-		</tr>
-		<tr>
-			<td>Description</td><td><input id="description" placeholder="What is this internship about?" value="Our company works with computers and you will do work with computers."/></td>
-		</tr>
-		<tr>
-			<td>Focus</td><td><input id="focus" placeholder="What is the focus of this opporunity?" value="Computer Science"/></td>
-		</tr>
-		<tr>
-			<td>Title</td><td><input id="title" placeholder="What is the internship title?" value="Software Developer"/></td>
-		</tr>
-		<tr>
-			<td>Location</td><td><input id="lcoation" placeholder="Where is the internship located?" value="Baltimore, MD"/></td>
-		</tr>
-		<tr>
-			<td>Paid</td><td><input id="paid" placeholder="Is this internship a paying position?" value="Yes"/></td>
-		</tr>
-	</table>
+<div id="title">
+	<img id="logo" src="imgs/logo.png" alt="Logo">
+	<span>CALVERT HALL COLLEGE</span>
+</div>
+
+<div class='container'>
+<nav id='navigationBar' class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">Cardinal Connect</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+        <li><a href="home.html">Home</a></li>
+        <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" data-hover='dropdown' href="#" onclick='navigate("mentorships")'>Mentorships <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="#" onclick='navigate("mentorships")'>Business</a></li>
+            <li><a href="#" onclick='navigate("mentorships")'>Finance</a></li>
+            <li><a href="#" onclick='navigate("mentorships")'>Law</a></li>
+            <li><a href="#" onclick='navigate("mentorships")'>Medicine</a></li>
+            <li><a href="#" onclick='navigate("mentorships")'>Teaching</a></li>
+            <li><a href="#" onclick='navigate("mentorships")'>Trade</a></li>
+            <li><a href="#" onclick='navigate("mentorships")'>Other</a></li>
+          </ul>
+        </li>
+        <li class="dropdown active">
+          <a class="dropdown-toggle" data-toggle="dropdown" data-hover='dropdown' href="#" onclick='navigate("internships")'>Internships <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="#" onclick='navigate("internships")'>Business</a></li>
+            <li><a href="#" onclick='navigate("internships")'>Finance</a></li>
+            <li><a href="#" onclick='navigate("internships")'>Law</a></li>
+            <li><a href="#" onclick='navigate("internships")'>Medicine</a></li>
+            <li><a href="#" onclick='navigate("internships")'>Teaching</a></li>
+            <li><a href="#" onclick='navigate("internships")'>Trade</a></li>
+            <li><a href="#" onclick='navigate("internships")'>Other</a></li>
+          </ul>
+        </li>
+        <li><a href="#" onclick='navigate("events")'>Events</a></li>
+        <li><a href='#' onclick='navigate("account")'>Account</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<form id='registerForm' class="form-horizontal">
+  <div class="form-group">
+	<label class="control-label col-sm-2" for="title">Title:</label>
+	<div class="col-sm-10">
+	  <input type="text" class="form-control" id="internshipTitle" placeholder="Title">
+	</div>
+  </div>
+ <div class="form-group">
+	<label class="control-label col-sm-2" for="location">Location:</label>
+	<div class="col-sm-10">
+	  <input type="text" class="form-control" id="location" placeholder="Location">
+	</div>
+  </div>
+  <div class="form-group">
+	<label class="control-label col-sm-2" for="email">Company:</label>
+	<div class="col-sm-10">
+	  <input type="email" class="form-control" id="email" placeholder="Enter email">
+	</div>
+  </div>
+  <div class="form-group">
+	<label class="control-label col-sm-2" for="contact">Contact:</label>
+	<div class="col-sm-10">
+	  <input type="text" class="form-control" id="contact" placeholder="Contact Email (if different than user email)">
+	</div>
+  </div>
+  <div class="form-group">
+	<label class="control-label col-sm-2" for="description">Description:</label>
+	<div class="col-sm-10">
+	  <textarea class='form-control' rows='5' id='description'></textarea>
+	</div>
+  </div>
+
+  <div class="form-group">
+	<label class="control-label col-sm-2" for="pwd">Internship Focus:</label>
+	<div class="col-sm-10">
+	  <select id='accountType' class='form-control'>
+		  <option value='business'>Business</option>
+		  <option value='finance'>Finance</option>
+		  <option value='law'>Law</option>
+		  <option value='medicine'>Medicine</option>
+		  <option value='teaching'>Teaching</option>
+		  <option value='trade'>Trade</option>
+		  <option value='other'>Other</option>
+	  </select>
+	</div>
+  </div>
+  <div class="form-group">
+	  <label class="control-label col-sm-2" for="tags">Tags:</label>
+	  <div class="col-sm-10">
+		  <input type="text" class="form-control" id="tags" placeholder="Add Focus Tags to your Internship (ex: [Marketing])">
+	  </div>
+  </div>
+
+  <div class="form-group">
+	<div class="col-sm-offset-2 col-sm-10">
+	  <button type="submit" class="btn btn-default">Submit</button>
+	</div>
+  </div>
 </form>
-<button onclick="saveInternship()">Save Internship</button>
 
-
+</div>
 </body>
 </html>
