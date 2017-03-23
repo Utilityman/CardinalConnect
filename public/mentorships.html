@@ -7,18 +7,24 @@
     <title>Cardinal Home</title>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-	
+
 	<!-- Latest compiled and minified JavaScript -->
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 	<script type='text/javascript' src='js/bootstrap-hover-dropdown.min.js'></script>
     <script type='text/javascript' src='js/base.js'></script>
-    <script type='text/javascript' src='js/mentorships.js'></script>
-    <script type='text/javascript' src='js/modal.js'></script>
-    
+    <script type='text/javascript' src='js/client-mentorships.js'></script>
+
+
     <!-- Bootstrap -->
 	<!-- Latest compiled and minified CSS -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">    <link href="css/style.css" rel="stylesheet">
     <link href='css/style.css' rel='stylesheet'>
+
+    <script>
+        function goToForm () {
+            window.location.href = 'mentorshipForm.html';
+        }
+    </script>
 </head>
 <body onload="loadMentorships()">
 
@@ -34,7 +40,7 @@
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
-        <span class="icon-bar"></span>                        
+        <span class="icon-bar"></span>
       </button>
       <a class="navbar-brand" href="#">Cardinal Connect</a>
     </div>
@@ -64,7 +70,7 @@
             <li><a href="#" onclick='navigate("internships")'>Trade</a></li>
             <li><a href="#" onclick='navigate("internships")'>Other</a></li>
           </ul>
-        </li>        
+        </li>
         <li><a href="#" onclick='navigate("events")'>Events</a></li>
         <li><a href='#' onclick='navigate("account")'>Account</a></li>
       </ul>
@@ -75,25 +81,30 @@
   </div>
 </nav>
 
-	
+
 	<div id="controls">
-		<button><a href='mentorshipsForm.html'>Post</a></button>
+		<button class='btn btn-default' type='button' onclick='goToForm()'>Post</button>
 	</div>
-	
-		<ul id="mentorshipList">
-			
-		</ul>
-	
+
+    <table class="table table-hover">
+        <thead>
+            <tr><th style='font-size: 26px'>Mentorships</th><th>Owner</th><th>Contact Information</th><th>Focus</th></tr>
+        </thead>
+       <tbody id='mentorships'>
+
+       </tbody>
+     </table>
+
 <!-- Filter Popup -->
 
 
 
-<div id="footer">Calvert Hall College, Cardinal Connect. 2016. If there are any 
-				issues or concerns, contact the Advancement Office at 999-9999-999. 
-				<div onclick='openFeedbackTab()' 
+<div id="footer">Calvert Hall College, Cardinal Connect. 2016. If there are any
+				issues or concerns, contact the Advancement Office at 999-9999-999.
+				<div onclick='openFeedbackTab()'
 				style='margin-top: 8px;display: inline;text-decoration:underline;cursor:pointer'>Send Feedback!</div></div>
-				
-					</div>
-				
+
+	</div>
+
 </body>
 </html>

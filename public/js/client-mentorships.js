@@ -1,21 +1,22 @@
 
-
-function loadInternships()
+function loadMentorships()
 {
 	var filter = getParameterByName("id");
-
+	console.log(filter);
 	$.ajax({
 		type: 'POST',
-		url: '/GetInternships',
+		url: '/GetMentorships',
 		contentType: 'application/json',
 		data: JSON.stringify({
-			'action': 'getInternships',
-		}), complete: function(data) {
+			'action': 'getMentorships',
+		}),
+		complete: function(data)
+		{
 			console.log(data);
 			if (data.responseJSON) {
 				fillField(data.responseJSON);
 			}
-		}
+		},
 	});
 }
 
@@ -27,29 +28,29 @@ function fillField(json)
 		if(!json[i].active)
 		{
 			count++;
-			$('#internships').append('<tr><td>' + json[i].title + '</td>' +
+			$('#mentorships').append('<tr><td>' + json[i].title + '</td>' +
 																'<td>Owner Name from ' + json[i].company + '</td>' +
 																'<td>' + json[i].contact + '</td>' +
-																'<td>' + toTitleCase(json[i].focus) + '</td>' +
+																'<td>' + toTitleCase(json[i].focus) + '</td>' + 
 																'</tr>');
 
 		}
 	}
 
 	if (!count) {
-		$('#internships').append('<tr><td>No Internships to Display</td></tr>');
+		$('#mentorships').append('<tr><td>No Mentorships to Display</td></tr>');
 	}
 }
 
-function subscribe(internshipID)
+function subscribe(mentorshipID)
 {
 	/*$.ajax({
 		type: 'POST',
-		url: 'Internships',
+		url: 'Mentorships',
 		data:
 		{
-			'action': 'subscribeToInternship',
-			'internshipID': internshipID
+			'action': 'subscribeToMentorship',
+			'mentorshipID': mentorshipID
 		},
 		complete: function(data)
 		{

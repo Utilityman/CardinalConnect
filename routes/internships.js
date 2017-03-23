@@ -59,13 +59,13 @@ function submitInternship(json, callback) {
         console.log(err);
         callback('SERVER_ERROR');
       } else {
-        globals.createInternshipObject(json, function(err, user) {
+        globals.createInternshipObject(json, function(err, internship) {
           if(err) {
             console.log('err@internships.js:submitInternship() - ' + err);
             callback(err);
           } else {
             let collection = db.collection(globals.INTERNSHIP_TABLE);
-            collection.insert([user], function (err, done) {
+            collection.insert([internship], function (err, done) {
               if (err) {
                 console.log('err@internships.js:submitInternship() - ' + err);
                 callback('SERVER_ERROR');

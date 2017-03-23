@@ -16,7 +16,6 @@ router.post('/Login', function (req, res, next) {
 });
 
 router.post('/Register', function (req, res, next) {
-  console.log(req.body);
   let t0 = new Date().getTime();
   register(req.body, function (response) {
     let t1 = new Date().getTime();
@@ -99,7 +98,7 @@ function register(json, callback) {
                 callback('SERVER_ERROR');
                 db.close();
               } else if (result.length) {
-                callback('ACCOUNT_EXISTS');
+                callback({'INVALID_FORM': 'Account Already Exists'});
               } else {
                 collection.insert([user], function (err, done) {
                   if (err) {

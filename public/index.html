@@ -120,16 +120,17 @@
 				}), complete: function (data) {
 					console.log(data);
 
-					var responseText = data.responseJSON;
-
-					if(responseText === 'ACCOUNT_CREATED') {
+                    if(data.responseJSON && data.responseJSON.INVALID_FORM) {
+                        alert(data.responseJSON.INVALID_FORM);
+                    } else if(data.responseText === 'ACCOUNT_CREATED') {
+                        $('#backButton').css('display', 'none');
 						$('#registerForm').css('display', 'none');
 						$('#loginForm').fadeIn();
 						$('#success').text('Account pending apporval from Calvert Hall. Your email will be your username!');
 						$('#success').slideDown();
-					} else if (responseText === 'ACOUNT_EXISTS') {
+					} else if (data.responseText === 'ACOUNT_EXISTS') {
 						//$('#registerForm').css('display', 'none');
-					} else if (responseText === 'SERVER_ERROR') {
+					} else if (data.responseText === 'SERVER_ERROR') {
 						$('#registerForm').css('display', 'none');
 						$('#errorText').text('Server Error!');
 						$('#loginForm').fadeIn();

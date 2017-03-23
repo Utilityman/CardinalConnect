@@ -56,7 +56,7 @@
                     'tags': tags
 				}), complete: function (data) {
                     console.log(data);
-					if(data.responseJSON.INVALID_FORM) {
+					if(data.responseJSON && data.responseJSON.INVALID_FORM) {
                         alert(data.responseJSON.INVALID_FORM);
                     } else if (data.responseText === 'INTERNSHIP_CREATED') {
                         $('#internshipTitle').val('');

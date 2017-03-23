@@ -10,48 +10,20 @@ router.post('/GetMentorships', function (req, res, next) {
   let t0 = new Date().getTime();
   getMentorships(req.body, function(response) {
     let t1 = new Date().getTime();
-    console.log('POST@/Login --- Response:' + response + ' --- ' + (t1 - t0) + 'ms');
+    console.log('POST@/GetMentorships --- Response:' + response + ' --- ' + (t1 - t0) + 'ms');
     res.send(response);
   });
 });
 
 
 router.post('/SubmitMentorship', function (req, res, next) {
-	console.log("submit mentorship call")
   let t0 = new Date().getTime();
-  getMentorships(req.body, function(response) {
+  submitMentorship(req.body, function(response) {
     let t1 = new Date().getTime();
     console.log('POST@/SubmitMentorship --- Response:' + response + ' --- ' + (t1 - t0) + 'ms');
     res.send(response);
   });
 });
-
-
-function submitMentorship(json, callback) {
-  if(json.action !== 'submitMentorship') {
-    callback('INCORRECT_ACTION_TYPE');
-  } else {
-    let MongoClient = mongodb.MongoClient;
-    MongoClient.connect(globals.MONGO_URL, function (err, db) {
-      if (err) {
-        console.log('err@mentorships.js.getAccounts().MongoClient.connect - ' + err);
-        callback('SERVER_ERROR');
-      } else {
-        let collection = db.collection('mentorships');
-        collection.find().toArray(function (err, results) {
-          if (err) {
-            callback('SERVER_ERROR');
-            db.close();
-          } else {
-            callback(results);
-            db.close();
-          }
-        });
-      }
-    });
-  }
-}
-
 
 function getMentorships(json, callback) {
   if(json.action !== 'getMentorships') {
@@ -63,7 +35,7 @@ function getMentorships(json, callback) {
         console.log('err@mentorships.js.getAccounts().MongoClient.connect - ' + err);
         callback('SERVER_ERROR');
       } else {
-        let collection = db.collection('mentorships');
+        let collection = db.collection(globals.MENTORSHIP_TABLE);
         collection.find().toArray(function (err, results) {
           if (err) {
             callback('SERVER_ERROR');
@@ -77,5 +49,38 @@ function getMentorships(json, callback) {
     });
   }
 }
+
+function submitMentorship(json, callback) {
+  if(json.action !== 'submitMentorship') {
+    callback('INCORRECT_ACTION_TYPE');
+  } else {
+    let MongoClient = mongodb.MongoClient;
+    MongoClient.connect(globals.MONGO_URL, function (err, db) {
+      if (err) {
+        console.log('err@mentorships.js.submitMentorship().MongoClient.connect - ' + err);
+        callback('SERVER_ERROR');
+      } else {
+        globals.createMentorshipObject(json, function (err, mentorship) {
+          if (err) {
+            console.log('mentorship creation error : fix this message');
+            callback(err);
+          } else {
+            let collection = db.collection(globals.MENTORSHIP_TABLE);
+            collection.insert([mentorship], function (err, done) {
+              if (err) {
+                console.log('err inserting mentorship: fix this message');
+                callback('SERVER_ERROR');
+              } else {
+                callback('MENTORSHIP_CREATED');
+              }
+              db.close();
+            });
+          }
+        });
+      }
+    });
+  }
+}
+
 
 module.exports = router;

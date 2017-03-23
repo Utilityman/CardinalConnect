@@ -20,66 +20,54 @@
 
 	<script>
 	'use strict';
-	
+
 	$(document).ready(function () {
-
-
     	$('#registerForm').submit(function (event) {
     		event.preventDefault();
-    		
     		submitMentorship();
     	});
-
 	});
-	
-	
-	
+
 	function submitMentorship(){
-		console.log("hello")
-		
+
 		var mentorshipTitle = $('#mentorshipTitle').val();
-		
 		var location = $('#location').val();
-
 		var company = $('#company').val();
-
 		var contact = $('#contact').val();
-		
 		var description = $('#description').val();
-
 		var mentorshipFocus = $('#mentorshipFocus').val();
+        var tags = $('#tags').val();
 
-			
 		$.ajax({
 			type: 'POST',
 			url: '/SubmitMentorship',
             contentType: 'application/json',
 			data: JSON.stringify({
 				'action': 'submitMentorship',
-				'mentorshipTitle': mentorshipTitle,
+				'title': mentorshipTitle,
 				'location': location,
 				'company': company,
+                'contact': contact,
 				'description': description,
-				'mentorshipFocus': mentorshipFocus
+				'focus': mentorshipFocus,
+                'tags': tags
 			}), complete: function (data) {
 				console.log(data);
+                if (data.responseJSON && data.responseJSON.INVALID_FORM) {
+                    alert(data.responseJSON.INVALID_FORM);
+                } else if (data.responseText === 'MENTORSHIP_CREATED'){
+                    $('#mentorshipTitle').val('');
+                    $('#location').val('');
+                    $('#company').val('');
+                    $('#contact').val('');
+                    $('#description').val('');
+                    $('#tags').val('');
+                    alert('Mentorship Created! TODO Ask to redirect home or to mentorship page');
+                }
 
-			
-
-				
 			}
 		});
-		
 	}
-
-	
-	
-	
-	
-	
-	
-	
-
 	</script>
 </head>
 <body>

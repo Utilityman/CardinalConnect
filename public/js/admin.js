@@ -70,7 +70,7 @@ function getMentorships()
 			console.log(data);
 			mentorships = data.responseJSON;
 
-			//fillTabs();
+			fillTabs();
 		},
 	});
 }
@@ -94,14 +94,14 @@ function fillTabs()
 														'>Name: ' + accounts[i].firstName +
 														' ' + accounts[i].lastName +
 														' -- Email: ' + accounts[i].email +
-														' -- As Status: ' + accounts[i].status.userStatus +
+														' -- As Status: ' + accounts[i].role +
 														'<button onclick="handleAccount(this, false)">Decline</button>' +
 														'<button onclick="handleAccount(this, true)">Accept</button>' +
 														'<button onclick="goToAccountPage(this)">Account Page</button>' +
 														'</li>');
 			continue;
 		}
-		if(accounts[i].status.userStatus == 'Student')
+		if(accounts[i].role === 'student')
 		{
 			studentAccounts++;
 			$('#accountHolder #studentAccounts').after('<li id="' + accounts[i].id +
@@ -122,7 +122,7 @@ function fillTabs()
 					   '</li>');
 			continue;
 		}
-		else if(accounts[i].status.userStatus == 'Advisor')
+		else if(accounts[i].role === 'advisor')
 		{
 			advisorAccounts++;
 			$('#accountHolder #advisorAccounts').after('<li id="' + accounts[i].id +

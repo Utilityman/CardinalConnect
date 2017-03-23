@@ -1,4 +1,4 @@
-/**	
+/**
  * 	Base functions that are applicable for more than one page
  */
 
@@ -34,7 +34,7 @@ function navigate(location)
 	}
 }
 
-function getParameterByName(name) 
+function getParameterByName(name)
 {
     name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
     var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
@@ -44,7 +44,7 @@ function getParameterByName(name)
 
 /**
  * The mentorship's submenu uses this to navigate with filters already in place
- * @param param - the major that the page will filter for 
+ * @param param - the major that the page will filter for
  */
 function findMentorships(param)
 {
@@ -62,13 +62,13 @@ function findInternships(param)
 
 /**
  * 	Expands tabs on the mentorship, internships, and events pages
- * 	TODO: use html classes to generalize this ie. find all children with class (.hideme) and toggle .hidden 
+ * 	TODO: use html classes to generalize this ie. find all children with class (.hideme) and toggle .hidden
  */
 function expand(tab)
 {
 	$(tab).siblings().children(".name").addClass("hidden");
 	$(tab).siblings().removeClass('active');
-		
+
 	$(tab).children().removeClass("hidden");
 	$(tab).addClass('active');
 }
@@ -80,7 +80,7 @@ function fillFocusDropdown()
 	{
 		$("#focus").append($("<option></option>")
 				.attr("value", focuses[i])
-				.text(focuses[i]));	
+				.text(focuses[i]));
 	}
 }
 
@@ -96,8 +96,8 @@ function logout()
 		console.log("logging out!");
 		$.ajax({
 			type: 'POST',
-			url: 'Home', 
-			data: 
+			url: 'Home',
+			data:
 			{
 				'action': 'logout',
 			},
@@ -155,8 +155,6 @@ function returnToPreviousByURLParam()
 	returnToPageID(id);
 }
 
-
-
-
-
-
+function toTitleCase(str) {
+    return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+}
