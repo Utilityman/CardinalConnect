@@ -1,5 +1,43 @@
 #!/usr/bin/env node
+'use strict';
 
-// if(mongodb-check-initialized--is--false())
-    //make mongodb server
-    // make admin account
+let mongodb = require('mongodb');
+let Globals = require('../config');
+let globals = new Globals();
+
+let MongoClient = mongodb.MongoClient;
+MongoClient.connect(globals.MONGO_URL, function (err, db) {
+	if (err) {
+		console.log(err);
+	} else {
+		let collection = db.collection('users');
+		collection.find({email:'root'}).toArray(function (err, result) {
+			if (err) {
+				console.log(err);
+			} else if (result.length === 1) {
+				console.log('root account already created');
+			} else {
+				let user = {
+					'active': 1,
+					'company': 'calvert-hall',
+					'email': 'root',
+					'password': 'admin',
+					'firstName': 'root',
+					'lastName': 'root',
+					'role': 'admin'
+				};
+				
+				collection.insert([user], function (err, done) {
+					if (err) {
+						console.log(err);
+					} else {
+						console.log('admin account created');
+					}
+					db.close();
+				});
+			}
+		});
+	
+	}
+	
+});

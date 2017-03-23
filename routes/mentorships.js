@@ -8,14 +8,52 @@ let globals = new Globals();
 
 router.post('/GetMentorships', function (req, res, next) {
   let t0 = new Date().getTime();
-  getAccounts(req.body, function(response) {
+  getMentorships(req.body, function(response) {
     let t1 = new Date().getTime();
     console.log('POST@/Login --- Response:' + response + ' --- ' + (t1 - t0) + 'ms');
     res.send(response);
   });
 });
 
-function getAccounts(json, callback) {
+
+router.post('/SubmitMentorship', function (req, res, next) {
+	console.log("submit mentorship call")
+  let t0 = new Date().getTime();
+  getMentorships(req.body, function(response) {
+    let t1 = new Date().getTime();
+    console.log('POST@/SubmitMentorship --- Response:' + response + ' --- ' + (t1 - t0) + 'ms');
+    res.send(response);
+  });
+});
+
+
+function submitMentorship(json, callback) {
+  if(json.action !== 'submitMentorship') {
+    callback('INCORRECT_ACTION_TYPE');
+  } else {
+    let MongoClient = mongodb.MongoClient;
+    MongoClient.connect(globals.MONGO_URL, function (err, db) {
+      if (err) {
+        console.log('err@mentorships.js.getAccounts().MongoClient.connect - ' + err);
+        callback('SERVER_ERROR');
+      } else {
+        let collection = db.collection('mentorships');
+        collection.find().toArray(function (err, results) {
+          if (err) {
+            callback('SERVER_ERROR');
+            db.close();
+          } else {
+            callback(results);
+            db.close();
+          }
+        });
+      }
+    });
+  }
+}
+
+
+function getMentorships(json, callback) {
   if(json.action !== 'getMentorships') {
     callback('INCORRECT_ACTION_TYPE');
   } else {

@@ -19,6 +19,7 @@
     <link href='css/style.css' rel='stylesheet'>
 
 	<script>
+	'use strict';
 	
 	$(document).ready(function () {
 
@@ -48,8 +49,7 @@
 
 		var mentorshipFocus = $('#mentorshipFocus').val();
 
-		
-	
+			
 		$.ajax({
 			type: 'POST',
 			url: '/SubmitMentorship',
