@@ -104,10 +104,7 @@
 			$('#password').val('');
 			$('#password2').val('');
 
-			if(password !== password2) {
-				alert('Passwords do not match!');
-				return;
-			}
+		
 
 			$.ajax({
 				type: 'POST',
@@ -176,6 +173,8 @@
 	</form>
 
   <button id='backButton' onclick='reload()'>Return to Login</button>
+  
+  
   <form id='registerForm' class="form-horizontal">
     <div class="form-group">
       <label class="control-label col-sm-2" for="firstName">First Name:</label>
