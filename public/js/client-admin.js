@@ -1,3 +1,5 @@
+'use strict';
+
 var accounts = null;
 var internships = null;
 var mentorships = null;
@@ -21,6 +23,7 @@ function loadDashboard () {
 	else if(tab == 'account')
 		showTab($('#account'), 'accountTab');
 
+	// get users
 	$.ajax({
 		type: 'POST',
 		url: '/GetAccounts',
@@ -29,9 +32,10 @@ function loadDashboard () {
 			'action': 'getAccounts',
 		}), complete: function(data)
 		{
-			console.log(data);
 			if(data.responseText === 'SERVER_ERROR') {
 					return alert('Server Error');
+			} else if (data.responseText === 'NOT_ADMIN_USER') {
+				window.location.href = 'index.html';
 			}
 
 			if(data.responseJSON) {
@@ -51,7 +55,6 @@ function getInternships()
 		data: JSON.stringify({
 			'action': 'getInternships',
 		}), complete: function(data) {
-			console.log(data);
 			internships = data.responseJSON;
 			getMentorships();
 		},
@@ -67,7 +70,6 @@ function getMentorships()
 		data: JSON.stringify({
 			'action': 'getMentorships',
 		}), complete: function(data) {
-			console.log(data);
 			mentorships = data.responseJSON;
 
 			fillTabs();
@@ -89,7 +91,7 @@ function fillTabs()
 		if(accounts[i].active == 0)
 		{
 			pendingAccounts++;
-			$('#accountHolder #pendingAccounts').after('<li id="' + accounts[i].id +
+			$('#accountHolder #pendingAccounts').after('<li id="' + accounts[i]._id +
 														'" class="pendingAccounts miniAccount hidden"' +
 														'>Name: ' + accounts[i].firstName +
 														' ' + accounts[i].lastName +
@@ -104,20 +106,20 @@ function fillTabs()
 		if(accounts[i].role === 'student')
 		{
 			studentAccounts++;
-			$('#accountHolder #studentAccounts').after('<li id="' + accounts[i].id +
+			$('#accountHolder #studentAccounts').after('<li id="' + accounts[i]._id +
 													   '" class="studentAccounts miniAccount hidden"' +
 													   '>Name: ' + accounts[i].firstName +
 													   ' ' + accounts[i].lastName +
 													   ' -- Email: ' + accounts[i].email +
-													   ' -- Status: ' + accounts[i].status.userStatus +
+													   ' -- Status: ' + accounts[i].role +
 													   '<button onclick="goToAccountPage(this)">Account Page</button>' +
 													   '</li>');
-			$('#accountHolder #registeredAccounts').after('<li id="' + accounts[i].id +
+			$('#accountHolder #registeredAccounts').after('<li id="' + accounts[i]._id +
 					   '" class="registeredAccounts miniAccount hidden"' +
 					   '>Name: ' + accounts[i].firstName +
 					   ' ' + accounts[i].lastName +
 					   ' -- Email: ' + accounts[i].email +
-					   ' -- Status: ' + accounts[i].status.userStatus +
+					   ' -- Status: ' + accounts[i].role +
 					   '<button onclick="goToAccountPage(this)">Account Page</button>' +
 					   '</li>');
 			continue;
@@ -125,22 +127,24 @@ function fillTabs()
 		else if(accounts[i].role === 'advisor')
 		{
 			advisorAccounts++;
-			$('#accountHolder #advisorAccounts').after('<li id="' + accounts[i].id +
+			$('#accountHolder #advisorAccounts').after('<li id="' + accounts[i]._id +
 					   '" class="advisorAccounts miniAccount hidden"' +
 					   '>Name: ' + accounts[i].firstName +
 					   ' ' + accounts[i].lastName +
 					   ' -- Email: ' + accounts[i].email +
-					   ' -- Status: ' + accounts[i].status.userStatus +
+					   ' -- Status: ' + accounts[i].role +
 					   '<button onclick="goToAccountPage(this)">Account Page</button>' +
+						 '<button onclick="handleAccount(this, false)">Suspend</button>' +
 					   '</li>');
 
-			$('#accountHolder #registeredAccounts').after('<li id="' + accounts[i].id +
+			$('#accountHolder #registeredAccounts').after('<li id="' + accounts[i]._id +
 					   '" class="registeredAccounts miniAccount hidden"' +
 					   '>Name: ' + accounts[i].firstName +
 					   ' ' + accounts[i].lastName +
 					   ' -- Email: ' + accounts[i].email +
-					   ' -- Status: ' + accounts[i].status.userStatus +
+					   ' -- Status: ' + accounts[i].role +
 					   '<button onclick="goToAccountPage(this)">Account Page</button>' +
+						 '<button onclick="handleAccount(this, false)">Suspend</button>' +
 					   '</li>');
 			continue;
 		}
@@ -160,7 +164,7 @@ function fillTabs()
 		if(internships[i].active == 0)
 		{
 			pendingInternships++;
-			$('#internshipHolder #pendingInternships').after('<li id="' + internships[i].id +
+			$('#internshipHolder #pendingInternships').after('<li id="' + internships[i]._id +
 					   '" class="pendingInternships miniAccount hidden"' +
 					   '>Company: ' + internships[i].company +
 						'<button onclick="handleInternship(this, false)">Decline</button>' +
@@ -171,11 +175,10 @@ function fillTabs()
 		else if(internships[i].active == 1)
 		{
 			activeInternships++;
-			$('#internshipHolder #allInternships').after('<li id="' + internships[i].id +
+			$('#internshipHolder #allInternships').after('<li id="' + internships[i]._id +
 					   '" class="allInternships miniAccount hidden"' +
 					   '>Company: ' + internships[i].company +
-						'<button onclick="handleInternship(this, false)">Decline</button>' +
-						'<button onclick="handleInternship(this, true)">Accept</button>' +
+						'<button onclick="handleInternship(this, false)">Suspend</button>' +
 					   '<button onclick="goToInternshipPage(this)">Internship Page</button>' +
 					   '</li>');
 		}
@@ -194,7 +197,7 @@ function fillTabs()
 		if(mentorships[i].active == 0)
 		{
 			pendingMentorships++;
-			$('#mentorshipHolder #pendingMentorships').after('<li id="' + mentorships[i].id +
+			$('#mentorshipHolder #pendingMentorships').after('<li id="' + mentorships[i]._id +
 					   '" class="pendingMentorships miniAccount hidden"' +
 					   '>Company: ' + mentorships[i].company +
 						'<button onclick="handleMentorship(this, false)">Decline</button>' +
@@ -205,10 +208,11 @@ function fillTabs()
 		else if(mentorships[i].active == 1)
 		{
 			activeMentorships++;
-			$('#mentorshipHolder #allMentorships').after('<li id="' + mentorships[i].id +
+			$('#mentorshipHolder #allMentorships').after('<li id="' + mentorships[i]._id +
 					   '" class="allMentorships miniAccount hidden"' +
 					   '>Company: ' + mentorships[i].company +
 					   '<button onclick="goToMentorshipPage(this)">Mentorship Page</button>' +
+						 '<button onclick="handleMentorship(this, false)">Suspend</button>' +
 					   '</li>');
 		}
 	}
@@ -243,34 +247,27 @@ function returnToSite()
 
 function handleAccount(param, handle)
 {
-	var parentElement = $(param).parents()[0];
+	let parentElement = $(param).parents()[0];
 	if(parentElement == null) { alert('Something has gone wrong!'); return;}
 
-	var accepted = "";
-	if(handle)
-		accepted = "true";
-	else
-		accepted = "false";
-
-	var mesg = handle ? "ACCEPT": "DECLINE";
-	var accountId = $(parentElement).attr('id');
+	let mesg = handle ? "ACCEPT": "DECLINE";
+	let accountId = $(parentElement).attr('id');
+	console.log(accountId);
 	if(confirm('Are you sure that you want to ' +
 					mesg + ' this ACCOUNT?'))
 	{
 		$.ajax({
 			type: 'POST',
-			url: 'Account',
-			data:
-			{
+			url: '/ToggleUser',
+			contentType: 'application/json',
+			data: JSON.stringify({
 				'action': 'acceptOrDenyAccount',
 				'accountId': accountId,
-				'accepted': accepted,
-			},
-			complete: function(data)
-			{
+				'accepted': handle,
+			}),
+			complete: function(data) {
 				if(data.responseText == '') {alert('Something has gone wrong!'); return;}
-				else
-				{
+				else {
 					alert('Account ' + mesg + "ED");
 					window.location.href = "admin.html?&id=account";
 				}
@@ -284,28 +281,21 @@ function handleMentorship(param, handle)
 	var parentElement = $(param).parents()[0];
 	if(parentElement == null) { alert('Something has gone wrong!'); return;}
 
-	var accepted = "";
-	if(handle)
-		accepted = "true";
-	else
-		accepted = "false";
-
 	var mesg = handle ? 'ACCEPT': 'DECLINE';
 	var accountId = $(parentElement).attr('id');
+	console.log(accountId);
 	if(confirm('Are you sure that you want to ' +
 			 mesg + ' this MENTORSHIP?'))
 	{
 		$.ajax({
 			type: 'POST',
-			url: 'Data',
-			data:
-			{
+			url: '/ToggleMentorship',
+			contentType: 'application/json',
+			data: JSON.stringify({
 				'action': 'acceptOrDenyMentorship',
 				'mentorshipId': accountId,
-				'accepted': accepted,
-			},
-			complete: function(data)
-			{
+				'accepted': handle,
+			}), complete: function(data) {
 				if(data.responseText == '') {alert('Something has gone wrong!'); return;}
 				else
 				{
@@ -317,16 +307,9 @@ function handleMentorship(param, handle)
 	}
 }
 
-function handleInternship(param, handle)
-{
+function handleInternship (param, handle) {
 	var parentElement = $(param).parents()[0];
 	if(parentElement == null) { alert('Something has gone wrong!'); return;}
-
-	var accepted = "";
-	if(handle)
-		accepted = "true";
-	else
-		accepted = "false";
 
 	var mesg = handle ? 'ACCEPT': 'DECLINE';
 	var accountId = $(parentElement).attr('id');
@@ -335,18 +318,15 @@ function handleInternship(param, handle)
 	{
 		$.ajax({
 			type: 'POST',
-			url: 'Data',
-			data:
-			{
+			url: '/ToggleInternship',
+			contentType: 'application/json',
+			data: JSON.stringify({
 				'action': 'acceptOrDenyInternship',
 				'internshipId': accountId,
-				'accepted': accepted,
-			},
-			complete: function(data)
-			{
+				'accepted': handle,
+			}), complete: function (data) {
 				if(data.responseText == '') {alert('Something has gone wrong!'); return;}
-				else
-				{
+				else {
 					alert('Internship ' + mesg + "ED");
 					window.location.href = "admin.html?&id=internship";
 				}

@@ -17,10 +17,10 @@ function navigate(location)
 			window.location.href = "home.html";
 			break;
 		case "mentorships":
-			window.location.href = "mentorships.html" + navigateParam;
+			window.location.href = "mentorshipBrowser.html" + navigateParam;
 			break;
 		case "internships":
-			window.location.href = "internships.html" + navigateParam;
+			window.location.href = "internshipBrowser.html" + navigateParam;
 			break;
 		case "events":
 			window.location.href = "events.html" + navigateParam;

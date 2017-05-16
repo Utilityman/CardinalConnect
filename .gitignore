@@ -6,14 +6,9 @@ npm-debug.log
 ## DB Stuff
 /data/
 
-## Old Stuff
-src/
-target/
-WebContent/
-
+## Workspace Specifics
+.project
+.settings/
 
 ## OS Specific
 .DS_Store
-
-
-

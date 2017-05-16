@@ -5,8 +5,9 @@
   "main": "index.js",
   "scripts": {
     "start": "node ./bin/start",
-    "mongo-start": "mongod --dbpath data/",
-    "prestartup": "node ./bin/init"
+    "dbstart": "mongod --dbpath data/",
+    "init_script": "node ./bin/init",
+    "hashRunner": "node ./bin/hashRunner"
   },
   "repository": {
     "type": "git",
@@ -20,8 +21,13 @@
   "homepage": "https://github.com/Utilityman/CardinalConnect#readme",
   "dependencies": {
     "body-parser": "^1.17.1",
+    "client-sessions": "^0.8.0",
+    "connect-livereload": "^0.6.0",
+    "cookie-session": "^2.0.0-beta.1",
     "express": "^4.15.2",
-    "mongodb": "^2.2.25"
+    "express-session": "^1.15.2",
+    "mongodb": "^2.2.25",
+    "password-hash": "^1.2.2"
   },
   "devDependencies": {
     "semistandard": "^10.0.0"

@@ -4,7 +4,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>Internships</title>
+    <title>Mentorship Browser</title>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
@@ -12,7 +12,8 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 	<script type='text/javascript' src='js/bootstrap-hover-dropdown.min.js'></script>
     <script type='text/javascript' src='js/base.js'></script>
-    <script type='text/javascript' src='js/client-internships.js'></script>
+    <script type='text/javascript' src='js/client-mentorshipBrowser.js'></script>
+
 
     <!-- Bootstrap -->
 	<!-- Latest compiled and minified CSS -->
@@ -20,14 +21,12 @@
     <link href='css/style.css' rel='stylesheet'>
 
     <script>
-
-    function goToForm() {
-        window.location.href = 'internshipForm.html';
-    }
-
+        function goToForm () {
+            window.location.href = 'mentorshipForm.html';
+        }
     </script>
 </head>
-<body onload="loadInternships()">
+<body onload="loadMentorships()">
 
 <div id="title">
 	<img id="logo" src="imgs/logo.png" alt="Logo">
@@ -48,7 +47,7 @@
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
         <li><a href="home.html">Home</a></li>
-        <li class="dropdown">
+        <li class="dropdown active">
           <a class="dropdown-toggle" data-toggle="dropdown" data-hover='dropdown' href="#" onclick='navigate("mentorships")'>Mentorships <span class="caret"></span></a>
           <ul class="dropdown-menu">
             <li><a href="#" onclick='navigate("mentorships")'>Business</a></li>
@@ -60,7 +59,7 @@
             <li><a href="#" onclick='navigate("mentorships")'>Other</a></li>
           </ul>
         </li>
-        <li class="dropdown active">
+        <li class="dropdown">
           <a class="dropdown-toggle" data-toggle="dropdown" data-hover='dropdown' href="#" onclick='navigate("internships")'>Internships <span class="caret"></span></a>
           <ul class="dropdown-menu">
             <li><a href="#" onclick='navigate("internships")'>Business</a></li>
@@ -82,19 +81,23 @@
   </div>
 </nav>
 
-	<div id="controls">
-		<button type='button' class='btn btn-default' onclick='goToForm()'>Post</button>
-	</div>
 
+	<div id="controls">
+		<button class='btn btn-default' type='button' onclick='goToForm()'>Post</button>
+	</div>
 
     <table class="table table-hover">
         <thead>
-            <tr><th style='font-size: 26px'>Internships</th><th>Owner</th><th>Contact Information</th><th>Focus</th></tr>
+            <tr><th style='font-size: 26px'>Mentorships</th><th>Owner</th><th>Contact Information</th><th>Focus</th></tr>
         </thead>
-       <tbody id='internships'>
+       <tbody id='mentorships'>
 
        </tbody>
      </table>
+
+<!-- Filter Popup -->
+
+
 
 <div id="footer">Calvert Hall College, Cardinal Connect. 2016. If there are any
 				issues or concerns, contact the Advancement Office at 999-9999-999.

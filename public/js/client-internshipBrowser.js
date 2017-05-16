@@ -24,7 +24,7 @@ function fillField(json)
 	var count = 0;
 	for(var i = 0; i < json.length; i++)
 	{
-		if(!json[i].active)
+		if(json[i].active)
 		{
 			count++;
 			$('#internships').append('<tr><td>' + json[i].title + '</td>' +

@@ -2,6 +2,7 @@
 'use strict';
 
 let mongodb = require('mongodb');
+let hashPass = require('password-hash');
 let Globals = require('../config');
 let globals = new Globals();
 
@@ -16,17 +17,25 @@ MongoClient.connect(globals.MONGO_URL, function (err, db) {
 				console.log(err);
 			} else if (result.length === 1) {
 				console.log('root account already created');
+				console.log('exiting...');
+				db.close();
+				return;
 			} else {
+				// We manually put this in the database because account creation
+				// is validated which won't allow the username of 'root' or
+				//the role of 'admin'
+				// TODO: runner of script initially sets root password
+				let rootPass = 'admin';
 				let user = {
 					'active': 1,
 					'company': 'calvert-hall',
 					'email': 'root',
-					'password': 'admin',
+					'password': hashPass.generate(rootPass),
 					'firstName': 'root',
 					'lastName': 'root',
 					'role': 'admin'
 				};
-				
+
 				collection.insert([user], function (err, done) {
 					if (err) {
 						console.log(err);
@@ -37,7 +46,5 @@ MongoClient.connect(globals.MONGO_URL, function (err, db) {
 				});
 			}
 		});
-	
 	}
-	
 });

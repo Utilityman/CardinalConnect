@@ -6,6 +6,7 @@
 var express = require('express');
 var path = require('path');
 var bodyParser = require('body-parser');
+var session = require('express-session');
 
 var mongo = require('mongodb');
 
@@ -19,14 +20,27 @@ var accounts = require('./routes/accounts');
 var internships = require('./routes/internships');
 var mentorships = require('./routes/mentorships');
 
-// finally the actual app that will be used
+// the actual app that will be used
 var app = express();
+
+// allow serving of static files
+
+app.use('/', express.static(path.join(__dirname, 'public')));
 
 // for JSON POST parsing
 app.use(bodyParser.json());
 
-// allow serving of static files
-app.use('/', express.static(path.join(__dirname, 'public')));
+// sessions!
+app.set('trust proxy', 1) // trust first proxy
+app.use(session ({
+  secret: 'they_will_never_know',
+  resave: true,
+  saveUninitialized: true,
+  cookie: {
+    secure: false,
+    httpOnly: false
+  },
+}));
 
 // map public routes to the '/'
 /* TODO: eventually app.use('/Index', index) to access more specific /Index/Register */

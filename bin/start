@@ -53,6 +53,7 @@ server.on('error', onError);
   */
 
 function onError(error) {
+  console.log('Not sure if this is ever called');
   if (error.syscall !== 'listen') {
     throw error;
   }

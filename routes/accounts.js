@@ -7,11 +7,17 @@ let Globals = require('../config');
 let globals = new Globals();
 
 router.post('/GetAccounts', function (req, res, next) {
-  let t0 = new Date().getTime();
-  getAccounts(req.body, function(response) {
-    let t1 = new Date().getTime();
-    console.log('POST@/Login --- Response:' + response + ' --- ' + (t1 - t0) + 'ms');
-    res.send(response);
+  globals.verifyAdmin(req.session.user, function (valid) {
+    if (valid) {
+      let t0 = new Date().getTime();
+      getAccounts(req.body, function(response) {
+        let t1 = new Date().getTime();
+        console.log('POST@/GetAccounts --- Response:' + response + ' --- ' + (t1 - t0) + 'ms');
+        res.send(response);
+      });
+    } else {
+      res.send('NOT_ADMIN_USER');
+    }
   });
 });
 

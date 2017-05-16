@@ -3,12 +3,13 @@
 let express = require('express');
 let router = express.Router();
 let mongodb = require('mongodb');
+let passwordHash = require('password-hash');
 let Globals = require('../config');
 let globals = new Globals();
 
 router.post('/Login', function (req, res, next) {
   let t0 = new Date().getTime();
-  login(req.body, function(response) {
+  login(req.body, req.session, function(response) {
     let t1 = new Date().getTime();
     console.log('POST@/Login --- Response:' + response + ' --- ' + (t1 - t0) + 'ms');
     res.send(response);
@@ -24,7 +25,7 @@ router.post('/Register', function (req, res, next) {
   });
 });
 
-function login(json, callback) {
+function login(json, session, callback) {
   if(json.action !== 'login') {
     callback('INCORRECT_ACTION_TYPE');
   } else {
@@ -39,7 +40,7 @@ function login(json, callback) {
       } else {
         let collection = db.collection('users');
 
-        collection.find({email: username}).toArray(function (err, result) {
+        collection.find({'email': username}).toArray(function (err, result) {
           // if error, server failure
           if (err) {
             callback('SERVER_ERROR');
@@ -50,14 +51,20 @@ function login(json, callback) {
               if (result[0].active === 0) {
                 // if the account is inactive, end login process
                 callback('ACCOUNT_INACTIVE');
-              } else if (result[0].password === password) {
+              } else if (passwordHash.verify(password, result[0].password)) {
+              //} else if (result[0].password === password) {
                 // if query user password is the password, login
                 if (result[0].role === 'admin') {
-                  // TODO: Set session as valid
                   callback('LOGIN_ADMIN');
                 } else {
                   callback('LOGIN_SUCCESS');
                 }
+                // TODO: Save in DB - user.loggedIn = true;
+                // TODO: Set session as valid
+                session.user = result[0];
+                session.save(function (err) {
+                  if (err) console.log('session error');
+                });
               } else {
                 // else, invalid login
                 callback('INVALID_LOGIN');
@@ -96,9 +103,10 @@ function register(json, callback) {
             collection.find({email:user.email}).toArray(function (err, result) {
               if (err) {
                 callback('SERVER_ERROR');
-                db.close();
+                //db.close();
               } else if (result.length) {
                 callback({'INVALID_FORM': 'Account Already Exists'});
+                //db.close();
               } else {
                 collection.insert([user], function (err, done) {
                   if (err) {
@@ -107,9 +115,10 @@ function register(json, callback) {
                   } else {
                     callback('ACCOUNT_CREATED');
                   }
-                  db.close();
+                  //db.close();
                 });
               }
+              db.close();
             });
           }
         }); // end createUserObject callback

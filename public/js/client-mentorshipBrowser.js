@@ -9,6 +9,7 @@ function loadMentorships()
 		contentType: 'application/json',
 		data: JSON.stringify({
 			'action': 'getMentorships',
+			'active': 1
 		}),
 		complete: function(data)
 		{
@@ -25,13 +26,13 @@ function fillField(json)
 	var count = 0;
 	for(var i = 0; i < json.length; i++)
 	{
-		if(!json[i].active)
+		if(json[i].active)
 		{
 			count++;
 			$('#mentorships').append('<tr><td>' + json[i].title + '</td>' +
 																'<td>Owner Name from ' + json[i].company + '</td>' +
 																'<td>' + json[i].contact + '</td>' +
-																'<td>' + toTitleCase(json[i].focus) + '</td>' + 
+																'<td>' + toTitleCase(json[i].focus) + '</td>' +
 																'</tr>');
 
 		}
