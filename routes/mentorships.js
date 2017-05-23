@@ -25,6 +25,15 @@ router.post('/SubmitMentorship', function (req, res, next) {
   });
 });
 
+router.post('/SubscribeToMentorship', function (req, res, next) {
+  let t0 = new Date().getTime();
+  subscribeToMentorship(req.body, req.session.user, function (response) {
+    let t1 = new Date().getTime();
+    console.log('POST@/SubscribeToMentorship --- Response: ' + response + ' --- ' + (t1 - t0) + 'ms');
+    res.send(response);
+  });
+});
+
 function getMentorships(json, callback) {
   if(json.action !== 'getMentorships') {
     callback('INCORRECT_ACTION_TYPE');
@@ -79,6 +88,14 @@ function submitMentorship(json, callback) {
         });
       }
     });
+  }
+}
+
+function subscribeToMentorship (json, user, callback) {
+  if (json.action !== 'subscribeToMentorship') {
+    callback('INCORRECT_ACTION_TYPE');
+  } else {
+    callback('SUBSCRIBED');
   }
 }
 

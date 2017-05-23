@@ -112,6 +112,7 @@ function fillTabs()
 													   ' ' + accounts[i].lastName +
 													   ' -- Email: ' + accounts[i].email +
 													   ' -- Status: ' + accounts[i].role +
+														 '<button onclick="handleAccount(this, false)">Suspend</button>' +
 													   '<button onclick="goToAccountPage(this)">Account Page</button>' +
 													   '</li>');
 			$('#accountHolder #registeredAccounts').after('<li id="' + accounts[i]._id +
@@ -120,6 +121,7 @@ function fillTabs()
 					   ' ' + accounts[i].lastName +
 					   ' -- Email: ' + accounts[i].email +
 					   ' -- Status: ' + accounts[i].role +
+						 '<button onclick="handleAccount(this, false)">Suspend</button>' +
 					   '<button onclick="goToAccountPage(this)">Account Page</button>' +
 					   '</li>');
 			continue;

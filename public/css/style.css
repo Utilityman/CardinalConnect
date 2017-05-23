@@ -1,6 +1,6 @@
 body
 {
-	background-color: #FFF0F0;	
+	background-color: #FFF0F0;
 	font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
 }
 
@@ -11,7 +11,7 @@ body
 	-khtml-user-select: none;    /* Konqueror */
 	-moz-user-select: none;      /* Firefox */
 	-ms-user-select: none;       /* Internet Explorer/Edge */
-	user-select: none;  
+	user-select: none;
 }
 
 
@@ -62,7 +62,7 @@ body
 
 .navbar > .container-fluid .navbar-brand {
 	color: white;
-} 
+}
 
 .navbar-inverse .navbar-nav > li > a {
 	color: #f2f2f2;
@@ -73,27 +73,36 @@ body
 	padding-right: 10px;
 }
 
-.navbar-inverse .navbar-nav > li > a:hover, 
-.navbar-inverse .navbar-nav > .open > a:hover, 
-.navbar-inverse .navbar-nav>.active>a:focus, 
+.navbar-inverse .navbar-nav > li > a:hover,
+.navbar-inverse .navbar-nav > .open > a:hover,
+.navbar-inverse .navbar-nav>.active>a:focus,
 .navbar-inverse .navbar-nav>.active>a:hover,
-.navbar-inverse .navbar-nav>.open>a, 
-.navbar-inverse .navbar-nav>.open>a:focus, 
+.navbar-inverse .navbar-nav>.open>a,
+.navbar-inverse .navbar-nav>.open>a:focus,
 .navbar-inverse .navbar-nav>.open>a:hover{
 	background-color: #bd343f;
 }
 
-.hidden
-{
+.hidden {
 	display: none;
 }
 
-#footer
-{
+#footer {
 	font-family: Arial, Helvetica, sans-serif;
-	
 	font-size: 12px;
 	clear: both;
 	margin-top: 8px;
-	
+}
+
+ul.nav.nav-pills {
+	padding: 4px;
+}
+
+ul.nav.nav-pills  > li.active > a {
+	background-color: #e7b132;
+	color: #fff;
+}
+
+ul.nav.nav-pills > li > a {
+	color: #b78716;
 }

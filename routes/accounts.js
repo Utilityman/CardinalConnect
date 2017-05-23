@@ -21,6 +21,15 @@ router.post('/GetAccounts', function (req, res, next) {
   });
 });
 
+router.post('/GetUser', function (req, res, next) {
+  let t0 = new Date().getTime();
+  getUser(req.body, req.session.user, function (response) {
+    let t1 = new Date().getTime();
+    console.log('POST@/GetUsers --- Response:' + response + ' --- ' + (t1 - t0) + 'ms');
+    res.send(response);
+  });
+});
+
 function getAccounts(json, callback) {
   if(json.action !== 'getAccounts') {
     callback('INCORRECT_ACTION_TYPE');
@@ -43,6 +52,14 @@ function getAccounts(json, callback) {
         });
       }
     });
+  }
+}
+
+function getUser (json, user, callback) {
+  if (json.action !== 'getUserAccount') {
+    callback('INCORRECT_ACTION_TYPE');
+  } else {
+    callback(user);
   }
 }
 

@@ -82,13 +82,15 @@
 </nav>
 
 
-	<div id="controls">
-		<button class='btn btn-default' type='button' onclick='goToForm()'>Post</button>
-	</div>
+	<button style='margin-bottom: 4px' class='btn btn-default' type='button' onclick='goToForm()'>Post</button>
 
-    <table class="table table-hover">
+    <div id='mentorshipDescription' class='well hidden'>
+        <button class='btn btn-default' type='button' onclick='subscribe()'>Subscribe!</button>
+    </div>
+
+    <table id='mentorshipTable' class="table table-hover">
         <thead>
-            <tr><th style='font-size: 26px'>Mentorships</th><th>Owner</th><th>Contact Information</th><th>Focus</th></tr>
+            <tr><th style='font-size: 24px'>Mentorships</th><th>Owner</th><th>Contact Information</th><th>Focus</th></tr>
         </thead>
        <tbody id='mentorships'>
 

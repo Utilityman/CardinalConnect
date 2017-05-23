@@ -1,45 +1,29 @@
-var ACCOUNT = null;
+'use strict';
+var account = null;
 
-
-function loadAccountDetails()
-{
+function getAccount () {
 	$.ajax({
 		type: 'POST',
-		url: 'Account', 
-		data: 
-		{
+		url: '/GetUser',
+		contentType: 'application/json',
+		data: JSON.stringify({
 			'action': 'getUserAccount',
-		},
-		complete: function(data)
-		{
+		}), complete: function (data) {
 			console.log(data.responseJSON);
-			if(data.responseText == '') {returnToLogin(); return;} 
-			ACCOUNT = data.responseJSON;
+			if(data.responseText == '') {returnToLogin(); return;}
+			account = data.responseJSON;
 			fillInformation(data.responseJSON);
 		},
 	});
 }
 
-function fillInformation(json)
-{
-	$("#name").html(json.firstName + " " + json.middleName + " " + json.lastName);
-	$("#email").html(json.email);
-	if(escape(json.status) != 'undefined')
-		$("#status").html(json.status);
-	else
-		$("#status").html("---");
-	if(escape(json.focus) != 'undefined')
-		$("#focus").html(json.focus);
-	else
-		$("#focus").html("---");
-	if(escape(json.company) != 'undefined')
-		$("#company").html(json.company);
-	else
-		$("#company").html("---");
+function fillInformation (json) {
+	$('#name').html(json.firstName + ' ' + json.lastName);
+	$('#email').html(json.email);
+	$('#status').html(toTitleCase(json.role));
 }
 
-function toggleStudentSelector()
-{
+function toggleStudentSelector () {
 	if($("#status").hasClass('hidden'))
 	{
 		$("#status").removeClass('hidden');
@@ -93,8 +77,8 @@ function saveStudentOrAlum()
 	{
 		$.ajax({
 			type: 'POST',
-			url: 'Account', 
-			data: 
+			url: 'Account',
+			data:
 			{
 				'action': 'editStudentOrAlum',
 				'ACCOUNT_ID': ACCOUNT.id,
@@ -115,8 +99,8 @@ function saveFocus()
 	{
 		$.ajax({
 			type: 'POST',
-			url: 'Account', 
-			data: 
+			url: 'Account',
+			data:
 			{
 				'action': 'editFocus',
 				'ACCOUNT_ID': ACCOUNT.id,
@@ -133,13 +117,13 @@ function saveFocus()
 function saveCompany()
 {
 	var company = $("#companyName").val();
-	
+
 	if(company != '')
 	{
 		$.ajax({
 			type: 'POST',
-			url: 'Account', 
-			data: 
+			url: 'Account',
+			data:
 			{
 				'action': 'editCompany',
 				'ACCOUNT_ID': ACCOUNT.id,
@@ -150,6 +134,5 @@ function saveCompany()
 				location.reload();
 			},
 		});
-	}	
+	}
 }
-
