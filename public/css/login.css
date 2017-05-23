@@ -1,5 +1,13 @@
+input, input:before, input:after {
+	 -webkit-user-select: initial;
+	 -khtml-user-select: initial;
+	 -moz-user-select: initial;
+	 -ms-user-select: initial;
+	 user-select: initial;
+	} 
+
 #loginForm {
-	max-width: 350px; 
+	max-width: 350px;
 }
 
 form{
@@ -11,7 +19,7 @@ form{
   border-radius: 8px;
 }
 
-#success, 
+#success,
 #invalidLogin {
 	display: none;
 	margin-bottom: 4px;

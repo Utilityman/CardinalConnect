@@ -50,7 +50,7 @@ function showDetails (source) {
 	$('.well').append('<p>' + selectedMentorship.title + '</p>');
 }
 
-function subscribe(mentorshipID) {
+function subscribe() {
 	$.ajax({
 		type: 'POST',
 		url: 'SubscribeToMentorship',

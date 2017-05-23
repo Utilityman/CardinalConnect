@@ -95,7 +95,14 @@ function subscribeToMentorship (json, user, callback) {
   if (json.action !== 'subscribeToMentorship') {
     callback('INCORRECT_ACTION_TYPE');
   } else {
-    callback('SUBSCRIBED');
+    if (typeof user !== 'undefined') {
+      let MongoClient = mongodb.MongoClient;
+      MongoClient.connect(globals.MONGO_URL, function (err, db) {
+        db.close();
+      });
+    } else {
+      callback('SESSION_UNDEFINED');
+    }
   }
 }
 
