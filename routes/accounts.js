@@ -12,11 +12,12 @@ router.post('/GetAccounts', function (req, res, next) {
       let t0 = new Date().getTime();
       getAccounts(req.body, function(response) {
         let t1 = new Date().getTime();
-        console.log('POST@/GetAccounts --- Response:' + response + ' --- ' + (t1 - t0) + 'ms');
         res.send(response);
+        console.log('POST@/GetAccounts --- Response:' + response + ' --- ' + (t1 - t0) + 'ms');
       });
     } else {
       res.send('NOT_ADMIN_USER');
+      console.log('POST@/GetAccounts --- Response:' + response + ' --- ' + (t1 - t0) + 'ms');
     }
   });
 });
@@ -25,8 +26,8 @@ router.post('/GetUser', function (req, res, next) {
   let t0 = new Date().getTime();
   getUser(req.body, req.session.user, function (response) {
     let t1 = new Date().getTime();
-    console.log('POST@/GetUsers --- Response:' + response + ' --- ' + (t1 - t0) + 'ms');
     res.send(response);
+    console.log('POST@/GetUser --- Response:' + response + ' --- ' + (t1 - t0) + 'ms');
   });
 });
 

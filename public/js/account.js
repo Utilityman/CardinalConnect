@@ -13,8 +13,36 @@ function getAccount () {
 			if(data.responseText == '') {returnToLogin(); return;}
 			account = data.responseJSON;
 			fillInformation(data.responseJSON);
+			getMentorships();
 		},
 	});
+}
+
+function getMentorships () {
+	$.ajax({
+		type: 'POST',
+		url: '/GetSubscribedMentorships',
+		contentType: 'application/json',
+		data: JSON.stringify({
+			'action': 'getSubscribedMentorships',
+		}), complete: function (data) {
+			console.log(data.responseJSON);
+			if(data.responseJSON) {
+				fillMentorshipTable(data.responseJSON.mentorships);
+			}
+		},
+	});
+}
+
+function fillMentorshipTable (mentorships) {
+	for (let i = 0; i < mentorships.length; i++) {
+		$('#mentorshipTable').append('<tr><td>' + mentorships[i].title + '</td>' +
+															'<td>' + mentorships[i].company + '</td>' +
+															'<td>' + mentorships[i].location + '</td>' +
+															'<td>' + mentorships[i].focus + '</td>' +
+															'<td>' + mentorships[i].description +
+															'</tr>');
+	}
 }
 
 function fillInformation (json) {

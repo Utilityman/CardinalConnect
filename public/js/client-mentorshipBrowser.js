@@ -1,8 +1,7 @@
 let mentorships;
 let selectedMentorship;
 
-function loadMentorships()
-{
+function loadMentorships () {
 	var filter = getParameterByName("id");
 	console.log(filter);
 	$.ajax({
@@ -12,8 +11,7 @@ function loadMentorships()
 		data: JSON.stringify({
 			'action': 'getMentorships',
 			'active': 1
-		}),
-		complete: function (data) {
+		}), complete: function (data) {
 			console.log(data);
 			if (data.responseJSON) {
 				mentorships = data.responseJSON;
@@ -30,7 +28,7 @@ function fillField (json) {
 		if (json[i].active) {
 			count++;
 			$('#mentorships').append('<tr id="index' + i + '" onclick="showDetails(this)"><td>' + json[i].title + '</td>' +
-																'<td>Owner Name from ' + json[i].company + '</td>' +
+																'<td>' + json[i].company + '</td>' +
 																'<td>' + json[i].contact + '</td>' +
 																'<td>' + toTitleCase(json[i].focus) + '</td>' +
 																'</tr>');
@@ -47,13 +45,13 @@ function showDetails (source) {
 	console.log(source);
 	selectedMentorship = mentorships[$(source).attr('id').replace(/\D/g,'')];
 	$('.well').removeClass('hidden');
-	$('.well').append('<p>' + selectedMentorship.title + '</p>');
+	$('.well > .mentorshipTitle').text(selectedMentorship.title);
 }
 
 function subscribe() {
 	$.ajax({
 		type: 'POST',
-		url: 'SubscribeToMentorship',
+		url: '/SubscribeToMentorship',
 		contentType: 'application/json',
 		data: JSON.stringify({
 			'action': 'subscribeToMentorship',
@@ -62,6 +60,8 @@ function subscribe() {
 			console.log(data);
 			if (data.responseText === 'SUBSCRIBED') {
 				alert('Subscribed!');
+			} else if (data.responseText === 'ALREADY_SUBSCRIBED') {
+				alert('Already Subscribed!');
 			} else {
 				alert('Subscription Request Failed!');
 			}

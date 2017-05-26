@@ -6,13 +6,15 @@ let mongodb = require('mongodb');
 let passwordHash = require('password-hash');
 let Globals = require('../config');
 let globals = new Globals();
+let users = require('../objects/user-objects');
+
 
 router.post('/Login', function (req, res, next) {
   let t0 = new Date().getTime();
   login(req.body, req.session, function(response) {
     let t1 = new Date().getTime();
-    console.log('POST@/Login --- Response:' + response + ' --- ' + (t1 - t0) + 'ms');
     res.send(response);
+    console.log('POST@/Login --- Response:' + response + ' --- ' + (t1 - t0) + 'ms');
   });
 });
 
@@ -20,8 +22,16 @@ router.post('/Register', function (req, res, next) {
   let t0 = new Date().getTime();
   register(req.body, function (response) {
     let t1 = new Date().getTime();
-    console.log('POST@/Register --- Response:' + response + ' --- ' + (t1 - t0) + 'ms');
     res.send(response);
+    console.log('POST@/Register --- Response:' + response + ' --- ' + (t1 - t0) + 'ms');
+  });
+});
+
+router.post('/Logout', function (req, res, next) {
+  let t0 = new Date().getTime();
+  logout(req.session, function () {
+    let t1 = new Date().getTime();
+    console.log('POST@/Logout --- End User Session --- ' + (t1 - t0) + 'ms');
   });
 });
 
@@ -94,7 +104,7 @@ function register(json, callback) {
         console.log(err);
         callback('SERVER_ERROR');
       } else {
-        globals.createUserObject(json, function(err, user) {
+        users.createUserObject(json, function(err, user) {
           if(err) {
             console.log('err@index.js:register() - ' + err);
             callback(err);
@@ -125,6 +135,10 @@ function register(json, callback) {
       } // end MongoClient else branch
     }); // end MongoClient.connect
   } // end register else branch
+}
+
+function logout (session , callback) {
+  session.destroy();
 }
 
 module.exports = router;

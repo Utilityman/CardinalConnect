@@ -66,7 +66,6 @@ function toggleUser (json, callback) {
         callback('SERVER_ERROR');
       } else {
         let collection = db.collection(globals.USER_TABLE);
-        console.log(json.accountId);
         collection.find({'_id': new ObjectId(json.accountId)}).toArray(function (err, result) {
           if (err) {
             callback('SERVER_ERROR');
@@ -75,10 +74,8 @@ function toggleUser (json, callback) {
               let user = result[0];
               let activate = json.accepted ? 1 : 0;
               user.active = activate;
-              console.log('here!!');
 
               collection.save(user, function (err, done) {
-                console.log('here!');
                 if (err) {
                   console.log('err@admin.js:toggleUser() - ' + err);
                   callback('SERVER_ERROR');

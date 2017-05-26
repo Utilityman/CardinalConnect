@@ -10,10 +10,8 @@
 
 	<!-- Latest compiled and minified JavaScript -->
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-	<script type='text/javascript' src='js/bootstrap-hover-dropdown.min.js'></script>
-    <script type='text/javascript' src='js/base.js'></script>
-    <script type='text/javascript' src='js/events.js'></script>
-    <script type='text/javascript' src='js/modal.js'></script>
+  <script type='text/javascript' src='js/base.js'></script>
+  <script type='text/javascript' src='js/events.js'></script>
 
     <!-- Bootstrap -->
 	<!-- Latest compiled and minified CSS -->
@@ -42,34 +40,36 @@
       <ul class="nav navbar-nav">
         <li><a href="home.html">Home</a></li>
         <li class="dropdown">
-          <a class="dropdown-toggle" data-toggle="dropdown" data-hover='dropdown' href="#" onclick='navigate("mentorships")'>Mentorships <span class="caret"></span></a>
+          <a class="dropdown" data-toggle="dropdown" href="#">Mentorships <span class="caret"></span></a>
           <ul class="dropdown-menu">
-            <li><a href="#" onclick='navigate("mentorships")'>Business</a></li>
-            <li><a href="#" onclick='navigate("mentorships")'>Finance</a></li>
-            <li><a href="#" onclick='navigate("mentorships")'>Law</a></li>
-            <li><a href="#" onclick='navigate("mentorships")'>Medicine</a></li>
-            <li><a href="#" onclick='navigate("mentorships")'>Teaching</a></li>
-            <li><a href="#" onclick='navigate("mentorships")'>Trade</a></li>
-            <li><a href="#" onclick='navigate("mentorships")'>Other</a></li>
+            <li><a href='#' onclick='navigate("mentorships")'>All Mentorships</a></li>
+            <li><a href="#" onclick='navigate("mentorships", "business")'>Business</a></li>
+            <li><a href="#" onclick='navigate("mentorships", "finance")'>Finance</a></li>
+            <li><a href="#" onclick='navigate("mentorships", "law")'>Law</a></li>
+            <li><a href="#" onclick='navigate("mentorships", "medicine")'>Medicine</a></li>
+            <li><a href="#" onclick='navigate("mentorships", "teaching")'>Teaching</a></li>
+            <li><a href="#" onclick='navigate("mentorships", "trade")'>Trade</a></li>
+            <li><a href="#" onclick='navigate("mentorships", "other")'>Other</a></li>
           </ul>
         </li>
         <li class="dropdown">
-          <a class="dropdown-toggle" data-toggle="dropdown" data-hover='dropdown' href="#" onclick='navigate("internships")'>Internships <span class="caret"></span></a>
+          <a class="dropdown" data-toggle="dropdown" href="#">Internships <span class="caret"></span></a>
           <ul class="dropdown-menu">
-            <li><a href="#" onclick='navigate("internships")'>Business</a></li>
-            <li><a href="#" onclick='navigate("internships")'>Finance</a></li>
-            <li><a href="#" onclick='navigate("internships")'>Law</a></li>
-            <li><a href="#" onclick='navigate("internships")'>Medicine</a></li>
-            <li><a href="#" onclick='navigate("internships")'>Teaching</a></li>
-            <li><a href="#" onclick='navigate("internships")'>Trade</a></li>
-            <li><a href="#" onclick='navigate("internships")'>Other</a></li>
+            <li><a href='#' onclick='navigate("internships")'>All Internships</a></li>
+            <li><a href="#" onclick='navigate("internships", "business")'>Business</a></li>
+            <li><a href="#" onclick='navigate("internships", "finance")'>Finance</a></li>
+            <li><a href="#" onclick='navigate("internships", "law")'>Law</a></li>
+            <li><a href="#" onclick='navigate("internships", "medicine")'>Medicine</a></li>
+            <li><a href="#" onclick='navigate("internships", "teaching")'>Teaching</a></li>
+            <li><a href="#" onclick='navigate("internships", "trade")'>Trade</a></li>
+            <li><a href="#" onclick='navigate("internships", "other")'>Other</a></li>
           </ul>
         </li>
-        <li class="active"><a href="#" onclick='navigate("events")'>Events</a></li>
+        <li class='active'><a href="#" onclick='navigate("events")'>Events</a></li>
         <li><a href='#' onclick='navigate("account")'>Account</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+        <li><a href="logout.html"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
       </ul>
     </div>
   </div>

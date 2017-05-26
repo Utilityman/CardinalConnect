@@ -99,10 +99,10 @@ ul.nav.nav-pills {
 }
 
 ul.nav.nav-pills  > li.active > a {
-	background-color: #e7b132;
+	background-color: #cf6e76;
 	color: #fff;
 }
 
 ul.nav.nav-pills > li > a {
-	color: #b78716;
+	color: #752c32;
 }
