@@ -1,3 +1,6 @@
+'use strict';
+let ObjectId = require('mongodb').ObjectID;
+
 // TODO include validator to do actual json value validating
 
 module.exports = {
@@ -82,7 +85,7 @@ module.exports = {
       'contact': json.contact,
       'description': json.description,
       'focus': json.focus,
-      'posterID': session.user._id,
+      'posterID': new ObjectId(session.user._id),
       'subscriberIDs': []
     }
     callback(null, mentorship);

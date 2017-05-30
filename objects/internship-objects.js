@@ -1,6 +1,7 @@
+'use strict';
+let ObjectId = require('mongodb').ObjectID;
 
 module.exports = {
-
     /*
       takes json params in the form of an account
       and a session which should contain a user
@@ -83,7 +84,7 @@ module.exports = {
       'contact': json.contact,
       'description': json.description,
       'focus': json.focus,
-      'posterID': session.user._id,
+      'posterID': new ObjectId(session.user._id),
       'subscriberIDs': []
     }
     callback(null, internship);

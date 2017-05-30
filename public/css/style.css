@@ -37,6 +37,7 @@ body
 	-moz-user-select: none;      /* Firefox */
 	-ms-user-select: none;       /* Internet Explorer/Edge */
 	user-select: none;
+	line-height: 62px;
 }
 
 #logo
@@ -105,4 +106,12 @@ ul.nav.nav-pills  > li.active > a {
 
 ul.nav.nav-pills > li > a {
 	color: #752c32;
+}
+
+#myNavbar ul li ul.dropdown-menu {
+	background-color: white;
+}
+
+#myNavbar ul > li > ul > li > a {
+	color: #333;
 }

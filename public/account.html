@@ -17,6 +17,24 @@
 	<!-- Latest compiled and minified CSS -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">    <link href="css/style.css" rel="stylesheet">
   <link href='css/style.css' rel='stylesheet'>
+  <style>
+
+    /*.highlighted > td:first-child {
+      border-top-left-radius: 12px;
+      border-bottom-left-radius: 12px;
+    }
+    .highlighted > td:last-child {
+      border-top-right-radius: 12px;
+      border-bottom-right-radius: 12px;
+    }*/
+    .highlighted > td{
+      background-color: #dFdFdF;
+    }
+    .highlighted:hover > td{
+      background-color: #dFdFdF;
+    }
+
+  </style>
 </head>
 <body onload='getAccount()'>
 
@@ -82,30 +100,32 @@
 </ul>
 
 <div class='tab-content'>
-  <div id="accountInfo" class="tab-pane fade in active">
+  <div id="accountInfo" class="tab-pane fade in active table-responsive">
     <table class='table table-hover'>
-
-		<tr><td></td><td>Account Information</td></tr>
-		<tr><td>Name: </td><td id="name"></td></tr>
-		<tr><td>Email Address: </td><td id="email"></td>
-					<!--<td class="hidden" id="emailChanger"></td><td class="hidden" id="emailSaver"></td>--></tr>
-		<tr class="hoverable"><td onclick="toggleStudentSelector()">Student/Alumni: </td><td id="status">Advisor</td>
-		</tr>
-		<tr class="hoverable"><td onclick="toggleFocusSelector()">Primary Focus: </td><td id="focus"></td>
-		</tr>
-		<tr class="hoverable"><td onclick="toggleCompanySelector()">Company: </td><td id="company"></td>
-					<td class="hidden" id="companySelector">
-						<input id="companyName" type="text" placeholder="Company Name"/><br>
-						<button onclick="saveCompany()">Save Change</button>
-					</td>
-		</tr>
-  </table>
-
+  		<tr><td></td><td>Account Information</td></tr>
+  		<tr><td>Name: </td><td id="name"></td></tr>
+  		<tr><td>Email Address: </td><td id="email"></td>
+  					<!--<td class="hidden" id="emailChanger"></td><td class="hidden" id="emailSaver"></td>--></tr>
+  		<tr class="hoverable"><td onclick="toggleStudentSelector()">Student/Alumni: </td><td id="status">Advisor</td>
+  		</tr>
+  		<tr class="hoverable"><td onclick="toggleFocusSelector()">Primary Focus: </td><td id="focus"></td>
+  		</tr>
+  		<tr class="hoverable"><td onclick="toggleCompanySelector()">Company: </td><td id="company"></td>
+  					<td class="hidden" id="companySelector">
+  						<input id="companyName" type="text" placeholder="Company Name"/><br>
+  						<button onclick="saveCompany()">Save Change</button>
+  					</td>
+  		</tr>
+    </table>
   </div>
-  <div id="subbedInternships" class="tab-pane fade">
-    Hello
+  <div id="subbedInternships" class="tab-pane fade table-responsive">
+    <div class="table-responsive">
+      <table id='internshipTable' class='table table-hover'>
+        <th>Title</th><th>Company</th><th>Location</th><th>Focus</th><th>Description</th>
+      </table>
+    </div>
   </div>
-  <div id="subbedMentorships" class="tab-pane fade">
+  <div id="subbedMentorships" class="tab-pane fade table-responsive">
     <table id='mentorshipTable' class='table table-hover'>
       <th>Title</th><th>Company</th><th>Location</th><th>Focus</th><th>Description</th>
     </table>
