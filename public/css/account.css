@@ -1,0 +1,11 @@
+
+.highlighted > td{
+  background-color: #dFdFdF;
+}
+.highlighted:hover > td{
+  background-color: #dFdFdF;
+}
+
+.list-group{
+  text-align: center;
+}

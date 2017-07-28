@@ -13,28 +13,12 @@
   <script type='text/javascript' src='js/base.js'></script>
   <script type='text/javascript' src='js/account.js'></script>
 
+
     <!-- Bootstrap -->
 	<!-- Latest compiled and minified CSS -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">    <link href="css/style.css" rel="stylesheet">
   <link href='css/style.css' rel='stylesheet'>
-  <style>
-
-    /*.highlighted > td:first-child {
-      border-top-left-radius: 12px;
-      border-bottom-left-radius: 12px;
-    }
-    .highlighted > td:last-child {
-      border-top-right-radius: 12px;
-      border-bottom-right-radius: 12px;
-    }*/
-    .highlighted > td{
-      background-color: #dFdFdF;
-    }
-    .highlighted:hover > td{
-      background-color: #dFdFdF;
-    }
-
-  </style>
+  <link href='css/account.css' rel='stylesheet'>
 </head>
 <body onload='getAccount()'>
 
@@ -97,6 +81,7 @@
   <li class="active"><a data-toggle="pill" href="#accountInfo">Account Information</a></li>
   <li><a data-toggle="pill" href="#subbedInternships">Internships</a></li>
   <li><a data-toggle="pill" href="#subbedMentorships">Mentorships</a></li>
+  <li><a data-toggle="pill" href="#userInterests">Your Interests</a></li>
 </ul>
 
 <div class='tab-content'>
@@ -130,7 +115,68 @@
       <th>Title</th><th>Company</th><th>Location</th><th>Focus</th><th>Description</th>
     </table>
   </div>
+  <div id="userInterests" class="tab-pane fade">
+    <div id="interestDisplay">
+
+      <div id="interestDisplayHead">
+      <h2>Pick what areas you're interested in!</h2>
+      <h2>General Interests</h2>
+      </div>
+      <br>
+
+      
+      <ul id="interestDisplayList" class="list-group">
+      <table id="interestDisplayTable">
+        <tr id="row_interest_id_1">
+          <td><li onclick="displaySubinterests(1)" id="interest_id_1_expander" class="list-group-item"> + </li></td>
+          <td><li id="interest_id_1" class="list-group-item"></li></td>
+          <td><li class="list-group-item"><input id="interest_id_1_check" type="checkbox"></li></td>
+        </tr>
+        <tr id="row_interest_id_2">
+          <td><li onclick="displaySubinterests(2)" id="interest_id_2_expander" class="list-group-item"> + </li></td>
+          <td><li id="interest_id_2" class="list-group-item"></li></td>
+          <td><li class="list-group-item"><input id="interest_id_2_check" type="checkbox"></li></td>
+        </tr>
+        <tr id="row_interest_id_3">
+          <td><li onclick="displaySubinterests(3)" id="interest_id_3_expander" class="list-group-item"> + </li></td>
+          <td><li id="interest_id_3" class="list-group-item"></li></td>
+          <td><li class="list-group-item"><input id="interest_id_3_check" type="checkbox"></li></td>
+        </tr>
+        <tr id="row_interest_id_4">
+          <td><li onclick="displaySubinterests(4)" id="interest_id_4_expander" class="list-group-item"> + </li></td>
+          <td><li id="interest_id_4" class="list-group-item"></li></td>
+          <td><li class="list-group-item"><input id="interest_id_4_check" type="checkbox"></li></td>
+        </tr>
+        <tr id="row_interest_id_5">
+          <td><li onclick="displaySubinterests(5)" id="interest_id_5_expander" class="list-group-item"> + </li></td>
+          <td><li id="interest_id_5" class="list-group-item"></li></td>
+          <td><li class="list-group-item"><input id="interest_id_5_check" type="checkbox"></li></td>
+        </tr>
+        <tr id="row_interest_id_6">
+          <td><li onclick="displaySubinterests(6)" id="interest_id_6_expander" class="list-group-item"> + </li></td>
+          <td><li id="interest_id_6" class="list-group-item"></li></td>
+          <td><li class="list-group-item"><input id="interest_id_6_check" type="checkbox"></li></td>
+        </tr>
+        <tr id="row_interest_id_7">
+          <td><li onclick="displaySubinterests(7)" id="interest_id_7_expander" class="list-group-item"> + </li></td>
+          <td><li id="interest_id_7" class="list-group-item"></li></td>
+          <td><li class="list-group-item"><input id="interest_id_7_check" type="checkbox"></li></td>
+        </tr>
+        <tr id="row_interest_id_8">
+          <td><li onclick="displaySubinterests(8)" id="interest_id_8_expander" class="list-group-item"> + </li></td>
+          <td><li id="interest_id_8" class="list-group-item"></li></td>
+          <td><li class="list-group-item"><input id="interest_id_8_check" type="checkbox"></li></td>
+        </tr>
+      </table>
+      </ul>
+    </div>
+
+
+  </div>
 </div>
+
+
+
 
 </div>
 

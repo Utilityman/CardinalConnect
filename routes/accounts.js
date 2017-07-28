@@ -5,6 +5,8 @@ var router = express.Router();
 let mongodb = require('mongodb');
 let Globals = require('../config');
 let globals = new Globals();
+var nodemailer = require('nodemailer');
+
 
 router.post('/GetAccounts', function (req, res, next) {
   globals.verifyAdmin(req.session.user, function (valid) {
@@ -30,6 +32,17 @@ router.post('/GetUser', function (req, res, next) {
     console.log('POST@/GetUser --- Response:' + response + ' --- ' + (t1 - t0) + 'ms');
   });
 });
+
+
+router.post('/GetInterests', function (req, res, next) {
+  let t0 = new Date().getTime();
+  getInterests(req.body, function (response) {
+    let t1 = new Date().getTime();
+    res.send(response);
+    console.log('POST@/getInterests --- Response: '+ response + ' --- ' + (t1 - t0) + 'ms');
+  });
+});
+
 
 function getAccounts(json, callback) {
   if(json.action !== 'getAccounts') {
@@ -61,6 +74,31 @@ function getUser (json, user, callback) {
     callback('INCORRECT_ACTION_TYPE');
   } else {
     callback(user);
+  }
+}
+
+function getInterests (json, callback) {
+  if(json.action !== 'getInterests') {
+    callback('INCORRECT_ACTION_TYPE');
+  } else {
+    let MongoClient = mongodb.MongoClient;
+    MongoClient.connect(globals.MONGO_URL, function (err, db) {
+      if (err) {
+        console.log('err@accounts.js.getInterests().MongoClient.connect - ' + err);
+        callback('SERVER_ERROR');
+      } else {
+        let collection = db.collection('interests');
+        collection.find().toArray(function (err, results) {
+          if (err) {
+            callback('SERVER_ERROR');
+            db.close();
+          } else {
+            callback(results);
+            db.close();
+          }
+        });
+      }
+    });
   }
 }
 

@@ -67,7 +67,8 @@ module.exports = {
       'role': json.status.toLowerCase(),
       'company': '',
       'focus': '',
-      'focusTags': ''
+      'focusTags': '',
+      'interests':''
     }
     callback(null, user);
   }
