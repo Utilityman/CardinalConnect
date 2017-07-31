@@ -157,8 +157,12 @@ function saveUser(json, user, callback) {
 
 function sendAlerts(json, user, callback) {
   console.log("ABOUT TO SEND ALERTS");
+
+
   if(json.action == 'updatedQuestionAndAnswer') {
     let MongoClient = mongodb.MongoClient;
+    let INTERESTS = json.interests;
+    console.log("INTTTT = ", INTERESTS[0], INTERESTS[0].name);
     MongoClient.connect(globals.MONGO_URL, function (err, db) {
       if (err) {
         console.log('err@accounts.js.sendAlerts()).MongoClient.connect - ' + err);
@@ -168,49 +172,33 @@ function sendAlerts(json, user, callback) {
         let advisor = json.account;
         let interests = advisor.interests;
         if(interests.length != 0){
-
-          let interest_collection = db.collection('interests');
           collection.find().toArray(function (err, results) {
             if (err) {
               callback('SERVER_ERROR');
               db.close();
             } else {
               let userToBeAlerted, interestsInCommon, match;
-              for(var i = 0;i < results.length; i++){
+              for(var i = 0;i < results.length; i++){ //Iterates through each user
                 userToBeAlerted = results[i];
                 interestsInCommon = new Array();
                 match = false;
-
                 if(results[i].interests && results[i].role == "student"){
-                //  console.log("RES I = ", results[i]);
-                  for(var q = 0;q < results[i].interests.length; q++){
-                  //  console.log("RES INTERs = ", results[i].interests[q]);
-                    for(var k = 0;k < interests.length; k++){
-                      //  console.log("INTERS ", interests[k]);
+                  for(var q = 0;q < results[i].interests.length; q++){ //Iterates through each user's interests
+                    for(var k = 0;k < interests.length; k++){ //Iterates through each interest id
                       if(interests[k] == results[i].interests[q]){
-                      //  console.log("RES-INT-NAME ", results[i].interests[q]);
-                      let str = interests[k].toString();
-
-                      interest_collection.find({"interest_id":str}).toArray().then(function(result){
-
-                        let tmp = JSON.stringify(result);
-                        let interest = JSON.parse(tmp);
-                        console.log(interest.name);
-                        interestsInCommon.push(interest.name);
-                      });
-                      //let name = interest;
-                      //  let name = interest.name;
-                        //console.log("NAME = ", name);
-                      //  console.log("INTER = ", name);
-                      //  interestsInCommon.push(name);
+                        for(var z = 0; z < INTERESTS.length; z++) {
+                          if(INTERESTS[z].interest_id == interests[k]) {
+                              interestsInCommon.push(INTERESTS[z].name);
+                           }
+                        }
                         match = true;
                       }
                     }
                   }
 
                 }
-                console.log("MATCH = ", match);
                 if(match == true) sendQuestionAndAnswerAlert(userToBeAlerted.email, advisor, interestsInCommon);
+
 
               }
               db.close();
@@ -225,9 +213,14 @@ function sendAlerts(json, user, callback) {
   } else callback('INCORRECT_ACTION_TYPE');
 }
 
+function pushIt(name, commonInterests) {
+  commonInterests.push(name);
+}
+
 function sendQuestionAndAnswerAlert(recipient, advisor, commonInterests){
 
-     console.log("ABOUT TO SEND ALERTS FOR Q/A");
+
+     console.log("ABOUT TO SEND ALERTS FOR Q/A", commonInterests);
       var transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
@@ -241,6 +234,7 @@ function sendQuestionAndAnswerAlert(recipient, advisor, commonInterests){
       to: recipient,
       subject: 'Interest Match!',
       text: 'An advisor with similar interests to you has signed up for Cardinal Connect !\n' +
+            'They are available for question and answer.\n' +
             'Advisor Name: ' + advisor.firstName + " " + advisor.lastName + "\n" +
             'Advisor Email: ' + advisor.email +"\n" +
             "Common Interests: "
@@ -253,8 +247,9 @@ function sendQuestionAndAnswerAlert(recipient, advisor, commonInterests){
        mailOptions.text += commonInterests[i];
       if(i != commonInterests.length - 1) mailOptions.text += ", ";
     }
-  //  console.log("MAIL: ", mailOptions.text);
-/*
+
+    console.log("MAIL: ", mailOptions.text);
+
     transporter.sendMail(mailOptions, function(error, info){
       if (error) {
         console.log(error);
@@ -262,7 +257,7 @@ function sendQuestionAndAnswerAlert(recipient, advisor, commonInterests){
         console.log('Email sent: ' + info.response);
       }
     });
-    */
+
 
 }
 

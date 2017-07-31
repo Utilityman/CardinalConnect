@@ -567,6 +567,7 @@ console.log("IN SEND ALERTS");
 		data: JSON.stringify({
 			'action': 'updatedQuestionAndAnswer',
 			'account': account,
+			'interests' : interests
 		}), complete: function (data) {
 			console.log(data);
 		}
