@@ -9,3 +9,27 @@
 .list-group{
   text-align: center;
 }
+
+.glyphicon-ok-sign{
+  color: #00FF00;
+}
+
+#interestDisplayTable {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#interestDisplayHead {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#generalInterestHead {
+  text-align: center;
+}
+
+#interestDisplay {
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
