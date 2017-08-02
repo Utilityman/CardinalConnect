@@ -78,17 +78,20 @@
 </nav>
 
 <ul class="nav nav-pills">
-  <li class="active"><a data-toggle="pill" href="#accountInfo">Account Information</a></li>
+  <li class="active"><a data-toggle="pill" href="#demographics">Demographics</a></li>
   <li><a data-toggle="pill" href="#subbedInternships">Internships</a></li>
   <li><a data-toggle="pill" href="#subbedMentorships">Mentorships</a></li>
   <li><a data-toggle="pill" href="#userInterests">Your Interests</a></li>
+  <li class="advisorContent"><a data-toggle="pill" href="#internshipRoles">Internship Roles </a></li>
+  <li class="advisorContent"><a data-toggle="pill" href="#mentorshipRoles">Mentorship Roles </a></li>
 </ul>
 
 <div class='tab-content'>
-  <div id="accountInfo" class="tab-pane fade in active table-responsive">
+  <div id="demographics" class="tab-pane fade in active table-responsive">
     <button onclick = "savePreferences()">Save Preferences</button>
-    <table class='table table-hover'>
-  		<tr><td></td><td>Account Information</td></tr>
+    <table class='table table-hover'id="demographicsTable" >
+
+  		<tr id="demographicsHead"><td></td><td>Demographics</td></tr>
   		<tr><td>Name: </td><td id="name"></td></tr>
   		<tr><td>Email Address: </td><td id="email"></td>
   					<!--<td class="hidden" id="emailChanger"></td><td class="hidden" id="emailSaver"></td>--></tr>
@@ -103,7 +106,7 @@
   					</td>
   		</tr>
       <tr class="hoverable advisorContent">
-        <td>Q/A</td><td><span id="QuestionAndAnswerCheck" class="glyphicon"></span></td>
+        <td>Question and Answer via Email with Students: </td><td><span id="QuestionAndAnswerCheck" class="glyphicon"></span></td>
       </tr>
     </table>
   </div>
@@ -134,43 +137,68 @@
       <table id="interestDisplayTable">
         <tr id="row_interest_id_1">
 
-          <td><li onclick="displaySubinterests(1)" id="interest_id_1" class="list-group-item"></li></td>
-          <td class ="checkbox"><li class="list-group-item checkbox"><span id="interest_id_1_check"  class="glyphicon"></span></li></td>
+          <td><li id="interest_id_1" class="list-group-item"></li></td>
+          <td class ="checkbox"><li  onclick="displaySubinterests(1)" class="list-group-item checkbox"><span id="interest_id_1_expand"  class="glyphicon"></span></li></td>
         </tr>
         <tr id="row_interest_id_2">
-          <td><li onclick="displaySubinterests(2)" id="interest_id_2" class="list-group-item"></li></td>
-          <td><li class="list-group-item checkbox"><span id="interest_id_2_check" class="glyphicon"></span></li></td>
+          <td><li id="interest_id_2" class="list-group-item"></li></td>
+          <td class="checkbox"><li class="list-group-item" onclick="displaySubinterests(2)"><span id="interest_id_2_expand" class="glyphicon"></span></li></td>
         </tr>
         <tr id="row_interest_id_3">
-          <td><li onclick="displaySubinterests(3)" id="interest_id_3" class="list-group-item"></li></td>
-          <td><li class="list-group-item checkbox"><span id="interest_id_3_check" class="glyphicon"></span></li></td>
+          <td><li id="interest_id_3" class="list-group-item"></li></td>
+          <td class="checkbox"><li class="list-group-item" onclick="displaySubinterests(3)"><span id="interest_id_3_expand" class="glyphicon"></span></li></td>
         </tr>
         <tr id="row_interest_id_4">
-          <td><li onclick="displaySubinterests(4)" id="interest_id_4" class="list-group-item"></li></td>
-          <td><li class="list-group-item checkbox"><span id="interest_id_4_check" class="glyphicon"></span></li></td>
+          <td><li id="interest_id_4" class="list-group-item"></li></td>
+          <td class="checkbox"><li class="list-group-item" onclick="displaySubinterests(4)"><span id="interest_id_4_expand" class="glyphicon"></span></li></td>
         </tr>
         <tr id="row_interest_id_5">
-          <td><li onclick="displaySubinterests(5)" id="interest_id_5" class="list-group-item"></li></td>
-          <td><li class="list-group-item checkbox"><span id="interest_id_5_check" class="glyphicon"></span></li></td>
+          <td><li id="interest_id_5" class="list-group-item"></li></td>
+          <td class="checkbox"><li class="list-group-item" onclick="displaySubinterests(5)"><span id="interest_id_5_expand" class="glyphicon"></span></li></td>
         </tr>
         <tr id="row_interest_id_6">
-          <td><li onclick="displaySubinterests(6)" id="interest_id_6" class="list-group-item"></li></td>
-          <td><li class="list-group-item checkbox"><span id="interest_id_6_check" class="glyphicon"></span></li></td>
+          <td><li id="interest_id_6" class="list-group-item"></li></td>
+          <td class="checkbox"><li class="list-group-item" onclick="displaySubinterests(6)"><span id="interest_id_6_expand" class="glyphicon"></span></li></td>
         </tr>
         <tr id="row_interest_id_7">
-          <td><li onclick="displaySubinterests(7)" id="interest_id_7" class="list-group-item"></li></td>
-          <td><li class="list-group-item checkbox"><span id="interest_id_7_check" class="glyphicon"></span></li></td>
+          <td><li id="interest_id_7" class="list-group-item"></li></td>
+          <td class="checkbox"><li class="list-group-item" onclick="displaySubinterests(7)"><span id="interest_id_7_expand" class="glyphicon"></span></li></td>
         </tr>
         <tr id="row_interest_id_8">
-          <td><li onclick="displaySubinterests(8)" id="interest_id_8" class="list-group-item"></li></td>
-          <td><li class="list-group-item checkbox"><span id="interest_id_8_check" class="glyphicon"></span></li></td>
+          <td><li id="interest_id_8" class="list-group-item"></li></td>
+          <td class="checkbox"><li class="list-group-item" onclick="displaySubinterests(8)"><span id="interest_id_8_expand" class="glyphicon"></span></li></td>
         </tr>
       </table>
       </ul>
     </div>
 
 
-  </div>
+    </div>
+    <div id="internshipRoles" class="tab-pane fade table-responsive">
+      <p> internship roles </p>
+      <button onclick = "saveInternshipRoles()">Save Internship Roles</button>
+      <table id="internshipRolesTable" class="table table-hover table-bordered">
+        <thead id="internshipRolesTableHead">
+          <th> Internship Roles </th><th></th>
+        </thead>
+        <tbody id="internshipRolesTableBody">
+        </tbody>
+      </table>
+
+
+    </div>
+    <div id="mentorshipRoles" class="tab-pane fade table-responsive">
+      <p> mentorship roles </p>
+      <button onclick = "saveMentorshipRoles()">Save Mentorship Roles</button>
+      <table id="mentorshipRolesTable" class="table table-hover table-bordered">
+        <thead id="mentorshipRolesTableHead">
+        </thead>
+        <tbody id="mentorshipRolesTableBody">
+        </tbody>
+
+      </table>
+
+    </div>
 
 </div>
 

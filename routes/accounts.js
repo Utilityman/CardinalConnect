@@ -61,6 +61,15 @@ router.post('/SendAlerts', function (req, res, next) {
   });
 });
 
+router.post('/GetRoles', function (req, res, next) {
+  let t0 = new Date().getTime();
+  getRoles(req.body, function (response) {
+    let t1 = new Date().getTime();
+    res.send(response);
+    console.log('POST@/getRoles --- Response: '+ response + ' --- ' + (t1 - t0) + 'ms');
+  });
+});
+
 
 function getAccounts(json, callback) {
   if(json.action !== 'getAccounts') {
@@ -120,6 +129,51 @@ function getInterests (json, callback) {
   }
 }
 
+function getRoles (json, callback) {
+  if(json.action == 'getInternshipRoles') {
+    let MongoClient = mongodb.MongoClient;
+    MongoClient.connect(globals.MONGO_URL, function (err, db) {
+      if (err) {
+        console.log('err@accounts.js.getRoles().MongoClient.connect - ' + err);
+        callback('SERVER_ERROR');
+      } else {
+        let collection = db.collection('internshipRoles');
+        collection.find().toArray(function (err, results) {
+          if (err) {
+            callback('SERVER_ERROR');
+            db.close();
+          } else {
+            callback(results);
+            db.close();
+          }
+        });
+      }
+    });
+  } else if(json.action == 'getMentorshipRoles'){
+    let MongoClient = mongodb.MongoClient;
+    MongoClient.connect(globals.MONGO_URL, function (err, db) {
+      if (err) {
+        console.log('err@accounts.js.getRoles().MongoClient.connect - ' + err);
+        callback('SERVER_ERROR');
+      } else {
+        let collection = db.collection('mentorshipRoles');
+        collection.find().toArray(function (err, results) {
+          if (err) {
+            callback('SERVER_ERROR');
+            db.close();
+          } else {
+            callback(results);
+            db.close();
+          }
+        });
+      }
+    });
+  } else {
+      callback('INCORRECT_ACTION_TYPE');
+  }
+
+}
+
 function saveUser(json, user, callback) {
   if(json.action == 'saveUserInterests') {
     let MongoClient = mongodb.MongoClient;
@@ -152,6 +206,40 @@ function saveUser(json, user, callback) {
         callback('UPDATED USER');
       }
         });
+  } else if(json.action == "saveUserInternshipRoles") {
+    let MongoClient = mongodb.MongoClient;
+    MongoClient.connect(globals.MONGO_URL, function (err, db) {
+      if (err) {
+        console.log('err@accounts.js.saveUser()).MongoClient.connect - ' + err);
+        callback('SERVER_ERROR');
+      } else {
+        let collection = db.collection('users');
+        let email = json.email;
+        let internshipRoles = json.internshipRoles;
+        collection.update({'email':email},{$set:{'internshipRoles':internshipRoles}});
+        user.internshipRoles = internshipRoles;
+        console.log("USER = ",user);
+        callback('UPDATED USER');
+      }
+        });
+
+  } else if(json.action == "saveUserMentorshipRoles") {
+    let MongoClient = mongodb.MongoClient;
+    MongoClient.connect(globals.MONGO_URL, function (err, db) {
+      if (err) {
+        console.log('err@accounts.js.saveUser()).MongoClient.connect - ' + err);
+        callback('SERVER_ERROR');
+      } else {
+        let collection = db.collection('users');
+        let email = json.email;
+        let mentorshipRoles = json.mentorshipRoles;
+        collection.update({'email':email},{$set:{'mentorshipRoles':mentorshipRoles}});
+        user.mentorshipRoles = mentorshipRoles;
+        console.log("USER = ",user);
+        callback('UPDATED USER');
+      }
+        });
+
   } else callback('INCORRECT_ACTION_TYPE');
 }
 
@@ -218,8 +306,6 @@ function pushIt(name, commonInterests) {
 }
 
 function sendQuestionAndAnswerAlert(recipient, advisor, commonInterests){
-
-
      console.log("ABOUT TO SEND ALERTS FOR Q/A", commonInterests);
       var transporter = nodemailer.createTransport({
       service: 'gmail',

@@ -1,9 +1,17 @@
-
+/*
+#dFdFdF
+*/
 .highlighted > td{
   background-color: #dFdFdF;
 }
 .highlighted:hover > td{
   background-color: #dFdFdF;
+}
+/*
+#e3e9f2
+*/
+.table-hover tbody tr:hover:not(#demographicsHead) td, .table-hover tbody tr:hover th {
+  background-color: white;
 }
 
 .list-group{
@@ -14,22 +22,32 @@
   color: #00FF00;
 }
 
-#interestDisplayTable {
-  margin-left: auto;
-  margin-right: auto;
+
+#demographicsTable {
+  width : 50%;
 }
 
-#interestDisplayHead {
-  margin-left: auto;
-  margin-right: auto;
+#demographicsHead {
+  border-bottom: 2px solid #f44242;
+  background-color: white;
 }
 
-#generalInterestHead {
-  text-align: center;
+#demographicsHead:hover {
+  border-bottom: 2px solid #f44242;
+  background-color: white;
 }
 
-#interestDisplay {
-  margin-left: auto;
-  margin-right: auto;
-  text-align: center;
+#internshipRolesTable{
+  width : 50%;
+}
+
+
+#internshipRolesTableHead th {
+  border : none;
+  border-bottom : 2px solid #f44242;
+  text-align : center;
+}
+
+.roleCheck {
+  border-right: none;
 }

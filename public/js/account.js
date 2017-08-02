@@ -2,6 +2,8 @@
 var account = undefined;
 let selected = undefined;
 let interests = undefined;
+let internshipRoles = undefined;
+let mentorshipRoles = undefined;
 
 
 
@@ -37,9 +39,10 @@ function getMentorships () {
 			'action': 'getSubscribedMentorships',
 		}), complete: function (data) {
 			console.log(data.responseJSON);
+			getInternships();
 			if(data.responseJSON) {
 				fillMentorshipTable(data.responseJSON.mentorships);
-				getInternships();
+
 			}
 
 		},
@@ -55,10 +58,69 @@ function getInternships() {
 			'action': 'getSubscribedInternships',
 		}), complete: function (data) {
 			console.log(data.responseJSON);
+			getInternshipRoles();
 			if(data.responseJSON) {
 				fillInternshipTable(data.responseJSON.internships);
-				getInterests();
+
 			}
+		},
+	});
+}
+
+function getInterests() {
+	$.ajax({
+		type: 'POST',
+		url: '/GetInterests',
+		contentType: 'application/json',
+		data: JSON.stringify({
+			'action': 'getInterests',
+		}), complete: function (data) {
+			if(data.responseJSON) {
+			console.log("Interests have been retrieved");
+			interests = data.responseJSON;
+			initializeInterests();
+			fillTier1Interests();
+			getMentorships();
+		}
+		},
+	});
+}
+
+function getInternshipRoles() {
+	$.ajax({
+		type: 'POST',
+		url: '/GetRoles',
+		contentType: 'application/json',
+		data: JSON.stringify({
+			'action': 'getInternshipRoles',
+		}), complete: function (data) {
+			if(data.responseJSON) {
+			console.log("Internship Roles have been retrieved");
+			internshipRoles = data.responseJSON;
+			console.log("Internship Roles == ", internshipRoles);
+			initializeInternshipRoles();
+			fillInternshipRolesTable(internshipRoles);
+			getMentorshipRoles();
+		}
+		},
+	});
+}
+
+function getMentorshipRoles() {
+	$.ajax({
+		type: 'POST',
+		url: '/GetRoles',
+		contentType: 'application/json',
+		data: JSON.stringify({
+			'action': 'getMentorshipRoles',
+		}), complete: function (data) {
+			if(data.responseJSON) {
+			console.log("Mentorship Roles have been retrieved");
+			mentorshipRoles = data.responseJSON;
+			initializeMentorshipRoles();
+			fillMentorshipRolesTable();
+			console.log("Mentorship Roles == ", mentorshipRoles);
+		}
 		},
 	});
 }
@@ -86,6 +148,96 @@ function fillInternshipTable (internships) {
 															'<td>' + internships[i].focus + '</td>' +
 															'<td>' + internships[i].description +
 															'</tr>');
+	}
+}
+
+function fillInternshipRolesTable () {
+	for (let i = 0; i < internshipRoles.length; i++) {
+		let row = document.createElement('tr');
+		let element1 = document.createElement('td');
+		let element2 = document.createElement('td');
+		let name = document.createElement('span');
+		let check = document.createElement('span');
+		row.id = "internship-role-"+internshipRoles[i].id;
+		row.checked = false;
+		for(var k = 0; k < account.internshipRoles.length; k++) {
+			if(internshipRoles[i].id == account.internshipRoles[k]) row.checked = true;
+		}
+		row.onclick = function() {
+			let tmp = this.id.replace("internship-role-","");
+			let checkSpan = $('#'+this.id).find('#'+tmp);
+			for(var i = 0; i < internshipRoles.length; i++){
+					if(internshipRoles[i].id == tmp) {
+						if(this.checked == true) {
+							internshipRoles[i].checked = false;
+							this.checked = false;
+							console.log(this.id);
+						}
+						else {
+							internshipRoles[i].checked = true;
+							this.checked = true;
+							console.log(this.id);
+						}
+				}
+			}
+			toggleCheck(checkSpan[0]);
+		};
+		row.className = "internshipRoles";
+		name.innerHTML = "&nbsp;&nbsp;&nbsp;" + internshipRoles[i].name
+		check.id = internshipRoles[i].id;
+		if(row.checked == true) check.className = "glyphicon glyphicon-ok-sign roleCheck";
+		else check.className = "glyphicon glyphicon-unchecked roleCheck";
+		check.checked = row.checked;
+		element1.appendChild(name);
+		element2.appendChild(check);
+		row.appendChild(element2);
+		row.appendChild(element1);
+		$('#internshipRolesTableBody').append(row);
+	}
+}
+
+
+
+function fillMentorshipRolesTable () {
+	for (let i = 0; i < mentorshipRoles.length; i++) {
+		let row = document.createElement('tr');
+		let element1 = document.createElement('td');
+		let element2 = document.createElement('td');
+		let name = document.createElement('span');
+		let check = document.createElement('span');
+		row.id = "mentorship-role-"+mentorshipRoles[i].id;
+		row.checked = false;
+		for(var k = 0; k < account.mentorshipRoles.length; k++) {
+			if(mentorshipRoles[i].id == account.mentorshipRoles[k]) row.checked = true;
+		}
+		row.onclick = function() {
+			let tmp = this.id.replace("mentorship-role-","");
+			let checkSpan = $('#'+this.id).find('#'+tmp);
+			for(var i = 0; i < mentorshipRoles.length; i++){
+					if(mentorshipRoles[i].id == tmp) {
+						if(this.checked == true) {
+							mentorshipRoles[i].checked = false;
+							this.checked = false;
+						}
+						else {
+							mentorshipRoles[i].checked = true;
+							this.checked = true;
+						}
+				}
+			}
+			toggleCheck(checkSpan[0]);
+		};
+		row.className = "mentorshipRoles";
+		name.innerHTML = "&nbsp;&nbsp;&nbsp;" + mentorshipRoles[i].name
+		check.id = mentorshipRoles[i].id;
+		if(row.checked == true) check.className = "glyphicon glyphicon-ok-sign roleCheck";
+		else check.className = "glyphicon glyphicon-unchecked roleCheck";
+		check.checked = row.checked;
+		element1.appendChild(name);
+		element2.appendChild(check);
+		row.appendChild(element2);
+		row.appendChild(element1);
+		$('#mentorshipRolesTableBody').append(row);
 	}
 }
 
@@ -187,24 +339,7 @@ function unsubscribeMentorship () {
 	*/
 }
 
-function getInterests() {
-	$.ajax({
-		type: 'POST',
-		url: '/GetInterests',
-		contentType: 'application/json',
-		data: JSON.stringify({
-			'action': 'getInterests',
-		}), complete: function (data) {
-			if(data.responseJSON) {
-			console.log("Interests have been retrieved");
-			interests = data.responseJSON;
-			initializeInterests();
-			fillTier1Interests();
-			getMentorships();
-		}
-		},
-	});
-}
+
 
 
 
@@ -214,16 +349,21 @@ function fillTier1Interests() {
 				//interests[i].checked = false;
 				interests[i].expanded = false;
 				if(interests[i].tier === "1"){
-					$('#interest_id_'+interests[i].interest_id).html("<span class='glyphicon glyphicon-plus'></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+ interests[i].name);
-					if(interests[i].checked == true) document.getElementById('interest_id_'+interests[i].interest_id+'_check').checked = true;
-					//console.log("WEIRD THING ", $('#interest_id_'+interests[i].interest_id+'_check'));
+					//$('#interest_id_'+interests[i].interest_id).html("<span class='glyphicon glyphicon-plus'></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+ interests[i].name);
+          //$('#interest_id_'+interests[i].interest_id).html("<span class='glyphicon glyphicon-ok-'></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+ interests[i].name);
 					if(interests[i].checked == true){
-						//$('#interest_id_'+interests[i].interest_id+'_check').removeClass('glyphicon-unchecked');
-						$('#interest_id_'+interests[i].interest_id+'_check').addClass('glyphicon-ok-sign');
-					} else {
-						//$('#interest_id_'+interests[i].interest_id+'_check').removeClass('glyphicon-ok-sign');
-						$('#interest_id_'+interests[i].interest_id+'_check').addClass('glyphicon-unchecked');
+							$('#interest_id_'+interests[i].interest_id).html("<span id='interest_id_"+interests[i].interest_id+"_check'" + "class='glyphicon glyphicon-ok-sign'></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+ interests[i].name);
+              document.getElementById('interest_id_'+interests[i].interest_id+'_check').checked = true;
 					}
+					else {
+					     $('#interest_id_'+interests[i].interest_id).html("<span id='interest_id_"+interests[i].interest_id+"_check'" + "class='glyphicon glyphicon-unchecked'></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+ interests[i].name);
+							 document.getElementById('interest_id_'+interests[i].interest_id+'_check').checked = false;
+						 }
+					//document.getElementById('interest_id_'+interests[i].interest_id+'_check').checked = true;
+					//console.log("WEIRD THING ", $('#interest_id_'+interests[i].interest_id+'_check'));
+
+					$('#interest_id_'+interests[i].interest_id+"_expand").removeClass("glyphicon-plus-sign");
+					$('#interest_id_'+interests[i].interest_id+"_expand").addClass("glyphicon-plus-sign");
 					$('#interest_id_'+interests[i].interest_id+'_check').click(function() {
 						let tmp = this.id.replace("interest_id_", "");
 						tmp = tmp.replace("_check","");
@@ -272,61 +412,85 @@ function setInterestDisplayHeader(parent_interest){
 	$('#interestDisplayHead').find('ul').remove();
 	$('#interestDisplayHead').find('table').remove();
 
+	console.log("PARENTT ", parent_interest);
   let parent;
   for(var i = 0; i < interests.length; i++){
-		if(interests[i].parent_interest_id == parent_interest.parent_interest_id) parent = interests[i];
+		if(interests[i].parent_interest_id == parent_interest.parent_interest_id &&
+		    interests[i].interest_id == parent_interest.interest_id) parent = interests[i];
 	}
+		console.log("PARENTTZZZ ", parent);
   let table = document.createElement('table');
 	table.id = "interestDisplayHead";
 	let row = document.createElement('row');
 	let element_1 = document.createElement('td');
 	let element_2 = document.createElement('td');
+	let span = document.createElement('span');
+	let title = document.createElement('span');
 
 	let list = document.createElement('ul');
 	list.className = 'list-group';
 
 	let item_name = document.createElement('li');
-	item_name.onclick = function (){
-		displayTierAboveParent(parent);
-	}
-	item_name.className = 'list-group-item';
-	item_name.innerHTML = "<span class='glyphicon glyphicon-minus-sign'></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+ parent_interest.name;
-	let item_check = document.createElement('li');
-	item_check.className = 'list-group-item';
-	let input = document.createElement('span');
-	input.id = parent_interest.interest_id;
-	input.checked = parent_interest.checked;
-	if(input.checked == true){
-		console.log("IN IT");
-		input.className = 'glyphicon glyphicon-ok-sign';
+	item_name.id = "interest_id_"+parent_interest.interest_id;
+	item_name.className ="list-group-item";
+	span.id = "interest_id_"+parent_interest.interest_id+"_check";
+	span.value = parent_interest.interest_id;
+	span.checked = parent_interest.checked;
+	if(span.checked == true){
+		span.className = 'glyphicon glyphicon-ok-sign';
 	} else {
-		console.log("IN IT");
-		input.className = 'glyphicon glyphicon-unchecked';
+		span.className = 'glyphicon glyphicon-unchecked';
 	}
-	input.onclick = function() {
-		for(var i = 0; i < interests.length; i++){
-				if(interests[i].interest_id == this.id) {
-					if(this.checked == true) interests[i].checked = false;
-					else interests[i].checked = true;
+
+		let item_expand = document.createElement('li');
+
+		let expand = document.createElement('span');
+		item_expand.className = "list-group-item";
+		expand.id = parent_interest.interest_id;
+	  expand.className = "glyphicon glyphicon-minus-sign";
+		expand.onclick = function() {
+				displayTierAboveParent(parent);
+		};
+		span.onclick = function() {
+			for(var i = 0; i < interests.length; i++){
+				let tmp = this.id.replace("interest_id_","");
+				tmp = tmp.replace("_check","");
+					if(interests[i].interest_id == tmp) {
+						if(this.checked == true) interests[i].checked = false;
+						else interests[i].checked = true;
+				}
 			}
+			toggleCheck(this);
+		};
+		if(parent_interest.checked == true){
+			span.checked = true;
+			title.innerHTML = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+parent_interest.name;
 		}
-		toggleCheck(this);
-	};
+		else {
+			span.checked = false;
+			title.innerHTML = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + parent_interest.name;
+		}
 
-	item_check.appendChild(input);
 
-	element_1.appendChild(item_name);
-	element_2.appendChild(item_check);
 
-	row.appendChild(element_1);
-	row.appendChild(element_2);
+		item_expand.appendChild(expand);
+		item_name.appendChild(span);
+		item_name.appendChild(title);
 
-	table.appendChild(row);
-	$('#interestDisplayHead').after(table);
+		element_1.appendChild(item_name);
+		element_2.appendChild(item_expand);
+
+		row.appendChild(element_1);
+		row.appendChild(element_2);
+		//row.appendChild(list);
+
+		table.appendChild(row);
+		$('#interestDisplayHead').after(table);
+		//$(span).after('#interest_id_'+parent_interest.interest_id)
 }
 
 function displayTierAboveParent(parent_interest){
-	console.log("DISPLAY TIER ABOVE PARENT");
+	console.log("DISPLAY TIER ABOVE PARENT", parent_interest);
 	var count = 0;
   var i = 0;
   let new_parent;
@@ -346,34 +510,46 @@ function displayTierAboveParent(parent_interest){
 
 
 			let interest_name = document.createElement('li');
-			let interest_input = document.createElement('li');
-			let input = document.createElement('span');
+			let interest_expand = document.createElement('li');
+			let span = document.createElement('span');
+			let title = document.createElement('span');
 
 
 			//let interest_id = interests[i].interest_id;
-			interest_name.onclick = function (){
-				let interest_id = this.id.replace("interest_id_","");
-				displaySubinterests(interest_id);
-			}
 
-			if(checkChildInterests(interests[i].interest_id) == true){
-				interest_name.innerHTML = "<span class='glyphicon glyphicon-plus-sign'></span>" +
-				"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+ interests[i].name; }
-			else {interest_name.innerHTML = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + interests[i].name;}
+
+			if(interests[i].checked == true){
+				span.checked = true;
+				title.innerHTML = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+interests[i].name;
+			}
+			else {
+				span.checked = false;
+				title.innerHTML = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + interests[i].name;
+			}
 
 			interest_name.id = "interest_id_"+interests[i].interest_id;
 
 			interest_name.className ="list-group-item";
-			interest_input.className = "list-group-item";
-			input.id = "interest_id_"+interests[i].interest_id+"_check";
-      input.value = interests[i].interest_id;
-			input.checked = interests[i].checked;
-			if(input.checked == true){
-				input.className = 'glyphicon glyphicon-ok-sign';
-			} else {
-				input.className = 'glyphicon glyphicon-unchecked';
+			interest_expand.className = "list-group-item";
+			let expand = document.createElement('span');
+			expand.id = interests[i].interest_id;
+			console.log("EXAPND ID = ", expand.id);
+			expand.onclick = function() {
+					displaySubinterests(this.id);
+			};
+			if(checkChildInterests(interests[i].interest_id) == true) {
+				expand.className = 'glyphicon glyphicon-plus-sign';
 			}
-			input.onclick = function() {
+
+			span.id = "interest_id_"+interests[i].interest_id+"_check";
+      span.value = interests[i].interest_id;
+			span.checked = interests[i].checked;
+			if(span.checked == true){
+				span.className = 'glyphicon glyphicon-ok-sign';
+			} else {
+				span.className = 'glyphicon glyphicon-unchecked';
+			}
+			span.onclick = function() {
 				for(var i = 0; i < interests.length; i++){
 						if(interests[i].interest_id == this.value) {
 							if(this.checked == true) interests[i].checked = false;
@@ -382,9 +558,12 @@ function displayTierAboveParent(parent_interest){
 				}
 				toggleCheck(this);
 			};
-			interest_input.appendChild(input);
+
+      interest_expand.appendChild(expand);
+      interest_name.appendChild(span);
+			interest_name.appendChild(title);
 			element_1.appendChild(interest_name);
-			element_2.appendChild(interest_input);
+			element_2.appendChild(interest_expand);
 
 			row.appendChild(element_1);
 			row.appendChild(element_2);
@@ -406,31 +585,38 @@ function displayTierAboveParent(parent_interest){
 				let element_2 = document.createElement('td');
 
 				let interest_name = document.createElement('li');
-				let interest_input = document.createElement('li');
-				let input = document.createElement('span');
+				let interest_expand = document.createElement('li');
+				let span = document.createElement('span');
+				let title = document.createElement('span');
 
 
-				if(checkChildInterests(interests[i].interest_id) == true){
-					interest_name.innerHTML = "<span class='glyphicon glyphicon-plus-sign'></span>" +
-					"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+ interests[i].name; }
-				else {interest_name.innerHTML = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + interests[i].name;}
+				if(interests[i].checked == true){
+					title.innerHTML = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+ interests[i].name;}
+				else title.innerHTML = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + interests[i].name;
 
-				interest_name.onclick = function (){
-					let interest_id = this.id.replace("interest_id_","");
-					displaySubinterests(interest_id);
-				}
+
 				interest_name.id = "interest_id_"+interests[i].interest_id;
 				interest_name.className ="list-group-item";
-				interest_input.className = "list-group-item";
-				input.id = "interest_id_"+interests[i].interest_id+"_check";
-				input.value = interests[i].interest_id;
-				input.checked = interests[i].checked;
-				if(input.checked == true){
-					input.className = 'glyphicon glyphicon-ok-sign';
-				} else {
-					input.className = 'glyphicon glyphicon-unchecked';
+				interest_expand.className = "list-group-item";
+				let expand = document.createElement('span');
+				expand.id = parent_interest.interest_id;
+				console.log("EXAPND ID = ", expand.id);
+				expand.onclick = function() {
+						displaySubinterests(this.id);
+				};
+				if(checkChildInterests(interests[i].interest_id) == true) {
+					expand.className = 'glyphicon glyphicon-plus-sign';
 				}
-				input.onclick = function() {
+
+				span.id = "interest_id_"+interests[i].interest_id+"_check";
+				span.value = interests[i].interest_id;
+				span.checked = interests[i].checked;
+				if(span.checked == true){
+					span.className = 'glyphicon glyphicon-ok-sign';
+				} else {
+					span.className = 'glyphicon glyphicon-unchecked';
+				}
+				span.onclick = function() {
 					for(var i = 0; i < interests.length; i++){
 							if(interests[i].interest_id == this.value) {
 								if(this.checked == true) interests[i].checked = false;
@@ -439,9 +625,12 @@ function displayTierAboveParent(parent_interest){
 					}
 					toggleCheck(this);
 				};
-				interest_input.appendChild(input);
+
+				interest_expand.appendChild(expand);
+	      interest_name.appendChild(span);
+				interest_name.appendChild(title);
 				element_1.appendChild(interest_name);
-				element_2.appendChild(interest_input);
+				element_2.appendChild(interest_expand);
 
 				row.appendChild(element_1);
 				row.appendChild(element_2);
@@ -475,35 +664,46 @@ function displaySubinterests(parent_interest_id) {
 
 
 				let interest_name = document.createElement('li');
-				let interest_input = document.createElement('li');
-				let input = document.createElement('span');
+				let interest_expand = document.createElement('li');
+				let span = document.createElement('span');
+				let title = document.createElement('span');
 
 				//let interest_id = interests[i].interest_id;
 
-
-				if(checkChildInterests(interests[i].interest_id) == true){
-					interest_name.innerHTML = "<span class='glyphicon glyphicon-plus-sign'></span>" +
-					"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+ interests[i].name; }
-				else {interest_name.innerHTML = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + interests[i].name;}
-
-
-				interest_name.onclick = function (){
-					let interest_id = this.id.replace("interest_id_","");
-					displaySubinterests(interest_id);
+				if(checkChildInterests(interests[i].interest_id) == true) {
+					interest_expand.className = 'list-group-item glyphicon glyphicon-plus-sign';
 				}
+
+
 				interest_name.id = "interest_id_"+interests[i].interest_id;
 
 				interest_name.className ="list-group-item";
-				interest_input.className = "list-group-item";
-				input.id = "interest_id_"+interests[i].interest_id+"_check";
-				input.value = interests[i].interest_id;
-				input.checked = interests[i].checked;
-				if(input.checked == true){
-					input.className = 'glyphicon glyphicon-ok-sign';
-				} else {
-					input.className = 'glyphicon glyphicon-unchecked';
+				interest_expand.className = "list-group-item";
+				let expand = document.createElement('span');
+				expand.id = interests[i].interest_id;
+				/*
+				expand.onclick = function() {
+						displayTierAboveParent(parent_interest);
+				};
+				*/
+
+				expand.onclick = function (){
+					let interest_id = this.id.replace("interest_id_","");
+					displaySubinterests(interest_id);
+				};
+				if(checkChildInterests(expand.id)){
+					expand.className = 'glyphicon glyphicon-plus-sign';
 				}
-				input.onclick = function() {
+				span.id = "interest_id_"+interests[i].interest_id+"_check";
+				span.value = interests[i].interest_id;
+				span.checked = interests[i].checked;
+				if(span.checked == true){
+					span.className = 'glyphicon glyphicon-ok-sign';
+				} else {
+					span.className = 'glyphicon glyphicon-unchecked';
+				}
+				console.log("ABOUT TO ONCLICK");
+				span.onclick = function() {
 					for(var i = 0; i < interests.length; i++){
 							if(interests[i].interest_id == this.value) {
 								if(this.checked == true) interests[i].checked = false;
@@ -512,9 +712,16 @@ function displaySubinterests(parent_interest_id) {
 					}
 					toggleCheck(this);
 				};
-				interest_input.appendChild(input);
+				if(interests[i].checked == true){
+					title.innerHTML = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+ interests[i].name;}
+				else title.innerHTML = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + interests[i].name;
+
+
+				interest_name.appendChild(span);
+				interest_name.appendChild(title);
+				interest_expand.appendChild(expand);
 				element_1.appendChild(interest_name);
-				element_2.appendChild(interest_input);
+				element_2.appendChild(interest_expand);
 
 				row.appendChild(element_1);
 				row.appendChild(element_2);
@@ -551,6 +758,52 @@ function saveInterests(){
 			'action': 'saveUserInterests',
 			'email': account.email,
 			'interests' : account.interests
+		}), complete: function (data) {
+			console.log(data);
+		},
+	});
+
+}
+
+function saveInternshipRoles(){
+	account.internshipRoles = new Array();
+	for(var i = 0; i < internshipRoles.length; i++) {
+		if(internshipRoles[i].checked == true) {
+			console.log("INTEREST ID : ", internshipRoles[i].id);
+			account.internshipRoles.push(internshipRoles[i].id);
+	}
+}
+	$.ajax({
+		type: 'POST',
+		url: '/SaveUser',
+		contentType: 'application/json',
+		data: JSON.stringify({
+			'action': 'saveUserInternshipRoles',
+			'email': account.email,
+			'internshipRoles' : account.internshipRoles
+		}), complete: function (data) {
+			console.log(data);
+		},
+	});
+
+}
+
+function saveMentorshipRoles(){
+	account.mentorshipRoles = new Array();
+	for(var i = 0; i < mentorshipRoles.length; i++) {
+		if(mentorshipRoles[i].checked == true) {
+			console.log("INTEREST ID : ", mentorshipRoles[i].id);
+			account.mentorshipRoles.push(mentorshipRoles[i].id);
+	}
+}
+	$.ajax({
+		type: 'POST',
+		url: '/SaveUser',
+		contentType: 'application/json',
+		data: JSON.stringify({
+			'action': 'saveUserMentorshipRoles',
+			'email': account.email,
+			'mentorshipRoles' : account.mentorshipRoles
 		}), complete: function (data) {
 			console.log(data);
 		},
@@ -614,10 +867,44 @@ function initializeInterests() {
 
 }
 
-function toggleCheck(elem) {
-	console.log("THIS = ", elem);
+function initializeInternshipRoles() {
+	console.log("ACC = ", account);
+	for(var i = 0; i < internshipRoles.length; i++) {
+		internshipRoles[i].checked = false;
+		for(var q = 0; q < account.internshipRoles.length; q++){
+			if(internshipRoles[i].id == account.internshipRoles[q])
+			       internshipRoles[i].checked = true;
+		}
+	}
+}
 
-	if(elem.checked == false){
+function initializeMentorshipRoles() {
+	console.log("ACC = ", account);
+	for(var i = 0; i < mentorshipRoles.length; i++) {
+		mentorshipRoles[i].checked = false;
+		for(var q = 0; q < account.mentorshipRoles.length; q++){
+			if(mentorshipRoles[i].id == account.mentorshipRoles[q])
+			       mentorshipRoles[i].checked = true;
+		}
+	}
+}
+
+function toggleCheck(elem) {
+	console.log("THIS = ", elem.checked);
+
+	if(elem.checked == false || elem.checked == 'false'){
+		elem.className = "glyphicon glyphicon-ok-sign";
+		elem.checked = true;
+	} else {
+    elem.className = "glyphicon glyphicon-unchecked";
+		elem.checked = false;
+	}
+}
+
+function toggleCheck(elem) {
+	console.log("THIS = ", elem.checked);
+
+	if(elem.checked == false || elem.checked == 'false'){
 		elem.className = "glyphicon glyphicon-ok-sign";
 		elem.checked = true;
 	} else {
