@@ -55,6 +55,24 @@ router.post('/ToggleInternship', function (req, res, next) {
   });
 });
 
+router.post('/SiteRecommendation', function (req, res, next) {
+  globals.verifyAdmin(req.session.user, function (valid) {
+    if (valid) {
+      let t0 = new Date().getTime();
+      makeRecommendation(req.body, function (response) {
+        let t1 = new Date().getTime();
+        globals.prettyPrintResponse('MakeRecommendation', response, t1, t0);
+        res.send(response);
+      });
+    } else {
+      // Should never happen, the admin page shouldn't have loaded
+      res.send('NOT_ADMIN_USER');
+    }
+  });
+});
+
+
+
 function toggleUser (json, callback) {
   if (json.action !== 'acceptOrDenyAccount') {
     callback('INCORRECT_ACTION_TYPE');
@@ -181,6 +199,30 @@ function toggleInternship (json, callback) {
       }
     });
   }
+}
+
+function makeRecommendation(json, callback) {
+  if(json.action != 'makeRecommendation'){
+    callback('SERVER_ERROR');
+  } else {
+    let MongoClient = mongodb.MongoClient;
+    MongoClient.connect(globals.MONGO_URL, function (err, db) {
+      if (err) {
+        console.log(err);
+        callback('SERVER_ERROR');
+      } else {
+        let collection = db.collection('recommendations');
+        let recommendation = json.recommendation;
+        try {
+          collection.insertOne({'content':recommendation});
+        } catch (e) {
+          print(e);
+        };
+        callback('RECOMMENDATION SAVED');
+        }
+
+});
+}
 }
 
 module.exports = router;

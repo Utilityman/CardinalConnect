@@ -358,3 +358,26 @@ function goToInternshipPage(param)
 									$(param).parents('li').attr('id') +
 									"&returnPage=" + RETURN_ID;
 }
+
+function makeRecommendation()
+{
+
+	let recommendation = $('#newRecommendation').val();
+
+	$.ajax({
+		type: 'POST',
+		url: '/SiteRecommendation',
+		contentType: 'application/json',
+		data: JSON.stringify({
+			'action': 'makeRecommendation',
+			'recommendation': recommendation,
+		}), complete: function (data) {
+			if(data.responseText == 'RECOMMENDATION SAVED'){
+				alert("Recommendation saved to database");
+			} else {
+				alert("Recommendation was not saved! Please try again.");
+			}
+		},
+	});
+
+}

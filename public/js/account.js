@@ -6,11 +6,6 @@ let internshipRoles = undefined;
 let mentorshipRoles = undefined;
 
 
-
-
-
-
-
 function getAccount () {
 	$.ajax({
 		type: 'POST',
@@ -22,6 +17,7 @@ function getAccount () {
 			console.log(data.responseJSON);
 			if(data.responseText == '') {returnToLogin(); return;}
 			account = data.responseJSON;
+			if(account.email == "root") $(".adminContent").hide();
 			if(account.role == "student") $(".advisorContent").hide();
 			if(account.role == "advisor") $(".studentContent").hide();
 			fillInformation(data.responseJSON);

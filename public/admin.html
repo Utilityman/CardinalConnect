@@ -43,6 +43,7 @@
         <li class='accountTab'><a href="#" onclick="showTab(this, 'accountTab')" id='account'>Accounts</a></li>
         <li class='internshipTab'><a href='#' onclick="showTab(this, 'internshipTab')" id="internship">Internships</a></li>
         <li class='mentorshipTab'><a href='#' onclick="showTab(this, 'mentorshipTab')" id="mentorship">Mentorships</a></li>
+        <li class='recommendationsTab'><a href="#" onclick="showTab(this, 'recommendationsTab')" id="recommendations">Site Recommendations</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li><a href="#" onclick="returnToSite()"><span class="glyphicon glyphicon-home"></span> Return Home</a></li>
@@ -126,6 +127,16 @@
 							Pending Mentorships<span class='expanded'>+</span></li>
 			<li id='allMentorships' onclick="show('allMentorships')">
 							Accepted Mentorships<span class='expanded'>+</span></li>
+		</ul>
+	</div>
+  <div class="tab-content" id="recommendationsTab">
+    <h3> Enter a recommendation you have for the site! </h3>
+    <br>
+    <textarea id="newRecommendation" rows="5" cols="40"> </textarea>
+    <br>
+    <button onclick = "makeRecommendation()">Submit Recommendation</button>
+		<ul id="recommendationsHolder">
+
 		</ul>
 	</div>
 </div>
