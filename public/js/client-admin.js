@@ -1,9 +1,10 @@
 'use strict';
 
-var accounts = null;
-var internships = null;
-var mentorships = null;
-var RETURN_ID = 0;
+let accounts = null;
+let internships = null;
+let mentorships = null;
+let recommendations = null;
+let RETURN_ID = 0;
 
 function showTab (source, param) {
 	$('.' + param).siblings().removeClass('active');
@@ -73,6 +74,7 @@ function getMentorships()
 			mentorships = data.responseJSON;
 
 			fillTabs();
+			getRecommendations();
 		},
 	});
 }
@@ -372,12 +374,45 @@ function makeRecommendation()
 			'action': 'makeRecommendation',
 			'recommendation': recommendation,
 		}), complete: function (data) {
-			if(data.responseText == 'RECOMMENDATION SAVED'){
+			if(data.responseText == 'RECOMMENDATION_SAVED'){
 				alert("Recommendation saved to database");
 			} else {
 				alert("Recommendation was not saved! Please try again.");
 			}
 		},
 	});
+}
 
+function getRecommendations()
+{
+
+	$.ajax({
+		type: 'POST',
+		url: '/SiteRecommendation',
+		contentType: 'application/json',
+		data: JSON.stringify({
+			'action': 'getRecommendations',
+		}), complete: function (data) {
+			console.log("Recommendation Data = ", data);
+			recommendations = data.responseJSON;
+			fillRecommendations();
+			console.log("RECOMMENDATIONS_RETRIEVED");
+		},
+	});
+}
+
+function fillRecommendations()
+{
+	for(var i = 0; i < recommendations.length; i++) {
+		let row = document.createElement('tr');
+		let num = document.createElement('td');
+		let content = document.createElement('td');
+
+		num.innerHTML = i + 1;
+		content.innerHTML = recommendations[i].content;
+
+    row.appendChild(num);
+		row.appendChild(content);
+		$('#recommendationsTableBody').append(row);
+	}
 }

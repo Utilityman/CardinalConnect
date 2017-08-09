@@ -106,3 +106,14 @@ h3
 {
 	color: white;
 }
+
+#recommendationsTable
+{
+	width: 50%;
+}
+
+#recommendationsTable th, td
+{
+  word-wrap: break-word;
+	color: white;
+}

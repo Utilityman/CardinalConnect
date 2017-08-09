@@ -42,7 +42,7 @@
 }
 
 
-#internshipRolesTableHead th {
+.rolesTableHead th {
   border : none;
   border-bottom : 2px solid #f44242;
   text-align : center;

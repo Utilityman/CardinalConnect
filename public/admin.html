@@ -132,12 +132,20 @@
   <div class="tab-content" id="recommendationsTab">
     <h3> Enter a recommendation you have for the site! </h3>
     <br>
-    <textarea id="newRecommendation" rows="5" cols="40"> </textarea>
+    <textarea id="newRecommendation" rows="5" cols="40">Enter your recommendation here! </textarea>
     <br>
     <button onclick = "makeRecommendation()">Submit Recommendation</button>
-		<ul id="recommendationsHolder">
+    <br>
+    <br>
+    <br>
+		<table id="recommendationsTable" class ="table table-bordered">
+      <thead id = 'recommendationsTableHead'>
+        <th>#</th><th>Recommendation</th>
+      </thead>
+      <tbody id="recommendationsTableBody">
 
-		</ul>
+      </tbody>
+		</table>
 	</div>
 </div>
 </body>

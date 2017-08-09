@@ -94,8 +94,10 @@ function getInternshipRoles() {
 			console.log("Internship Roles have been retrieved");
 			internshipRoles = data.responseJSON;
 			console.log("Internship Roles == ", internshipRoles);
+			if(account.role == "advisor") {
 			initializeInternshipRoles();
 			fillInternshipRolesTable(internshipRoles);
+		}
 			getMentorshipRoles();
 		}
 		},
@@ -113,8 +115,10 @@ function getMentorshipRoles() {
 			if(data.responseJSON) {
 			console.log("Mentorship Roles have been retrieved");
 			mentorshipRoles = data.responseJSON;
+			if(account.role == "advisor") {
 			initializeMentorshipRoles();
 			fillMentorshipRolesTable();
+		}
 			console.log("Mentorship Roles == ", mentorshipRoles);
 		}
 		},
@@ -269,29 +273,7 @@ function fillInformation (json) {
 	$('#name').html(json.firstName + ' ' + json.lastName);
 	$('#email').html(json.email);
 	$('#status').html(toTitleCase(json.role));
-	if(json.questionAndAnswer) {
-			if(json.questionAndAnswer == "true") {
-				$('#QuestionAndAnswerCheck').addClass("glyphicon-ok-sign");
-				$('#QuestionAndAnswerCheck').click(function(){
-					toggleCheck(this);
-				});
-				document.getElementById("QuestionAndAnswerCheck").checked = true;
-			}
-			else {
-				$('#QuestionAndAnswerCheck').addClass("glyphicon-unchecked");
-				$('#QuestionAndAnswerCheck').click(function(){
-					toggleCheck(this);
-				});
-				document.getElementById("QuestionAndAnswerCheck").checked = false;
-			}
-	}
-	else {
-		$('#QuestionAndAnswerCheck').addClass("glyphicon-unchecked");
-		$('#QuestionAndAnswerCheck').click(function(){
-			toggleCheck(this);
-		});
-		document.getElementById("QuestionAndAnswerCheck").checked = false;
-	}
+
 }
 
 function unsubscibeInternship () {

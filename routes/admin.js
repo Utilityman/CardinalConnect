@@ -59,9 +59,9 @@ router.post('/SiteRecommendation', function (req, res, next) {
   globals.verifyAdmin(req.session.user, function (valid) {
     if (valid) {
       let t0 = new Date().getTime();
-      makeRecommendation(req.body, function (response) {
+      recommendations(req.body, function (response) {
         let t1 = new Date().getTime();
-        globals.prettyPrintResponse('MakeRecommendation', response, t1, t0);
+        globals.prettyPrintResponse('Recommendation', response, t1, t0);
         res.send(response);
       });
     } else {
@@ -201,10 +201,8 @@ function toggleInternship (json, callback) {
   }
 }
 
-function makeRecommendation(json, callback) {
-  if(json.action != 'makeRecommendation'){
-    callback('SERVER_ERROR');
-  } else {
+function recommendations(json, callback) {
+  if(json.action == "makeRecommendation"){
     let MongoClient = mongodb.MongoClient;
     MongoClient.connect(globals.MONGO_URL, function (err, db) {
       if (err) {
@@ -218,11 +216,34 @@ function makeRecommendation(json, callback) {
         } catch (e) {
           print(e);
         };
-        callback('RECOMMENDATION SAVED');
+        callback('RECOMMENDATION_SAVED');
         }
 
-});
+      });
+    } else if(json.action == "getRecommendations") {
+      let MongoClient = mongodb.MongoClient;
+      MongoClient.connect(globals.MONGO_URL, function (err, db) {
+        if (err) {
+          console.log(err);
+          callback('SERVER_ERROR');
+        } else {
+          let collection = db.collection('recommendations');
+          collection.find().toArray(function (err, results) {
+            if (err) {
+              callback('SERVER_ERROR');
+              db.close();
+            } else {
+              callback(results);
+              db.close();
+            }
+          });
+        }
+      });
+  } else {
+    callback("'INCORRECT_ACTION_TYPE'");
+  }
 }
-}
+
+
 
 module.exports = router;
