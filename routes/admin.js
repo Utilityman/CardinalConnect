@@ -211,8 +211,9 @@ function recommendations(json, callback) {
       } else {
         let collection = db.collection('recommendations');
         let recommendation = json.recommendation;
+        let priority = json.priority;
         try {
-          collection.insertOne({'content':recommendation});
+          collection.insertOne({'content':recommendation, 'priority':priority});
         } catch (e) {
           print(e);
         };

@@ -134,13 +134,20 @@
     <br>
     <textarea id="newRecommendation" rows="5" cols="40">Enter your recommendation here! </textarea>
     <br>
+    <h4>Priority</h4>
+    <select id = "recommendationPriority">
+      <option value = "1" selected="selected"> 1 </option>
+      <option value = "2"> 2 </option>
+      <option value = "3"> 3 </option>
+    </select>
+    <br>
     <button onclick = "makeRecommendation()">Submit Recommendation</button>
     <br>
     <br>
     <br>
 		<table id="recommendationsTable" class ="table table-bordered">
       <thead id = 'recommendationsTableHead'>
-        <th>#</th><th>Recommendation</th>
+        <th>#</th><th>Recommendation</th><th>Priority</th>
       </thead>
       <tbody id="recommendationsTableBody">
 

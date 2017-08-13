@@ -11,7 +11,8 @@
 #e3e9f2
 */
 .table-hover tbody tr:hover:not(#demographicsHead) td, .table-hover tbody tr:hover th {
-  background-color: white;
+  background-color: #dFdFdF;
+  color: black;
 }
 
 .list-group{
@@ -23,27 +24,24 @@
 }
 
 
-#demographicsTable {
+
+#internshipRolesTable, #mentorshipRolesTable, #demographicsTable{
   width : 50%;
+  background-color: #c44a54;
+  border-color: black;
 }
 
-#demographicsHead {
-  border-bottom: 2px solid #f44242;
-  background-color: white;
+#internshipRolesTable  td, #mentorshipRolesTable td, #demographicsTable td{
+  color: white;
 }
 
-#demographicsHead:hover {
-  border-bottom: 2px solid #f44242;
-  background-color: white;
+#internshipRolesTable  th, #mentorshipRolesTable th, #demographicsTable th{
+  color: white;
 }
-
-#internshipRolesTable{
-  width : 50%;
-}
-
 
 .rolesTableHead th {
   border : none;
+  background-color: black;
   border-bottom : 2px solid #f44242;
   text-align : center;
 }

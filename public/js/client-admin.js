@@ -365,6 +365,7 @@ function makeRecommendation()
 {
 
 	let recommendation = $('#newRecommendation').val();
+	let priority = $('#recommendationPriority').val();
 
 	$.ajax({
 		type: 'POST',
@@ -373,6 +374,7 @@ function makeRecommendation()
 		data: JSON.stringify({
 			'action': 'makeRecommendation',
 			'recommendation': recommendation,
+			'priority' : priority
 		}), complete: function (data) {
 			if(data.responseText == 'RECOMMENDATION_SAVED'){
 				alert("Recommendation saved to database");
@@ -407,12 +409,15 @@ function fillRecommendations()
 		let row = document.createElement('tr');
 		let num = document.createElement('td');
 		let content = document.createElement('td');
+		let priority = document.createElement('td');
 
 		num.innerHTML = i + 1;
 		content.innerHTML = recommendations[i].content;
+		priority.innerHTML = recommendations[i].priority;
 
     row.appendChild(num);
 		row.appendChild(content);
+		row.appendChild(priority);
 		$('#recommendationsTableBody').append(row);
 	}
 }

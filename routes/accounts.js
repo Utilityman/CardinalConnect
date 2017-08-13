@@ -239,6 +239,27 @@ function saveUser(json, user, callback) {
         callback('UPDATED USER');
       }
         });
+  } else if(json.action == "saveAboutMe") {
+    let MongoClient = mongodb.MongoClient;
+    console.log("save ABOIT <E");
+    MongoClient.connect(globals.MONGO_URL, function (err, db) {
+      if (err) {
+        console.log('err@accounts.js.saveUser()).MongoClient.connect - ' + err);
+        callback('SERVER_ERROR');
+      } else {
+        let collection = db.collection('users');
+        let email = json.email;
+        console.log("JSON == ", json.personalBio);
+        let personalBio = json.personalBio;
+        let company = json.company;
+        collection.update({'email':email},{$set:{'personalBio':personalBio,'company':json.company}});
+
+        user.personalBio = personalBio;
+        user.company = company;
+        console.log("USER = ",user);
+        callback('UPDATED USER');
+      }
+        });
 
   } else callback('INCORRECT_ACTION_TYPE');
 }

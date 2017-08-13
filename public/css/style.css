@@ -115,3 +115,13 @@ ul.nav.nav-pills > li > a {
 #myNavbar ul > li > ul > li > a {
 	color: #333;
 }
+
+.cardinalSaveButton {
+	color: white;
+	background-color: #c44a54;
+}
+
+.cardinalSaveButton:hover {
+	color: white;
+	background-color: black;
+}

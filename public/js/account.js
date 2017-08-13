@@ -6,6 +6,85 @@ let internshipRoles = undefined;
 let mentorshipRoles = undefined;
 
 
+function preparePage() {
+	if(account.email != "root") $(".adminContent").hide();
+	if(account.role == "student") {
+		$(".advisorContent").hide();
+		fillAboutMeStudent();
+	}
+	if(account.role == "advisor") {
+		$(".studentContent").hide();
+		document.getElementById("interestsOrCareer").innerHTML = "Your Career";
+		document.getElementById("saveInterestsButton").innerHTML = "Save Selected Fields";
+		fillAboutMeAdvisor();
+
+	}
+
+}
+
+function fillAboutMeAdvisor() {
+	$('#aboutMeTable').find('tr').remove();
+	let table = document.getElementById('aboutMeTable');
+	let row1 = document.createElement('tr');
+	let row2 = document.createElement('tr');
+
+
+  let bioDescription = document.createElement('td');
+	bioDescription.innerHTML = "Personal Bio:";
+	let personalBio = document.createElement('td');
+	let textBox = document.createElement('textarea');
+	textBox.id = "personalBio";
+	textBox.rows = "4";
+	textBox.cols = "50";
+	let brk = document.createElement('br');
+	let companyDescription = document.createElement('td');
+	companyDescription.innerHTML = "Company:";
+	let company = document.createElement('td');
+	let input = document.createElement('input');
+	input.id = "company";
+	input.type = "text";
+
+	if(account.personalBio) textBox.innerHTML = account.personalBio;
+	if(account.company) input.value = account.company;
+
+
+	row1.appendChild(bioDescription);
+	personalBio.appendChild(textBox);
+	row1.appendChild(personalBio);
+
+  row2.appendChild(companyDescription);
+	company.appendChild(input);
+  row2.appendChild(company);
+
+
+	$('#aboutMeTable').append(row1);
+	$('#aboutMeTable').append(brk);
+	$('#aboutMeTable').append(row2);
+}
+
+function fillAboutMeStudent() {
+	$('#aboutMeTable').find('tr').remove();
+	let table = document.getElementById('aboutMeTable');
+	let row1 = document.createElement('tr');
+
+	let bioDescription = document.createElement('td');
+	bioDescription.innerHTML = "Personal Bio:";
+	let personalBio = document.createElement('td');
+	let textBox = document.createElement('textarea');
+	textBox.id = "personalBio";
+	textBox.rows = "4";
+	textBox.cols = "50";
+
+	if(account.personalBio) textBox.innerHTML = account.personalBio;
+
+  row1.appendChild(bioDescription);
+	personalBio.appendChild(textBox);
+	row1.appendChild(personalBio);
+
+	$('#aboutMeTable').append(row1);
+
+}
+
 function getAccount () {
 	$.ajax({
 		type: 'POST',
@@ -17,9 +96,7 @@ function getAccount () {
 			console.log(data.responseJSON);
 			if(data.responseText == '') {returnToLogin(); return;}
 			account = data.responseJSON;
-			if(account.email == "root") $(".adminContent").hide();
-			if(account.role == "student") $(".advisorContent").hide();
-			if(account.role == "advisor") $(".studentContent").hide();
+			preparePage();
 			fillInformation(data.responseJSON);
 			getInterests();
 		},
@@ -74,6 +151,7 @@ function getInterests() {
 			if(data.responseJSON) {
 			console.log("Interests have been retrieved");
 			interests = data.responseJSON;
+			setGeneralInterestsHeader();
 			initializeInterests();
 			fillTier1Interests();
 			getMentorships();
@@ -376,11 +454,19 @@ function setGeneralInterestsHeader() {
 	let header_2 = document.createElement('h2');
 	header_1.class = "generalInterestHead";
 	header_2.class = "generalInterestHead";
-	header_1.innerHTML = "Pick what areas you're interested in!";
-	header_2.innerHTML = "General Interests";
 
-	$('#interestDisplayHead').after(header_2);
-	$('#interestDisplayHead').after(header_1);
+	if(account.role == "advisor") {
+		header_1.innerHTML = "Select the fields that purtain to your career!";
+		$('#interestDisplayHead').after(header_1);
+	}
+	else  {
+		header_1.innerHTML = "Pick what areas you're interested in!";
+	  header_2.innerHTML = "General Interests";
+		$('#interestDisplayHead').after(header_2);
+		$('#interestDisplayHead').after(header_1);
+	}
+
+
 
 }
 
@@ -511,7 +597,7 @@ function displayTierAboveParent(parent_interest){
 			interest_expand.className = "list-group-item";
 			let expand = document.createElement('span');
 			expand.id = interests[i].interest_id;
-			console.log("EXAPND ID = ", expand.id);
+
 			expand.onclick = function() {
 					displaySubinterests(this.id);
 			};
@@ -680,7 +766,7 @@ function displaySubinterests(parent_interest_id) {
 				} else {
 					span.className = 'glyphicon glyphicon-unchecked';
 				}
-				console.log("ABOUT TO ONCLICK");
+
 				span.onclick = function() {
 					for(var i = 0; i < interests.length; i++){
 							if(interests[i].interest_id == this.value) {
@@ -718,6 +804,25 @@ function checkChildInterests(interest_id){
 
 			}
 			return false;
+}
+
+function saveAboutMe(){
+
+	account.personalBio = $('#aboutMeTable').find('#personalBio').val();
+	account.company = $('#aboutMeTable').find('#company').val();
+	$.ajax({
+		type: 'POST',
+		url: '/SaveUser',
+		contentType: 'application/json',
+		data: JSON.stringify({
+			'action': 'saveAboutMe',
+			'email': account.email,
+			'personalBio' : account.personalBio,
+			'company' : account.company
+		}), complete: function (data) {
+			console.log(data);
+		},
+	});
 }
 
 function saveInterests(){

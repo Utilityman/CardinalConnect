@@ -81,17 +81,20 @@
   <li class="active"><a data-toggle="pill" href="#demographics">Demographics</a></li>
   <li><a data-toggle="pill" href="#subbedInternships">Internships</a></li>
   <li><a data-toggle="pill" href="#subbedMentorships">Mentorships</a></li>
-  <li><a data-toggle="pill" href="#userInterests">Your Interests</a></li>
+  <li><a data-toggle="pill" href="#userInterests" id="interestsOrCareer">Your Interests</a></li>
   <li class="advisorContent"><a data-toggle="pill" href="#internshipRoles">Internship Roles </a></li>
   <li class="advisorContent"><a data-toggle="pill" href="#mentorshipRoles">Mentorship Roles </a></li>
 </ul>
 
 <div class='tab-content'>
   <div id="demographics" class="tab-pane fade in active table-responsive">
-    <button onclick = "savePreferences()">Save Preferences</button>
+    <br>
     <table class='table table-hover'id="demographicsTable" >
 
-  		<tr id="demographicsHead"><td></td><td>Demographics</td></tr>
+      <thead class ="rolesTableHead">
+        <th> </th><th>Demographics</th>
+      </thead>
+      <tbody>
   		<tr><td>Name: </td><td id="name"></td></tr>
   		<tr><td>Email Address: </td><td id="email"></td>
   					<!--<td class="hidden" id="emailChanger"></td><td class="hidden" id="emailSaver"></td>--></tr>
@@ -105,12 +108,15 @@
   						<button onclick="saveCompany()">Save Change</button>
   					</td>
   		</tr>
+    </tbody>
       <!--
       <tr class="hoverable advisorContent">
         <td>Question and Answer via Email with Students: </td><td><span id="QuestionAndAnswerCheck" class="glyphicon"></span></td>
       </tr>
     -->
     </table>
+    <br>
+
   </div>
   <div id="subbedInternships" class="tab-pane fade table-responsive">
     <div class="table-responsive">
@@ -125,12 +131,17 @@
     </table>
   </div>
   <div id="userInterests" class="tab-pane fade table-responsive">
-    <button onclick = "saveInterests()">Save Interests</button>
-    <div id="interestDisplay">
 
+    <div id = "aboutMe" class = "well">
+      <button onclick = "saveAboutMe()" class="cardinalSaveButton btn" id="saveAboutMe">Save About Me</button>
+      <table id="aboutMeTable" class="table">
+      </table>
+    </div>
+
+    <div id="interestDisplay" class="well">
+      <button onclick = "saveInterests()" class="cardinalSaveButton btn" id="saveInterestsButton">Save Interests</button>
       <div id="interestDisplayHead">
-      <h2>Pick what areas you're interested in!</h2>
-      <h2>General Interests</h2>
+
       </div>
       <br>
 
@@ -177,27 +188,30 @@
 
     </div>
     <div id="internshipRoles" class="tab-pane fade table-responsive">
-      <button onclick = "saveInternshipRoles()">Save Internship Roles</button>
-      <table id="internshipRolesTable" class="table table-hover table-bordered">
+      <br>
+      <table id="internshipRolesTable" class="table table-hover">
         <thead class ="rolesTableHead">
-          <th> Internship Roles </th><th></th>
+          <th></th><th> Internship Roles </th>
         </thead>
         <tbody id ="internshipRolesTableBody">
         </tbody>
       </table>
+      <br>
+      <button onclick = "saveInternshipRoles()" class="cardinalSaveButton btn">Save Internship Roles</button>
 
 
     </div>
     <div id="mentorshipRoles" class="tab-pane fade table-responsive">
-      <button onclick = "saveMentorshipRoles()">Save Mentorship Roles</button>
-      <table id="mentorshipRolesTable" class="table table-hover table-bordered">
+      <br>
+      <table id="mentorshipRolesTable" class="table table-hover">
         <thead class ="rolesTableHead">
-          <th> Mentorship Roles </th><th></th>
+          <th> </th><th>Mentorship Roles </th>
         </thead>
         <tbody id="mentorshipRolesTableBody">
         </tbody>
-
       </table>
+      <br>
+      <button onclick = "saveMentorshipRoles()" class="cardinalSaveButton btn">Save Mentorship Roles</button>
 
     </div>
 
