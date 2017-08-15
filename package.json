@@ -23,6 +23,7 @@
     "body-parser": "^1.17.1",
     "express": "^4.15.2",
     "express-session": "^1.15.2",
+    "gridfs": "^1.0.0",
     "gridfs-stream": "^1.1.1",
     "mongodb": "^2.2.25",
     "nodemailer": "^4.0.1",

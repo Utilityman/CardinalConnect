@@ -35,7 +35,7 @@ function fillAboutMeAdvisor() {
 	let textBox = document.createElement('textarea');
 	textBox.id = "personalBio";
 	textBox.rows = "4";
-	textBox.cols = "50";
+	textBox.cols = "30";
 	let brk = document.createElement('br');
 	let companyDescription = document.createElement('td');
 	companyDescription.innerHTML = "Company:";
@@ -73,7 +73,7 @@ function fillAboutMeStudent() {
 	let textBox = document.createElement('textarea');
 	textBox.id = "personalBio";
 	textBox.rows = "4";
-	textBox.cols = "50";
+	textBox.cols = "30";
 
 	if(account.personalBio) textBox.innerHTML = account.personalBio;
 
@@ -969,18 +969,6 @@ function initializeMentorshipRoles() {
 			if(mentorshipRoles[i].id == account.mentorshipRoles[q])
 			       mentorshipRoles[i].checked = true;
 		}
-	}
-}
-
-function toggleCheck(elem) {
-	console.log("THIS = ", elem.checked);
-
-	if(elem.checked == false || elem.checked == 'false'){
-		elem.className = "glyphicon glyphicon-ok-sign";
-		elem.checked = true;
-	} else {
-    elem.className = "glyphicon glyphicon-unchecked";
-		elem.checked = false;
 	}
 }
 

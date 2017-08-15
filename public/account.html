@@ -81,7 +81,7 @@
   <li class="active"><a data-toggle="pill" href="#demographics">Demographics</a></li>
   <li><a data-toggle="pill" href="#subbedInternships">Internships</a></li>
   <li><a data-toggle="pill" href="#subbedMentorships">Mentorships</a></li>
-  <li><a data-toggle="pill" href="#userInterests" id="interestsOrCareer">Your Interests</a></li>
+  <li><a data-toggle="pill" href="#userInterests" id="interestsOrCareer">About You</a></li>
   <li class="advisorContent"><a data-toggle="pill" href="#internshipRoles">Internship Roles </a></li>
   <li class="advisorContent"><a data-toggle="pill" href="#mentorshipRoles">Mentorship Roles </a></li>
 </ul>
@@ -130,20 +130,23 @@
       <th>Title</th><th>Company</th><th>Location</th><th>Focus</th><th>Description</th>
     </table>
   </div>
-  <div id="userInterests" class="tab-pane fade table-responsive">
 
-    <div id = "aboutMe" class = "well">
+  <div id="userInterests" class="tab-pane fade table-responsive">
+    <div class="wrapper">
+    <div id = "aboutMe" class = "well box">
       <button onclick = "saveAboutMe()" class="cardinalSaveButton btn" id="saveAboutMe">Save About Me</button>
+      <br><br>
       <table id="aboutMeTable" class="table">
       </table>
     </div>
 
-    <div id="interestDisplay" class="well">
+    <div id="interestDisplay" class="well box">
       <button onclick = "saveInterests()" class="cardinalSaveButton btn" id="saveInterestsButton">Save Interests</button>
+      <br><br>
       <div id="interestDisplayHead">
 
       </div>
-      <br>
+
 
 
       <ul id="interestDisplayList" class="list-group">
@@ -187,6 +190,7 @@
 
 
     </div>
+  </div> <!-- END WRAPPER -->
     <div id="internshipRoles" class="tab-pane fade table-responsive">
       <br>
       <table id="internshipRolesTable" class="table table-hover">
@@ -198,6 +202,7 @@
       </table>
       <br>
       <button onclick = "saveInternshipRoles()" class="cardinalSaveButton btn">Save Internship Roles</button>
+
 
 
     </div>
