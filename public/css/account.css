@@ -44,6 +44,9 @@
   color: #c44a54;
 }
 
+.generalInterestHead {
+  color: white;
+}
 
 #internshipRolesTable, #demographicsTable{
   width : 30%;
@@ -52,7 +55,7 @@
 }
 
 #mentorshipRolesTable{
-  width : 40%;
+  width : 35%;
   background-color: #c44a54;
   border-color: black;
 }
@@ -79,10 +82,34 @@
 .wrapper {
   display: grid;
   grid-template-columns: 450px 550px;
+  grid-template-rows: auto auto auto;
   grid-gap: 5px;
 }
 
 .box {
   padding: 20px;
   border-radius: 5px;
+}
+
+.box1 {
+  grid-column-start: 1;
+  grid-column-end: 1;
+  grid-row-start: 1;
+  grid-row-end: auto;
+  background-color: black;
+}
+
+.box2 {
+  grid-column-start: 2;
+  grid-column-end: 2;
+  grid-row-start: 1;
+  grid-row-end: 3;
+  background-color: black;
+}
+
+.box3 {
+  grid-column-start: 1;
+  grid-column-end: 2;
+  grid-row-start: 2;
+  grid-row-end: auto;
 }

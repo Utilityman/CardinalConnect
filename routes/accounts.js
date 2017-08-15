@@ -6,8 +6,12 @@ let mongodb = require('mongodb');
 let Globals = require('../config');
 let globals = new Globals();
 let nodemailer = require('nodemailer');
+let Grid = require('gridfs-uploader');
 
 
+
+
+/*
 router.post('/GetAccounts', function (req, res, next) {
   globals.verifyAdmin(req.session.user, function (valid) {
     if (valid) {
@@ -22,6 +26,16 @@ router.post('/GetAccounts', function (req, res, next) {
       console.log('POST@/GetAccounts --- Response:' + response + ' --- ' + (t1 - t0) + 'ms');
     }
   });
+});
+*/
+
+router.post('/GetAccounts', function (req, res, next) {
+      let t0 = new Date().getTime();
+      getAccounts(req.body, function(response) {
+        let t1 = new Date().getTime();
+        res.send(response);
+        console.log('POST@/GetAccounts --- Response:' + response + ' --- ' + (t1 - t0) + 'ms');
+      });
 });
 
 router.post('/GetUser', function (req, res, next) {
@@ -69,6 +83,8 @@ router.post('/GetRoles', function (req, res, next) {
     console.log('POST@/getRoles --- Response: '+ response + ' --- ' + (t1 - t0) + 'ms');
   });
 });
+
+
 
 
 function getAccounts(json, callback) {
@@ -252,10 +268,12 @@ function saveUser(json, user, callback) {
         console.log("JSON == ", json.personalBio);
         let personalBio = json.personalBio;
         let company = json.company;
-        collection.update({'email':email},{$set:{'personalBio':personalBio,'company':json.company}});
+        let jobTitle = json.jobTitle;
+        collection.update({'email':email},{$set:{'personalBio':personalBio,'company':company,'jobTitle':jobTitle}});
 
         user.personalBio = personalBio;
         user.company = company;
+        user.jobTitle = jobTitle;
         console.log("USER = ",user);
         callback('UPDATED USER');
       }

@@ -20,7 +20,7 @@
   <link href='css/style.css' rel='stylesheet'>
   <link href='css/account.css' rel='stylesheet'>
 </head>
-<body onload='getAccount()'>
+<body onload='getAccounts()'>
 
 <div id="title">
 	<img id="logo" src="imgs/logo.png" alt="Logo">
@@ -89,6 +89,7 @@
 <div class='tab-content'>
   <div id="demographics" class="tab-pane fade in active table-responsive">
     <br>
+
     <table class='table table-hover'id="demographicsTable" >
 
       <thead class ="rolesTableHead">
@@ -133,14 +134,14 @@
 
   <div id="userInterests" class="tab-pane fade table-responsive">
     <div class="wrapper">
-    <div id = "aboutMe" class = "well box">
+    <div id = "aboutMe" class = "well box box1">
       <button onclick = "saveAboutMe()" class="cardinalSaveButton btn" id="saveAboutMe">Save About Me</button>
       <br><br>
       <table id="aboutMeTable" class="table">
       </table>
     </div>
 
-    <div id="interestDisplay" class="well box">
+    <div id="interestDisplay" class="well box box2">
       <button onclick = "saveInterests()" class="cardinalSaveButton btn" id="saveInterestsButton">Save Interests</button>
       <br><br>
       <div id="interestDisplayHead">
@@ -187,6 +188,17 @@
       </table>
       </ul>
     </div>
+    <div class = "studentContent well box box3">
+      <h3> Advisor Matches </h3>
+      <table class = "table table-hover table-bordered" id="matchingAdvisorsTable">
+        <thead>
+          <th>Name</th><th>Company</th><th>Job Title</th>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+    </div>
+
 
 
     </div>
